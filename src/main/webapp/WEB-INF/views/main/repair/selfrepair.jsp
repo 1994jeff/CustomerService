@@ -59,7 +59,7 @@
 		</div>
 		<div style="text-align: center; margin-top: 20px;">
 			<span
-				style="display: block; color: cornflowerblue; padding: 10px 20px; border-radius: 30px; border: solid cornflowerblue 1px; width: 230px; margin: auto;">确定申请报修</span>
+				style="display: block; color: cornflowerblue; padding: 10px 20px; border-radius: 30px; border: solid cornflowerblue 1px; width: 230px; margin: auto;" onclick="${pageContext.request.contextPath}/repair/toRepairNofication.do">确定申请报修</span>
 		</div>
 	</div>
 </body>

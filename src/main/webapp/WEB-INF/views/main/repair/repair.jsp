@@ -38,7 +38,7 @@
 					<span style="font-size: 18px;float: left;margin-top: 4px;margin-left: 40px;">5.扫码没反应</span>
 				</div>
 				<div style="padding: 20px 10px;overflow: hidden;border-bottom: solid #cccccc 1px;">
-					<span style="font-size: 18px;float: left;margin-top: 4px;margin-left: 40px;"><span><img src="${pageContext.request.contextPath}/img/problem.png" width="26px"/>&nbsp;<a href="#">以上问题都不是</a></span></span>
+					<span style="font-size: 18px;float: left;margin-top: 4px;margin-left: 40px;"><span><img src="${pageContext.request.contextPath}/img/problem.png" width="26px"/>&nbsp;<a href="${pageContext.request.contextPath}/repair/toSelfRepair.do">以上问题都不是</a></span></span>
 				</div>
 			</div>
 		</div>

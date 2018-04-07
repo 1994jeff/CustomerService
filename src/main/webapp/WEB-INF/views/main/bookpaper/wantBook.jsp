@@ -48,7 +48,7 @@
 				<span style="margin-left: 30px;line-height: 30px;">本次发放数量</span><br />
 				<span style="color:rgba(102, 153, 204, 1);font-size: 50px;display: block;text-align:center;font-weight: bold;">30卷</span>
 				<span style="color:rgba(102, 153, 204, 1);display: block;text-align: center;">预计使用期限：30天</span>
-				<span style="color:rgba(102, 153, 204, 1);display: block;border-radius: 30px;border: solid rgba(102,153,204,1) 1px;width: 120px;padding: 20px;text-align: center;margin:  0px auto;margin-top: 20px;">去订纸</span>
+				<span style="color:rgba(102, 153, 204, 1);display: block;border-radius: 30px;border: solid rgba(102,153,204,1) 1px;width: 120px;padding: 20px;text-align: center;margin:  0px auto;margin-top: 20px;" onclick="${pageContext.request.contextPath}/book/toBookPaper.do">去订纸</span>
 			</div>
 			<div class="reject">
 				<img src="${pageContext.request.contextPath}/img/u187.png" width="60px" style="margin-left: 30px;margin-top: 10px;margin-bottom: 10px;float: left;margin-right: 10px;"/>
