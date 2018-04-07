@@ -20,7 +20,7 @@
 			<div style="padding: 10px;color: white;font-size: 1.4em;">欢迎登录!</div>
 		</div>
 		<div style="width: 100%;padding: 20px;background-color: white;margin-top: 10px;">
-			<div style="float: left;width: 100px;">
+			<div style="float: left;width: 100px;" onclick="${pageContext.request.contextPath}/">
 				<img src="${pageContext.request.contextPath}/img/u87.png" width="36px" style="margin-left: 13px;"><br />
 				<span>报修申请</span>
 			</div>
