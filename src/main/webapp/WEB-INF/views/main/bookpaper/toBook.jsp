@@ -8,6 +8,7 @@
 	</head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}css/base.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/js/base.js" />
 	<body>
 		<div style="height: 80px;background-color:rgba(102, 153, 204, 1);">
 			<div style="float: left;position: fixed;">

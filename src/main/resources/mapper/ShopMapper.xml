@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.customerservicesystem.dao.ShopDao">
+	<resultMap type="com.example.customerservicesystem.bean.Shop"
+		id="shopResultMap">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="pos_no" jdbcType="VARCHAR" property="posNo" />
+		<result column="user_no" jdbcType="VARCHAR" property="userNo" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="brand" jdbcType="VARCHAR" property="brand" />
+		<result column="employee" jdbcType="VARCHAR" property="employee" />
+		<result column="employee_psd" jdbcType="VARCHAR" property="employePsd" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+	</resultMap>
+	<insert id="insertShop" parameterType="com.example.customerservicesystem.bean.Shop">
+		insert into
+		shop(pos_no,user_no,name,brand,employee,employee_psd,address,remark,create_time,update_time)
+		values(#{posNo},#{userNo},#{name},#{brand},#{employee},#{employeePsd},#{address},#{remark},now(),now())
+	</insert>
+
+	<select id="getShopByCondition" parameterType="com.example.customerservicesystem.bean.Shop"
+		resultMap="shopResultMap">
+		select * from shop
+		<include refid="sqlWhere" />
+	</select>
+
+	<update id="updateShopByCondition" parameterType="com.example.customerservicesystem.bean.Shop">
+		update shop
+		<include refid="updateSet" />
+	</update>
+
+	<delete id="deleteShopByUserNo" parameterType="com.example.customerservicesystem.bean.Shop">
+		delete from shop
+		where pos_no = #{posNo}
+	</delete>
+
+	<sql id="sqlWhere">
+		where
+		1=1
+		<if test="posNo != '' and posNo != null ">
+			and pos_no = #{posNo}
+		</if>
+		<if test="name !='' and name != null ">
+			and name = #{name}
+		</if>
+		<if test="brand !='' and brand !=null ">
+			and brand = #{brand}
+		</if>
+		<if test="employee !='' and employee !=null ">
+			and employee = #{employee}
+		</if>
+		<if test="employeePsd !='' and employeePsd != null ">
+			and employee_psd = #{employeePsd}
+		</if>
+		<if test="address !='' and address !=null ">
+			and address = #{address}
+		</if>
+		<if test="remark !='' and remark !=null ">
+			and remark = #{remark}
+		</if>
+	</sql>
+
+	<sql id="updateSet">
+		set
+		<if test="posNo != '' and posNo != null ">
+			pos_no = #{posNo},
+		</if>
+		<if test="name !='' and name != null ">
+			name = #{name},
+		</if>
+		<if test="brand !='' and brand !=null ">
+			brand = #{brand},
+		</if>
+		<if test="employee !='' and employee !=null ">
+			employee = #{employee},
+		</if>
+		<if test="employeePsd !='' and employeePsd != null ">
+			employee_psd = #{employeePsd},
+		</if>
+		<if test="address !='' and address !=null ">
+			address = #{address},
+		</if>
+		<if test="remark !='' and remark !=null ">
+			remark = #{remark},
+		</if>
+		update_time = now()
+		where pos_no = #{posNo}
+	</sql>
+</mapper>

@@ -15,7 +15,7 @@ public class BindingController extends BaseController {
 	
 	@RequestMapping("/toBindUser.do")
 	public String toModifyPsd(HttpSession session) {
-		return "binding/user";
+		return "main/binding/user";
 	}
 	
 }

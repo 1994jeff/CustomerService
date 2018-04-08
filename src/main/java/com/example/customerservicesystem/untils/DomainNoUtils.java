@@ -9,7 +9,7 @@ public class DomainNoUtils {
 	public static final String USER_NO = "UN";
 	public static final String SIGNED_NO = "SN";
 	public static final String USERAUTH_NO = "UA";
-	public static final String AUTH_NO = "AN";
+	public static final String AUTH_NO = "RN";//record no前缀
 	public static final String BC_NO = "BCN";
 
 	public static final int bitlength = 5;

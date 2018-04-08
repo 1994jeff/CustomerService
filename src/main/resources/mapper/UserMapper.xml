@@ -37,11 +37,11 @@
 		<if test="name != '' and name != null ">
 			and name = #{name}
 		</if>
-		<if test="psd !='' and psd != null ">
-			and psd = #{psd}
+		<if test="address !='' and address != null ">
+			and address = #{address}
 		</if>
-		<if test="auth !='' and auth !=null ">
-			and auth = #{auth}
+		<if test="openId !='' and openId !=null ">
+			and openId = #{openId}
 		</if>
 		<if test="userNo !='' and userNo !=null ">
 			and user_no = #{userNo}
@@ -53,15 +53,16 @@
 		<if test="name != '' and name != null ">
 			name = #{name},
 		</if>
-		<if test="psd !='' and psd != null ">
-			psd = #{psd},
+		<if test="address !='' and address != null ">
+			 address = #{address},
 		</if>
-		<if test="auth !='' and auth !=null ">
-			auth = #{auth},
+		<if test="openId !='' and openId !=null ">
+			 openId = #{openId},
 		</if>
 		<if test="userNo !='' and userNo !=null ">
-			user_no = #{userNo}
+			user_no = #{userNo},
 		</if>
+		update_time = now()
 		where user_no = #{userNo}
 	</sql>	
 </mapper>

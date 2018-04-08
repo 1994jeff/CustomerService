@@ -6,6 +6,14 @@ body {
 	background: rgba(242, 242, 242, 1);
 }
 
+a{
+	color: black;
+	text-decoration: none;
+}
+
+a:HOVER{
+	    -webkit-tap-highlight-color: transparent;/*去除点击时的背景色*/
+}
 ul {
 	padding: 0px;
 	margin: 0px;

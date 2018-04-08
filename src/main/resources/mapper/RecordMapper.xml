@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.customerservicesystem.dao.RecordDao">
+	<resultMap type="com.example.customerservicesystem.bean.ApplyRecord"
+		id="recordMap">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<id column="type" jdbcType="BIGINT" property="type" />
+		<id column="status" jdbcType="BIGINT" property="status" />
+		<result column="record_no" jdbcType="VARCHAR" property="recordNo" />
+		<result column="user_no" jdbcType="VARCHAR" property="userNo" />
+		<result column="reason" jdbcType="VARCHAR" property="reason" />
+		<result column="apply_name" jdbcType="VARCHAR" property="applyName" />
+		<result column="apply_mobile" jdbcType="VARCHAR" property="applyMobile" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+	</resultMap>
+	<insert id="insertRecord" parameterType="com.example.customerservicesystem.bean.ApplyRecord">
+		insert into
+		record(record_no,user_no,type,status,reason,apply_name,apply_mobile,remark,create_time,update_time)
+		values(#{recordNo},#{userNo},#{type},#{status},#{reason},#{applyName},#{applyMobile},#{remark},now(),now())
+	</insert>
+
+	<select id="getRecordByCondition" parameterType="com.example.customerservicesystem.bean.ApplyRecord"
+		resultMap="recordMap">
+		select * from record
+		<include refid="sqlWhere" />
+		order by create_time desc
+	</select>
+
+	<update id="updateRecordByCondition" parameterType="com.example.customerservicesystem.bean.ApplyRecord">
+		update record
+		<include refid="updateSet" />
+	</update>
+
+	<delete id="deleteRecordByUserNo" parameterType="com.example.customerservicesystem.bean.ApplyRecord">
+		delete from record
+		where pos_no = #{posNo}
+	</delete>
+
+	<sql id="sqlWhere">
+		where
+		1=1
+		<if test="recordNo != '' and recordNo != null ">
+			and record_no = #{recordNo}
+		</if>
+		<if test="type !='' and type != null ">
+			and type = #{type}
+		</if>
+		<if test="status !='' and status !=null ">
+			and status = #{status}
+		</if>
+		<if test="reason !='' and reason !=null ">
+			and reason = #{reason}
+		</if>
+		<if test="applyName !='' and applyName != null ">
+			and apply_name = #{applyName}
+		</if>
+		<if test="applyMobile !='' and applyMobile!=null ">
+			and apply_mobile = #{applyMobile}
+		</if>
+		<if test="remark !='' and remark !=null ">
+			and remark = #{remark}
+		</if>
+		<if test="userNo !='' and userNo !=null ">
+			and user_no = #{userNo}
+		</if>
+	</sql>
+
+	<sql id="updateSet">
+		set
+		<if test="type !='' and type != null ">
+			 type = #{type},
+		</if>
+		<if test="status !='' and status !=null ">
+			 status = #{status},
+		</if>
+		<if test="reason !='' and reason !=null ">
+			 reason = #{reason},
+		</if>
+		<if test="applyName !='' and applyName != null ">
+			 apply_name = #{applyName},
+		</if>
+		<if test="applyMobile !='' and applyMobile!=null ">
+			 apply_mobile = #{applyMobile},
+		</if>
+		<if test="remark !='' and remark !=null ">
+			 remark = #{remark},
+		</if>
+		<if test="userNo !='' and userNo !=null ">
+			 user_no = #{userNo},
+		</if>
+		update_time = now()
+		where record_no = #{recordNo}
+	</sql>
+</mapper>

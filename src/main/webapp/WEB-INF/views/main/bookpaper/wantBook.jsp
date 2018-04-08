@@ -8,6 +8,7 @@
 	</head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/base.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/js/base.js" />
 	<style>.pass {
 	text-align: left;
 	padding: 10px;

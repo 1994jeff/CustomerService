@@ -15,21 +15,21 @@ public class BookController extends BaseController {
 
 	@RequestMapping("/toApplyReason.do")
 	public String toApplyReason(HttpSession session) {
-		return "bookpaper/applyReason";
+		return "main/bookpaper/applyReason";
 	}
 	
 	@RequestMapping("/toBookPaper.do")
 	public String toRepair(HttpSession session) {
-		return "bookpaper/bookPaper";
+		return "main/bookpaper/bookPaper";
 	}
 	
 	@RequestMapping("/toBook.do")
 	public String toBook(HttpSession session) {
-		return "bookpaper/toBook";
+		return "main/bookpaper/toBook";
 	}
 	
 	@RequestMapping("/toWantBook.do")
 	public String toWantBook(HttpSession session) {
-		return "bookpaper/wantBook";
+		return "main/bookpaper/wantBook";
 	}
 }

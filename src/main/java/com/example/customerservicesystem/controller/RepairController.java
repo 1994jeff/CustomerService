@@ -15,31 +15,36 @@ public class RepairController {
 	
 	@RequestMapping("/toRepair.do")
 	public String toRepair(HttpSession session) {
-		return "repair/repair";
+		return "main/repair/repair";
 	}
 	
 	@RequestMapping("/toSelfRepair.do")
 	public String toSelfRepair(HttpSession session) {
-		return "repair/selfRepair";
+		return "main/repair/selfrepair";
 	}
 	
 	@RequestMapping("/toReason.do")
 	public String toReason(HttpSession session) {
-		return "repair/reason";
+		return "main/repair/reason";
 	}
 	
 	@RequestMapping("/toRecord.do")
 	public String toRecord(HttpSession session) {
-		return "repair/record";
+		return "main/repair/record";
 	}
 	
 	@RequestMapping("/toRepairDetails.do")
 	public String toRepairDetails(HttpSession session) {
-		return "repair/record";
+		return "main/repair/repairDetails";
 	}
 	
 	@RequestMapping("/toRepairNofication.do")
 	public String toRepairNofication(HttpSession session) {
-		return "repair/record";
+		return "main/repair/repairNofication";
+	}
+	
+	@RequestMapping("/toMoreRecord.do")
+	public String toMoreRecord(HttpSession session) {
+		return "main/repair/repairNofication";
 	}
 }

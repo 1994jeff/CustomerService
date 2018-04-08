@@ -11,7 +11,7 @@
 	<body>
 		<div style="height: 80px;background-color:rgba(102, 153, 204, 1);">
 			<div style="float: left;position: fixed;">
-				<img src="${pageContext.request.contextPath}/img/back.png" width="25px" height="25px" style="margin-top: 28px;margin-left: 6px;" />
+				<img src="${pageContext.request.contextPath}/img/back.png" width="25px" height="25px" style="margin-top: 28px;margin-left: 6px;" onclick="backPage" />
 				<img src="${pageContext.request.contextPath}/img/close.png" height="25px" style="margin-top: 28px;margin-left: 4px;" />
 			</div>
 			<div><span style="color: white;font-size: 22px;line-height: 80px;text-align: center;display: block;font-weight: bold;">申请报修记录</span></div>

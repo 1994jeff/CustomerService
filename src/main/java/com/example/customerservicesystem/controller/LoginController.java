@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.customerservicesystem.bean.ApplyRecord;
 import com.example.customerservicesystem.bean.RetParam;
 import com.example.customerservicesystem.bean.User;
+import com.example.customerservicesystem.service.RecordService;
 import com.example.customerservicesystem.service.UserService;
 
 import net.sf.json.JSONObject;
@@ -30,23 +32,34 @@ public class LoginController extends BaseController {
 
 	@Resource
 	UserService userService;
+	@Resource
+	RecordService recordService;
 	
 	@RequestMapping("/toIndex.do")
 	public String toIndex(HttpSession session,Model model){
 		User user = getSessionUser(session);
 		log.debug("------------------------login jsp page------------------------");
-//		if(null==user)
-//		{
+		if(null==user)
+		{
 //			return "redirect:/login/toLogin.do";
-//		}
+			user = new User();
+		}
 		try {
-			model.addAttribute("user",user);
+			user.setUserNo("1");
+			List<User> u = userService.getUserByCondition(user);
+			log.debug("-----------------------u-----------------------"+u.toString());
+			ApplyRecord applyRecord = new ApplyRecord();
+			applyRecord.setUserNo(u.get(0).getUserNo());
+			List<ApplyRecord> records = recordService.getRecordByCondition(applyRecord );
+			model.addAttribute("user",u.get(0));
+			model.addAttribute("records", records);
 		} catch (Exception e) {
 			model.addAttribute("errorMsg",e.getMessage());
 			return "error/404";
 		}
 		return "index";
 	}
+	
 	@RequestMapping("/toLogin.do")
 	public String toLogin(){
 		return "../../index";

@@ -25,7 +25,7 @@ public class SpringAop {
 	/**
 	 * 设置切入点，即需要代理的方法
 	 */
-	@Pointcut("execution(* com.jeff.data.service.impl.*.*(..))")
+	@Pointcut("execution(* com.example.customerservicesystem.service.impl.*.*(..))")
 	public void aspect(){
 	}
 	

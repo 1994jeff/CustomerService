@@ -9,6 +9,7 @@
 	</head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/base.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/js/base.js" />
 	<style>
 			/*垂直翻转图片*/
 		.flipy {
@@ -62,7 +63,7 @@
 					<span>小E温馨提示：请及时进行日终结算</span>
 				</div>
 				<div style="padding:16px 30px;">
-					<span>若未能帮您解决问题，请点击<a href="#">自助报修</a></span>
+					<span>若未能帮您解决问题，请点击<a href="${pageContext.request.contextPath}/repair/toSelfRepair.do">自助报修</a></span>
 				</div>
 			</div>
 			<div></div>
