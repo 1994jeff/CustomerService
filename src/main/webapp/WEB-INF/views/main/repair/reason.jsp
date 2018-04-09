@@ -27,8 +27,8 @@
 	<body>
 		<div style="height: 80px;background-color:rgba(102, 153, 204, 1);">
 			<div style="float: left;position: fixed;">
-				<img src="${pageContext.request.contextPath}/img/back.png" width="25px" height="25px" style="margin-top: 28px;margin-left: 6px;" />
-				<img src="${pageContext.request.contextPath}/img/close.png" height="25px" style="margin-top: 28px;margin-left: 4px;" />
+				<img src="${pageContext.request.contextPath}/img/back.png" width="25px" height="25px" style="margin-top: 28px;margin-left: 6px;" onclick="backPage(-1)" />
+				<img src="${pageContext.request.contextPath}/img/close.png" height="25px" style="margin-top: 28px;margin-left: 4px;" onclick="closeWindow()" />
 			</div>
 			<div><span style="margin-left:10px;color: white;font-size: 22px;line-height: 80px;text-align: center;display: block;">机器按了没反应</span></div>
 		</div>
@@ -63,11 +63,16 @@
 					<span>小E温馨提示：请及时进行日终结算</span>
 				</div>
 				<div style="padding:16px 30px;">
-					<span>若未能帮您解决问题，请点击<a href="${pageContext.request.contextPath}/repair/toSelfRepair.do">自助报修</a></span>
+					<span>若未能帮您解决问题，请点击<a href="${pageContext.request.contextPath}/repair/toSelfRepair.do" style="color:blue;">自助报修</a></span>
 				</div>
 			</div>
 			<div></div>
 		</div>
+		<script type="text/javascript">
+		function backPage(num) {
+			history.go(num);
+		}
+		</script>
 	</body>
 
 </html>

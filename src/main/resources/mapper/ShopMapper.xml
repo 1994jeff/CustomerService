@@ -9,7 +9,7 @@
 		<result column="name" jdbcType="VARCHAR" property="name" />
 		<result column="brand" jdbcType="VARCHAR" property="brand" />
 		<result column="employee" jdbcType="VARCHAR" property="employee" />
-		<result column="employee_psd" jdbcType="VARCHAR" property="employePsd" />
+		<result column="employee_psd" jdbcType="VARCHAR" property="employeePsd" />
 		<result column="address" jdbcType="VARCHAR" property="address" />
 		<result column="remark" jdbcType="VARCHAR" property="remark" />
 		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -25,6 +25,7 @@
 		resultMap="shopResultMap">
 		select * from shop
 		<include refid="sqlWhere" />
+		order by create_time desc
 	</select>
 
 	<update id="updateShopByCondition" parameterType="com.example.customerservicesystem.bean.Shop">

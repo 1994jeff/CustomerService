@@ -12,9 +12,9 @@ public class ApplyRecord implements Serializable{
 	
 	private int id;
 	private String recordNo;
-	private int type;//0申请报修,1申请订纸
+	private String type;//0申请报修,1申请订纸
 	private String reason;
-	private int status;//0未处理,1已处理
+	private String status;//0未处理,1已处理
 	private String userNo;
 	private String applyName;
 	private String applyMobile;
@@ -33,22 +33,22 @@ public class ApplyRecord implements Serializable{
 	public void setRecordNo(String recordNo) {
 		this.recordNo = recordNo;
 	}
-	public int getType() {
-		return type;
-	}
-	public void setType(int type) {
-		this.type = type;
-	}
 	public String getReason() {
 		return reason;
 	}
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
-	public int getStatus() {
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	public String getUserNo() {

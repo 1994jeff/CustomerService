@@ -4,8 +4,8 @@
 	<resultMap type="com.example.customerservicesystem.bean.ApplyRecord"
 		id="recordMap">
 		<id column="id" jdbcType="BIGINT" property="id" />
-		<id column="type" jdbcType="BIGINT" property="type" />
-		<id column="status" jdbcType="BIGINT" property="status" />
+		<id column="type" jdbcType="VARCHAR" property="type" />
+		<id column="status" jdbcType="VARCHAR" property="status" />
 		<result column="record_no" jdbcType="VARCHAR" property="recordNo" />
 		<result column="user_no" jdbcType="VARCHAR" property="userNo" />
 		<result column="reason" jdbcType="VARCHAR" property="reason" />
@@ -17,8 +17,8 @@
 	</resultMap>
 	<insert id="insertRecord" parameterType="com.example.customerservicesystem.bean.ApplyRecord">
 		insert into
-		record(record_no,user_no,type,status,reason,apply_name,apply_mobile,remark,create_time,update_time)
-		values(#{recordNo},#{userNo},#{type},#{status},#{reason},#{applyName},#{applyMobile},#{remark},now(),now())
+		record(record_no,user_no,type,status,reason,apply_name,apply_mobile,remark,create_time)
+		values(#{recordNo},#{userNo},#{type},#{status},#{reason},#{applyName},#{applyMobile},#{remark},now())
 	</insert>
 
 	<select id="getRecordByCondition" parameterType="com.example.customerservicesystem.bean.ApplyRecord"

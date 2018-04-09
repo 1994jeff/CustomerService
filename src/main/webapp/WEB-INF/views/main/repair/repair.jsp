@@ -14,9 +14,9 @@
 		<div style="float: left; position: fixed;">
 			<img src="${pageContext.request.contextPath}/img/back.png"
 				width="25px" height="25px" onclick="backPage(-1)"
-				style="margin-top: 28px; margin-left: 6px;" /> <img
-				src="${pageContext.request.contextPath}/img/close.png" height="25px"
-				style="margin-top: 28px; margin-left: 4px;" />
+				style="margin-top: 28px; margin-left: 6px;" /> 				
+			<a href="javascript:window.opener=null;window.open('','_self');window.close();"><img src="${pageContext.request.contextPath}/img/close.png" height="25px" style="margin-top: 28px;margin-left: 4px;" /></a>
+
 		</div>
 		<div>
 			<span

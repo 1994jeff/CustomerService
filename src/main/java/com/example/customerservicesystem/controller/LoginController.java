@@ -39,13 +39,12 @@ public class LoginController extends BaseController {
 	public String toIndex(HttpSession session,Model model){
 		User user = getSessionUser(session);
 		log.debug("------------------------login jsp page------------------------");
-		if(null==user)
+		if(null==user || user.getUserNo().equals(""))
 		{
-//			return "redirect:/login/toLogin.do";
 			user = new User();
+			user.setUserNo("1");
 		}
 		try {
-			user.setUserNo("1");
 			List<User> u = userService.getUserByCondition(user);
 			log.debug("-----------------------u-----------------------"+u.toString());
 			ApplyRecord applyRecord = new ApplyRecord();
@@ -53,6 +52,9 @@ public class LoginController extends BaseController {
 			List<ApplyRecord> records = recordService.getRecordByCondition(applyRecord );
 			model.addAttribute("user",u.get(0));
 			model.addAttribute("records", records);
+			//全局存储user,可以通过getAttribute方法取出
+			session.setAttribute("user", u.get(0));
+			
 		} catch (Exception e) {
 			model.addAttribute("errorMsg",e.getMessage());
 			return "error/404";

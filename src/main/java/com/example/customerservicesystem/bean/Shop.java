@@ -21,6 +21,8 @@ public class Shop implements Serializable{
 	private String remark;//电话
 	private Date createTime;
 	private Date updateTime;
+	
+	
 	public int getId() {
 		return id;
 	}

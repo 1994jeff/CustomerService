@@ -41,7 +41,7 @@
 			and address = #{address}
 		</if>
 		<if test="openId !='' and openId !=null ">
-			and openId = #{openId}
+			and open_id = #{openId}
 		</if>
 		<if test="userNo !='' and userNo !=null ">
 			and user_no = #{userNo}

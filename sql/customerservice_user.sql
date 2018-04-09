@@ -32,7 +32,7 @@ CREATE TABLE `user` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `remark` varchar(45) DEFAULT '',
   PRIMARY KEY (`id`,`user_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +41,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'1','Jeff','eqew','31231231','2018-04-08 22:06:20','2018-04-08 22:06:20',''),(2,'2','Haha','34sasdas','24d','2018-04-08 22:07:47','2018-04-08 22:07:47',''),(3,'3','Tom','12dss','','2018-04-08 22:07:47','2018-04-08 22:07:47','');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-07 19:50:32
+-- Dump completed on 2018-04-09 23:07:28

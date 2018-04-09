@@ -18,24 +18,42 @@ public class RecordServiceImpl implements RecordService {
 	
 	@Override
 	public void insertRecord(ApplyRecord applyRecord) {
-		String reNo = DomainNoUtils.getNoByPreStr(DomainNoUtils.AUTH_NO);
-		applyRecord.setRecordNo(reNo);
-		recordDao.insertRecord(applyRecord);
+		try {
+			String reNo = DomainNoUtils.getNoByPreStr(DomainNoUtils.AUTH_NO);
+			applyRecord.setRecordNo(reNo);
+			recordDao.insertRecord(applyRecord);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	@Override
 	public List<ApplyRecord> getRecordByCondition(ApplyRecord applyRecord) {
-		return recordDao.getRecordByCondition(applyRecord);
+		List<ApplyRecord> a = null;
+		try {
+			a =  recordDao.getRecordByCondition(applyRecord);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return a;
 	}
 
 	@Override
 	public void updateRecordByCondition(ApplyRecord applyRecord) {
-		recordDao.updateRecordByCondition(applyRecord);
+		try {
+			recordDao.updateRecordByCondition(applyRecord);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	@Override
 	public void deleteRecordByUserNo(ApplyRecord applyRecord) {
-		recordDao.deleteRecordByUserNo(applyRecord);
+		try {
+			recordDao.deleteRecordByUserNo(applyRecord);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 }

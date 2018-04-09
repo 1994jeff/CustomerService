@@ -37,7 +37,7 @@
 					width="36px" style="margin-left: 13px;"><br /> <span>报修申请</span>
 			</div>
 		</a>
-		<a href="${pageContext.request.contextPath}/repair/toRepair.do?userNo=${user.userNo}">
+		<a href="${pageContext.request.contextPath}/book/toWantBook.do?userNo=${user.userNo}">
 			<div>
 				<img src="${pageContext.request.contextPath}/img/u86.png"
 					width="36px" style="margin-left: 13px;"><br /> <span>订纸申请</span>
@@ -48,13 +48,13 @@
 		style="width: 100%; height: 100%; background-color: white; margin-top: 10px; padding: 10px; overflow: hidden; border-bottom: solid #cccccc 1px;">
 		<div>
 			<span style="float: left;">最新申请记录</span><span
-				style="color: grey; float: right; margin-right: 10px;"><a href="${pageContext.request.contextPath}/repair/">查看更多></a></span>
+				style="color: grey; float: right; margin-right: 10px;"><a href="${pageContext.request.contextPath}/repair/toMoreRecord.do?userNo=${user.userNo}">查看更多></a></span>
 		</div>
 	</div>
 	<c:forEach begin="0" end="1" items="${records}" var="record">
 		<c:if test="${ record.type==0 }">
 			<div
-				style="width: 100%; height: 100%; background-color: white; padding: 10px; overflow: hidden;">
+				style="width: 100%; height: 100%; background-color: white; padding: 10px; overflow: hidden;border-bottom: solid #ccc 1px;">
 				<div
 					style="float: left; width: 70px; padding: 6px 0px; border-right: solid #cccccc 1px;">
 					<img src="${pageContext.request.contextPath}/img/u87.png"

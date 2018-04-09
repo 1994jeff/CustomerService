@@ -35,7 +35,7 @@ CREATE TABLE `shop` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `remark` varchar(45) DEFAULT '',
   PRIMARY KEY (`id`,`pos_no`,`user_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,6 +44,7 @@ CREATE TABLE `shop` (
 
 LOCK TABLES `shop` WRITE;
 /*!40000 ALTER TABLE `shop` DISABLE KEYS */;
+INSERT INTO `shop` VALUES (1,'1','1','jeff','KFC','Tom','123','jiangxi','2018-04-08 22:09:57','2018-04-08 22:09:57','10086'),(2,'2','2','deng','KFC','Cat','1234','beijing','2018-04-08 22:09:57','2018-04-08 22:09:57','10086');
 /*!40000 ALTER TABLE `shop` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-07 19:50:32
+-- Dump completed on 2018-04-09 23:07:28

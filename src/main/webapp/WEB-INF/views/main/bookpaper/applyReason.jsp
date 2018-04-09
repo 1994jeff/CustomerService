@@ -39,5 +39,6 @@
 			</div>
 		</div>
 		<div style="text-align: center;margin-top: 20px;"><span style="display: block;color: rgba(102, 153, 204, 1);padding:10px 20px;border-radius: 30px;border: solid rgba(102, 153, 204, 1) 1px;width: 230px;margin:auto;">下一步</span></div>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.0.js"></script>
 	</body>
 </html>

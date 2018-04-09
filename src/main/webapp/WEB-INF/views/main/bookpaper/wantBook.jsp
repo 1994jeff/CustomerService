@@ -31,16 +31,18 @@
 			<div><span style="color: white;font-size: 22px;line-height: 80px;display:block;text-align:center;font-weight: bold;">我要订纸</span></div>
 		</div>
 		<div>
-			<div class="card">
-				<div style="float:left;">
-					<img src="${pageContext.request.contextPath}/img/u161.png" width="40px" style="padding: 20px;"/>
-				</div>
-				<div style="padding-bottom: 20px;padding-left: 80px;">
-						<br/><span style="color: cornflowerblue;font-size: 16px;line-height: 20px;">coco都可(成都店)</span><br />
-						<span>门店电话:021-8977867</span><span style="float: right;margin-right: 4px;color:gray;">我换店了>></span><br />
-						<span>门店地址:上海市浦东新区张扬路</span><br />
+			<c:if test="${shop!=null }">
+				<div class="card">
+					<div style="float:left;">
+						<img src="${pageContext.request.contextPath}/img/u161.png" width="40px" style="padding: 20px;"/>
 					</div>
-			</div>
+					<div style="padding-bottom: 20px;padding-left: 80px;">
+							<br/><span style="color: cornflowerblue;font-size: 16px;line-height: 20px;">${shop.name }</span><br />
+							<span>门店电话:${shop.remark}</span><span style="float: right;margin-right: 4px;color:gray;">我换店了>></span><br />
+							<span>门店地址:${shop.address}</span><br />
+						</div>
+				</div>
+			</c:if>
 		</div>
 		<div style="background-color: white;margin-top: 10px;overflow: hidden;">
 			<div class="pass">

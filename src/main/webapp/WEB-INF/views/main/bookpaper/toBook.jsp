@@ -15,7 +15,7 @@
 				<img src="${pageContext.request.contextPath}img/back.png" width="25px" height="25px" style="margin-top: 28px;margin-left: 6px;" />
 				<img src="${pageContext.request.contextPath}img/close.png" height="25px" style="margin-top: 28px;margin-left: 4px;" />
 			</div>
-			<div><span style="color: white;font-size: 22px;line-height: 80px;font-weight: bold;display: block;text-align: center;">去订纸¸</span></div>
+			<div><span style="color: white;font-size: 22px;line-height: 80px;font-weight: bold;display: block;text-align: center;">去订纸</span></div>
 		</div>
 		<div>
 			<div style="text-align: center;padding: 10px;">
@@ -50,5 +50,6 @@
 			</div>
 			<div style="text-align: center;margin-top: 20px;"><span style="display: block;color: rgba(102, 153, 204, 1);padding:10px 20px;border-radius: 30px;border: solid rgba(102, 153, 204, 1) 1px;width: 230px;margin:auto;">确定申请订纸</span></div>
 		</div>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.0.js"></script>
 	</body>
 </html>

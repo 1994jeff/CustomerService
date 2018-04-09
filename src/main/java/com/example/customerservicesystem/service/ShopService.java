@@ -1,11 +1,10 @@
-package com.example.customerservicesystem.dao;
+package com.example.customerservicesystem.service;
 
 import java.util.List;
 
 import com.example.customerservicesystem.bean.Shop;
 
-public interface ShopDao {
-
+public interface ShopService {
 	void insertShop(Shop shop);
 
 	List<Shop> getShopByCondition(Shop shop);
@@ -13,5 +12,4 @@ public interface ShopDao {
 	void updateShopByCondition(Shop shop);
 
 	void deleteShopByUserNo(Shop shop);
-
 }
