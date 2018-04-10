@@ -37,7 +37,7 @@
 					width="36px" style="margin-left: 13px;"><br /> <span>报修申请</span>
 			</div>
 		</a>
-		<a href="${pageContext.request.contextPath}/book/toWantBook.do?userNo=${user.userNo}">
+		<a href="${pageContext.request.contextPath}/book/toWantBook.do">
 			<div>
 				<img src="${pageContext.request.contextPath}/img/u86.png"
 					width="36px" style="margin-left: 13px;"><br /> <span>订纸申请</span>

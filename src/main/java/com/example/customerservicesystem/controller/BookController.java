@@ -1,5 +1,8 @@
 package com.example.customerservicesystem.controller;
 
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,6 +20,7 @@ import com.example.customerservicesystem.bean.User;
 import com.example.customerservicesystem.service.RecordService;
 import com.example.customerservicesystem.service.ShopService;
 import com.example.customerservicesystem.service.UserService;
+import com.example.customerservicesystem.untils.CalendarUtils;
 
 @Controller
 @RequestMapping("/book")
@@ -49,12 +53,45 @@ public class BookController extends BaseController {
 		return "main/bookpaper/bookPaper";
 	}
 	
+	@RequestMapping("/toBookNofication.do")
+	public String toBookNofication(HttpSession session,Model model,String num) {
+		User user = getSessionUser(session);
+		try {
+			if(user==null){
+				return "redirect:/login/toLogin.do";
+			}
+			ApplyRecord applyRecord = new ApplyRecord();
+			applyRecord.setType("1");
+			applyRecord.setApplyMobile(num);
+			applyRecord.setApplyName(user.getName());
+			applyRecord.setReason("common");
+			applyRecord.setUserNo(user.getUserNo());
+			applyRecord.setStatus("0");
+			recordService.insertRecord(applyRecord );
+			List<ApplyRecord> re = recordService.getRecordByCondition(applyRecord);
+			if(re!=null && re.size()>0){
+				model.addAttribute("record",re.get(0));
+			}
+		} catch (Exception e) {
+			model.addAttribute("errorMsg",e.getMessage());
+			return "error/404";
+		}
+		return "main/bookpaper/bookNofication";
+	}
+	
 	@RequestMapping("/toBook.do")
-	public String toBook(HttpSession session) {
+	public String toBook(HttpSession session,Model model) {
 		User user = getSessionUser(session);
 		if(user==null){
 			return "redirect:/login/toLogin.do";
 		}
+		Shop s = new Shop();
+		s.setUserNo(user.getUserNo());
+		List<Shop> shops = shopService.getShopByCondition(s);
+		if (shops != null && shops.size() > 0) {
+			model.addAttribute("shop", shops.get(0));
+		}
+		model.addAttribute("user", user);
 		return "main/bookpaper/toBook";
 	}
 	
@@ -72,9 +109,19 @@ public class BookController extends BaseController {
 		}
 		ApplyRecord applyRecord = new ApplyRecord();
 		applyRecord.setUserNo(user.getUserNo());
+		applyRecord.setType("1");
+		applyRecord.setStatus("1");
 		List<ApplyRecord> records = recordService.getRecordByCondition(applyRecord);
 		if (records != null && records.size() > 0) {
-			model.addAttribute("record", records.get(0));
+			ApplyRecord applyR = records.get(0);
+			//获取使用截止日期
+			Calendar calendar = CalendarUtils.getDayAfterDays(Integer.valueOf(applyR.getApplyMobile()), applyR.getCreateTime());
+			//计算截止日期与当前日期的时间差
+			int result = CalendarUtils.daysBetween(calendar, new Date());
+			if(result<0) {
+				model.addAttribute("days", -result);
+			}
+			model.addAttribute("record", applyR);
 		}
 		return "main/bookpaper/wantBook";
 	}

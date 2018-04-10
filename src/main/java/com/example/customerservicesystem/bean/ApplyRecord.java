@@ -17,7 +17,7 @@ public class ApplyRecord implements Serializable{
 	private String status;//0未处理,1已处理
 	private String userNo;
 	private String applyName;
-	private String applyMobile;
+	private String applyMobile;//订纸卷数或者处理状态
 	private Date createTime;
 	private Date updateTime;
 	private String remark;
