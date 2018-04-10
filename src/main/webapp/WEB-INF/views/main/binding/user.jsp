@@ -20,7 +20,7 @@
 	<body>
 		<div style="height: 80px;background-color:rgba(102, 153, 204, 1);">
 			<div style="float: left;position: fixed;">
-				<img src="${pageContext.request.contextPath}/img/back.png" width="25px" height="25px" style="margin-top: 28px;margin-left: 6px;" />
+				<img src="${pageContext.request.contextPath}/img/back.png" width="25px" height="25px" style="margin-top: 28px;margin-left: 6px;" onclick="backPage(-1)"/>
 				<img src="${pageContext.request.contextPath}/img/close.png" height="25px" style="margin-top: 28px;margin-left: 4px;" />
 			</div>
 			<div><span style="margin-left:10px;color: white;font-size: 22px;line-height: 80px;text-align: center;display: block;">用户绑定</span></div>
@@ -29,23 +29,42 @@
 			<div>
 				<div style="padding: 10px;overflow: hidden;border-bottom: solid #cccccc 1px;">
 					<span style="float: left;margin-left: 10px;"><img src="${pageContext.request.contextPath}/img/u135.png" width="40px"/></span>
-					<span style="float: right"><input class="inText" placeholder="请输入您门店POS机终端号"/></span>
+					<span style="float: right;width: 220px;margin-right: 30px;"><input class="inText" id="name" placeholder="请输入您的姓名"/></span>
 				</div>
 			</div>
 			<div>
 				<div style="padding:10px;overflow: hidden;border-bottom: solid #cccccc 1px;">
 					<span style="float: left;margin-left: 10px;"><img src="${pageContext.request.contextPath}/img/u144.png" width="40px"/></span>
-					<span style="float: right"><input class="inText" placeholder="请输入操作员号"/></span>
+					<span style="float: right;width: 220px;margin-right: 30px;"><input class="inText" id="remark"  placeholder="请输入您的联系电话"/></span>
 				</div>
 			</div>
 			<div>
 				<div style="padding:10px;overflow: hidden;border-bottom: solid #cccccc 1px;">
 					<span style="float: left;margin-left: 10px;"><img src="${pageContext.request.contextPath}/img/u145.png" width="40px"/></span>
-					<span style="float: right"><input class="inText" type="password" placeholder="请输入操作员密码"/></span>
+					<span style="float: right;width: 220px;margin-right: 30px;"><input class="inText" id="address"  type="text" placeholder="请输入您的收货地址"/></span>
 				</div>
 			</div>
 		</div>
-		<div style="text-align: center;margin-top: 20px;"><span style="display: block;color: cornflowerblue;padding:10px 20px;border-radius: 30px;border: solid cornflowerblue 1px;width: 230px;margin:auto;">下一步</span></div>
+		<div style="text-align: center;margin-top: 20px;"><span class="btn" style="display: block;color: cornflowerblue;padding:10px 20px;border-radius: 30px;border: solid cornflowerblue 1px;width: 230px;margin:auto;">下一步</span></div>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.0.js"></script>
+		<script type="text/javascript">
+			
+			$(function(){
+				$('.btn').on('click',function(){
+					var name = $('#name').val();
+					var remark = $('#remark').val();
+					var address = $('#address').val();
+					if(name==''||remark==''||address==''){
+						alert('您的信息不能为空!');
+						return;
+					}
+					window.location.href="${pageContext.request.contextPath}/userBinding/bindUser.do?name="+name+"&remark="+remark+"&address="+address;
+				});
+			});
+			
+			function backPage(num) {
+				history.go(num);
+			}
+		</script>
 	</body>
 </html>

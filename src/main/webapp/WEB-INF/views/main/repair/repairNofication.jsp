@@ -30,7 +30,7 @@
 			width="40px" style="float: left;" />
 		<div
 			style="float: left; margin-top: 8px; font-size: 20px; margin-left: 10px;">
-			<span style="color: white;">待电话回访</span>
+			<span style="color: white;"><c:if test="${record.status=='0'}">待电话回访</c:if><c:if test="${record.status=='1'}">已处理</c:if></span>
 		</div>
 	</div>
 	<c:if test="${record.status=='0'}">
@@ -50,8 +50,8 @@
 		<div style="background-color: white;">
 			<div class="times">
 				<ul>
-					<li><b></b><span>已电话回访</span>
-					<p>请务必保证联系电话准确通畅，我们的工程师会尽快与您取得联系</p></li>
+					<li><b></b><span><fmt:formatDate value="${record.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
+					<p>已处理</p></li>
 					<!--b标签不输入内容，span标签内输入时间不限制格式，p标签内输入介绍内容。注意，标签内不能使用div分割-->
 					<li><b></b><span><fmt:formatDate value="${record.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
 					<p>提交申请成功</p></li>

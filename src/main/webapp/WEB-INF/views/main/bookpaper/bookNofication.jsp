@@ -30,7 +30,7 @@
 			width="40px" style="float: left;" />
 		<div
 			style="float: left; margin-top: 8px; font-size: 20px; margin-left: 10px;">
-			<span style="color: white;">待处理</span>
+			<span style="color: white;"><c:if test="${record.status=='0'}">待处理</c:if><c:if test="${record.status=='1'}">已处理</c:if></span>
 		</div>
 	</div>
 	<c:if test="${record.status=='0'}">
@@ -38,7 +38,7 @@
 			<div class="times">
 				<ul>
 					<li><b></b><span>待处理</span>
-					<p>申请确认后，将为您发货</p></li>
+					<p>管理员确认申请后，将为您发货</p></li>
 					<!--b标签不输入内容，span标签内输入时间不限制格式，p标签内输入介绍内容。注意，标签内不能使用div分割-->
 					<li><b></b><span><fmt:formatDate value="${record.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
 					<p>提交申请成功</p></li>

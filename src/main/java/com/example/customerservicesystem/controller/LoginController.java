@@ -38,12 +38,17 @@ public class LoginController extends BaseController {
 	@RequestMapping("/toIndex.do")
 	public String toIndex(HttpSession session,Model model){
 		User user = getSessionUser(session);
-		log.debug("------------------------login jsp page------------------------");
+		//TODO 根据微信id查找是否已经绑定用户,未绑定则跳转
 		if(null==user || user.getUserNo().equals(""))
 		{
-			user = new User();
-			user.setUserNo("1");
+//			user = new User();
+//			user.setUserNo("1");
+			return "redirect:/userBinding/toBindUser.do";
 		}
+			//绑定用户查找是否绑定店铺,未绑定则跳转绑定店铺
+			//return "redirect:/userBinding/toBindUser.do";
+
+		//所有数据绑定了则进入首页
 		try {
 			List<User> u = userService.getUserByCondition(user);
 			log.debug("-----------------------u-----------------------"+u.toString());

@@ -92,7 +92,7 @@ public class BookController extends BaseController {
 	@RequestMapping("/toBook.do")
 	public String toBook(HttpSession session,Model model,String reason) {
 		User user = getSessionUser(session);
-		if(user==null){
+		if(user==null || user.getUserNo().equals("")){
 			return "redirect:/login/toLogin.do";
 		}
 		Shop s = new Shop();
@@ -100,6 +100,8 @@ public class BookController extends BaseController {
 		List<Shop> shops = shopService.getShopByCondition(s);
 		if (shops != null && shops.size() > 0) {
 			model.addAttribute("shop", shops.get(0));
+		}else{
+			return "redirect:/userBinding/toBindShop.do";
 		}
 		model.addAttribute("user", user);
 		model.addAttribute("reason", reason);
@@ -117,6 +119,8 @@ public class BookController extends BaseController {
 		List<Shop> shops = shopService.getShopByCondition(s);
 		if (shops != null && shops.size() > 0) {
 			model.addAttribute("shop", shops.get(0));
+		}else{
+			return "redirect:/userBinding/toBindShop.do";
 		}
 		ApplyRecord applyRecord = new ApplyRecord();
 		applyRecord.setUserNo(user.getUserNo());

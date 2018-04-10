@@ -57,6 +57,8 @@ public class RepairController extends BaseController {
 		List<Shop> shops = shopService.getShopByCondition(s);
 		if (shops != null && shops.size() > 0) {
 			model.addAttribute("shop", shops.get(0));
+		}else{
+			return "redirect:/userBinding/toBindShop.do";
 		}
 		model.addAttribute("user", user);
 		// ApplyRecord applyRecord = new ApplyRecord();

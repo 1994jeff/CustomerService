@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/base.css" />
 	<body>
-	loading...please wait~
+	loading...自动登录中,please wait~
 		<script type="text/javascript">
 		window.location.href="${pageContext.request.contextPath}/login/toIndex.do";
 		</script>
