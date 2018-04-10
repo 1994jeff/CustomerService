@@ -68,11 +68,11 @@
 					<span style="display: block;text-align:center;line-height: 30px;">根据预估您的卷纸还有剩余喔~</span><br />
 					<div>
 						<div style="width: 100%;text-align: left;">
-							<span style="display:block;text-align:center;width:100%;"><b style="text-align: center;background-color: #555555;padding-right: 6px;padding-left: 6px;color: white;font-weight: bold;border-radius: 10px;margin-right: 4px;">!</b>预估剩余15卷</span>
+							<span style="display:block;text-align:center;width:100%;"><b style="text-align: center;background-color: #555555;padding-right: 6px;padding-left: 6px;color: white;font-weight: bold;border-radius: 10px;margin-right: 4px;">!</b>预估剩余${days}卷</span>
 						</div>
 						<span style="display: block;text-align: center;">预估剩余使用期限:${days}天</span>
 					</div>
-					<a href="${pageContext.request.contextPath}/book/toBook.do"><span style="color:rgba(102, 153, 204, 1);display: block;border-radius: 30px;border: solid rgba(102,153,204,1) 1px;width: 220px;padding: 20px;text-align: center;margin:  0px auto;margin-top: 20px;">小E你错了，我是真没纸了</span></a>
+					<a href="${pageContext.request.contextPath}/book/toApplyReason.do"><span style="color:rgba(102, 153, 204, 1);display: block;border-radius: 30px;border: solid rgba(102,153,204,1) 1px;width: 220px;padding: 20px;text-align: center;margin:  0px auto;margin-top: 20px;">小E你错了，我是真没纸了</span></a>
 				</div>
 			</c:if>
 		</div>
