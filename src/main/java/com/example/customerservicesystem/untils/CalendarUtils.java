@@ -10,6 +10,13 @@ import java.util.Date;
  */
 public class CalendarUtils {
 
+	static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+	
+	public static String getFormatDay(Calendar calendar) {
+		Date date=calendar.getTime();
+		return simpleDateFormat.format(date);
+	}
+	
 	public static Calendar getDayAfterDays(int days, Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
@@ -58,8 +65,8 @@ public class CalendarUtils {
     }
     
 	public static void main(String[] args) throws ParseException {
-		getDayAfterDays(2, new Date());
 		System.out.println(daysBetween(new Date(2018,3,3), new Date(2018, 4, 2)));
+		System.out.println(getFormatDay(getDayAfterDays(2, new Date())));
 	}
 
 }

@@ -20,6 +20,7 @@ import com.example.customerservicesystem.bean.User;
 import com.example.customerservicesystem.service.RecordService;
 import com.example.customerservicesystem.service.ShopService;
 import com.example.customerservicesystem.service.UserService;
+import com.example.customerservicesystem.untils.CalendarUtils;
 
 import net.sf.json.JSONObject;
 
@@ -39,7 +40,7 @@ public class RepairController extends BaseController {
 	@RequestMapping("/toRepair.do")
 	public String toRepair(HttpSession session) {
 		User user = getSessionUser(session);
-		if(user==null){
+		if (user == null) {
 			return "redirect:/login/toLogin.do";
 		}
 		return "main/repair/repair";
@@ -48,7 +49,7 @@ public class RepairController extends BaseController {
 	@RequestMapping("/toSelfRepair.do")
 	public String toSelfRepair(HttpSession session, Model model) {
 		User user = getSessionUser(session);
-		if(user==null){
+		if (user == null) {
 			return "redirect:/login/toLogin.do";
 		}
 		Shop s = new Shop();
@@ -58,19 +59,19 @@ public class RepairController extends BaseController {
 			model.addAttribute("shop", shops.get(0));
 		}
 		model.addAttribute("user", user);
-//		ApplyRecord applyRecord = new ApplyRecord();
-//		applyRecord.setUserNo(user.getUserNo());
-//		List<ApplyRecord> records = recordService.getRecordByCondition(applyRecord);
-//		if (records != null && records.size() > 0) {
-//			model.addAttribute("record", records.get(0));
-//		}
+		// ApplyRecord applyRecord = new ApplyRecord();
+		// applyRecord.setUserNo(user.getUserNo());
+		// List<ApplyRecord> records = recordService.getRecordByCondition(applyRecord);
+		// if (records != null && records.size() > 0) {
+		// model.addAttribute("record", records.get(0));
+		// }
 		return "main/repair/selfrepair";
 	}
 
 	@RequestMapping("/toReason.do")
 	public String toReason(HttpSession session) {
 		User user = getSessionUser(session);
-		if(user==null){
+		if (user == null) {
 			return "redirect:/login/toLogin.do";
 		}
 		return "main/repair/reason";
@@ -79,7 +80,7 @@ public class RepairController extends BaseController {
 	@RequestMapping("/toRecord.do")
 	public String toRecord(HttpSession session, String userNo, Model model) {
 		User user = getSessionUser(session);
-		if(user==null){
+		if (user == null) {
 			return "redirect:/login/toLogin.do";
 		}
 		ApplyRecord applyRecord = new ApplyRecord();
@@ -93,33 +94,38 @@ public class RepairController extends BaseController {
 	@RequestMapping("/toRepairDetails.do")
 	public String toRepairDetails(HttpSession session) {
 		User user = getSessionUser(session);
-		if(user==null){
+		if (user == null) {
 			return "redirect:/login/toLogin.do";
 		}
 		return "main/repair/repairDetails";
 	}
 
 	@RequestMapping("/toRepairNofication.do")
-	public String toRepairNofication(HttpSession session,String name,Model model) {
+	public String toRepairNofication(HttpSession session, String name, Model model,String recordNo) {
 		User user = getSessionUser(session);
 		try {
-			if(user==null){
+			if (user == null) {
 				return "redirect:/login/toLogin.do";
 			}
 			ApplyRecord applyRecord = new ApplyRecord();
-			applyRecord.setType("0");
-			applyRecord.setApplyMobile(user.getRemark());
-			applyRecord.setApplyName(user.getName());
-			applyRecord.setReason(name);
-			applyRecord.setUserNo(user.getUserNo());
-			applyRecord.setStatus("0");
-			recordService.insertRecord(applyRecord );
+			//记录号为空则插入数据否则查询
+			if(recordNo==null || recordNo.equals("")) {
+				applyRecord.setType("0");
+				applyRecord.setApplyMobile(user.getRemark());
+				applyRecord.setApplyName(user.getName());
+				applyRecord.setReason(name);
+				applyRecord.setUserNo(user.getUserNo());
+				applyRecord.setStatus("0");
+				recordService.insertRecord(applyRecord);
+			}else {
+				applyRecord.setRecordNo(recordNo);
+			}
 			List<ApplyRecord> re = recordService.getRecordByCondition(applyRecord);
-			if(re!=null && re.size()>0){
-				model.addAttribute("record",re.get(0));
+			if (re != null && re.size() > 0) {
+				model.addAttribute("record", re.get(0));
 			}
 		} catch (Exception e) {
-			model.addAttribute("errorMsg",e.getMessage());
+			model.addAttribute("errorMsg", e.getMessage());
 			return "error/404";
 		}
 		return "main/repair/repairNofication";
@@ -128,7 +134,7 @@ public class RepairController extends BaseController {
 	@RequestMapping("/toMoreRecord.do")
 	public String toMoreRecord(HttpSession session, String userNo, Model model) {
 		User user = getSessionUser(session);
-		if(user==null){
+		if (user == null) {
 			return "redirect:/login/toLogin.do";
 		}
 		ApplyRecord applyRecord = new ApplyRecord();
@@ -137,5 +143,5 @@ public class RepairController extends BaseController {
 		model.addAttribute("records", records);
 		return "main/common/record";
 	}
-	
+
 }

@@ -16,11 +16,12 @@ public class ApplyRecord implements Serializable{
 	private String reason;
 	private String status;//0未处理,1已处理
 	private String userNo;
-	private String applyName;
-	private String applyMobile;//订纸卷数或者处理状态
+	private String applyName;//报修待定，订纸已签收，未签收
+	private String applyMobile;//报修处理状态，订纸卷数
 	private Date createTime;
 	private Date updateTime;
-	private String remark;
+	private String remark;//预计可使用至
+	
 	public int getId() {
 		return id;
 	}

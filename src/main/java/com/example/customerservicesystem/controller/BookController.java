@@ -53,20 +53,31 @@ public class BookController extends BaseController {
 	}
 	
 	@RequestMapping("/toBookNofication.do")
-	public String toBookNofication(HttpSession session,Model model,String num) {
+	public String toBookNofication(HttpSession session,Model model,String num,String reason,String recordNo) {
 		User user = getSessionUser(session);
 		try {
 			if(user==null){
 				return "redirect:/login/toLogin.do";
 			}
 			ApplyRecord applyRecord = new ApplyRecord();
-			applyRecord.setType("1");
-			applyRecord.setApplyMobile(num);
-			applyRecord.setApplyName(user.getName());
-			applyRecord.setReason("common");
-			applyRecord.setUserNo(user.getUserNo());
-			applyRecord.setStatus("0");
-			recordService.insertRecord(applyRecord );
+			if(recordNo==null || recordNo.equals("")) {
+				applyRecord.setType("1");
+				applyRecord.setApplyMobile(num);
+				applyRecord.setApplyName(user.getName());
+				if(reason==null || reason.equals(""))
+				{
+					applyRecord.setReason("卷纸正常使用完");
+				}else {
+					applyRecord.setReason(reason);
+				}
+				applyRecord.setRemark(CalendarUtils.getFormatDay(CalendarUtils.getDayAfterDays(Integer.valueOf(num),
+						new Date())));
+				applyRecord.setUserNo(user.getUserNo());
+				applyRecord.setStatus("0");
+				recordService.insertRecord(applyRecord );
+			}else {
+				applyRecord.setRecordNo(recordNo);
+			}
 			List<ApplyRecord> re = recordService.getRecordByCondition(applyRecord);
 			if(re!=null && re.size()>0){
 				model.addAttribute("record",re.get(0));
@@ -79,7 +90,7 @@ public class BookController extends BaseController {
 	}
 	
 	@RequestMapping("/toBook.do")
-	public String toBook(HttpSession session,Model model) {
+	public String toBook(HttpSession session,Model model,String reason) {
 		User user = getSessionUser(session);
 		if(user==null){
 			return "redirect:/login/toLogin.do";
@@ -91,6 +102,7 @@ public class BookController extends BaseController {
 			model.addAttribute("shop", shops.get(0));
 		}
 		model.addAttribute("user", user);
+		model.addAttribute("reason", reason);
 		return "main/bookpaper/toBook";
 	}
 	
