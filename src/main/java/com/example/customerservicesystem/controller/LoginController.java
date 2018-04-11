@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.customerservicesystem.bean.ApplyRecord;
 import com.example.customerservicesystem.bean.RetParam;
+import com.example.customerservicesystem.bean.Shop;
 import com.example.customerservicesystem.bean.User;
 import com.example.customerservicesystem.service.RecordService;
+import com.example.customerservicesystem.service.ShopService;
 import com.example.customerservicesystem.service.UserService;
 
 import net.sf.json.JSONObject;
@@ -34,6 +36,8 @@ public class LoginController extends BaseController {
 	UserService userService;
 	@Resource
 	RecordService recordService;
+	@Resource
+	ShopService shopService;
 	
 	@RequestMapping("/toIndex.do")
 	public String toIndex(HttpSession session,Model model){
@@ -41,13 +45,19 @@ public class LoginController extends BaseController {
 		//TODO 根据微信id查找是否已经绑定用户,未绑定则跳转
 		if(null==user || user.getUserNo().equals(""))
 		{
-//			user = new User();
-//			user.setUserNo("1");
-			return "redirect:/userBinding/toBindUser.do";
+			user = new User();
+			user.setUserNo("1");
+//			return "redirect:/userBinding/toBindUser.do";
 		}
-			//绑定用户查找是否绑定店铺,未绑定则跳转绑定店铺
-			//return "redirect:/userBinding/toBindUser.do";
-
+		
+		//绑定用户查找是否绑定店铺,未绑定则跳转绑定店铺
+		Shop shop = new Shop();
+		shop.setUserNo(user.getUserNo());
+		List<Shop> shops = shopService.getShopByCondition(shop );
+		if(shops==null || shops.size()<=0){
+			return "redirect:/userBinding/toBindShop.do";
+		}
+		
 		//所有数据绑定了则进入首页
 		try {
 			List<User> u = userService.getUserByCondition(user);

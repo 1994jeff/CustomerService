@@ -13,7 +13,7 @@
 		<div style="height: 80px;background-color:rgba(102, 153, 204, 1);">
 			<div style="float: left;position: fixed;z-index:100;">
 				<img src="${pageContext.request.contextPath}/img/back.png" width="25px" height="25px" style="margin-top: 28px;margin-left: 6px;" onclick="backPage(-1)"/>
-				<img src="${pageContext.request.contextPath}/img/close.png" height="25px" style="margin-top: 28px;margin-left: 4px;" />
+<%-- 				<img src="${pageContext.request.contextPath}/img/close.png" height="25px" style="margin-top: 28px;margin-left: 4px;" /> --%>
 			</div>
 			<div class="title"><span style="color: white;font-size: 22px;line-height: 80px;font-weight: bold;display: block;text-align: center;">订纸申请</span></div>
 		</div>

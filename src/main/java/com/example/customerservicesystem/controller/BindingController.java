@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.customerservicesystem.bean.Shop;
 import com.example.customerservicesystem.bean.User;
+import com.example.customerservicesystem.service.ShopService;
 import com.example.customerservicesystem.service.UserService;
 
 /**
@@ -28,6 +30,8 @@ public class BindingController extends BaseController {
 	
 	@Resource
 	UserService userService;
+	@Resource
+	ShopService shopService;
 	
 	@RequestMapping("/toBindUser.do")
 	public String toModifyPsd(HttpSession session,User user,Model model) {
@@ -57,4 +61,25 @@ public class BindingController extends BaseController {
 		return "main/binding/shop";
 	}
 	
+	@RequestMapping("/bindShop.do")
+	public String bindShop(HttpSession session,Shop shop,Model model) {
+		try {
+			User u = getSessionUser(session);
+			if(u==null || u.getUserNo().equals("")){
+				return "redirect:/userBinding/toBindUser.do";
+			}
+			shop.setUserNo(u.getUserNo());
+			shopService.insertShop(shop);
+			List<Shop> s = shopService.getShopByCondition(shop);
+			if(s!=null && s.size()>0){
+				session.setAttribute("shop", s.get(0));
+			}else{
+				return "redirect:/userBinding/toBindShop.do";
+			}
+		} catch (Exception e) {
+			model.addAttribute("errorMsg",e.getMessage());
+			return "error/404";
+		}
+		return "index";
+	}
 }

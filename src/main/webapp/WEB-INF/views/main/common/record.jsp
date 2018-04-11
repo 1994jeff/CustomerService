@@ -67,14 +67,14 @@
 		<div  style="height: 80px;background-color:rgba(102, 153, 204, 1);">
 			<div style="float: left;position: fixed;z-index:100;">
 				<img src="${pageContext.request.contextPath}/img/back.png" width="25px" height="25px" style="margin-top: 28px;margin-left: 6px;" onclick="backPage(-1)" />
-				<img src="${pageContext.request.contextPath}/img/close.png" height="25px" style="margin-top: 28px;margin-left: 4px;"  onclick="closeWindow()"/>
+<%-- 				<img src="${pageContext.request.contextPath}/img/close.png" height="25px" style="margin-top: 28px;margin-left: 4px;"  onclick="closeWindow()"/> --%>
 			</div>
 			<div class="title"><span style="color: white;font-size: 22px;line-height: 80px;text-align: center;display: block;font-weight: bold;">申请记录</span><span class="rightSpan">分类</span></div>
 		</div>
 		<div class="records" style="margin-top: 20px;background-color: white;">
 			<c:forEach items="${records}" var="record">
 		<c:if test="${ record.type==0 }">
-			<div class="repair ch" data="${record.recordNo }"  inType="${ record.type}" style="width: 100%; height: 100%; background-color: white; padding: 10px; overflow: hidden;border-bottom: solid #ccc 1px;">
+			<div class="repair ch" data="${record.recordNo }"  inType="${ record.type}" style="background-color: white; padding: 10px; overflow: hidden;border-bottom: solid #ccc 1px;">
 				<div
 					style="float: left; width: 70px; padding: 6px 0px; border-right: solid #cccccc 1px;">
 					<img src="${pageContext.request.contextPath}/img/u87.png"
@@ -95,7 +95,7 @@
 			</div>
 		</c:if>
 		<c:if test="${ record.type==1 }">
-			<div class="bookPaper ch" data="${record.recordNo }" inType="${ record.type}" style="width: 100%; height: 100%; background-color: white; padding: 10px; overflow: hidden; border-bottom: solid #cccccc 1px;">
+			<div class="bookPaper ch" data="${record.recordNo }" inType="${ record.type}" style="background-color: white; padding: 10px; overflow: hidden; border-bottom: solid #cccccc 1px;">
 				<div
 					style="float: left; width: 70px; padding: 6px 0px; border-right: solid #cccccc 1px;">
 					<img src="${pageContext.request.contextPath}/img/u86.png"
@@ -170,7 +170,8 @@
 		});
 		
 		function backPage(num) {
-			history.go(num);
+// 			history.go(num);
+			window.location.href="${pageContext.request.contextPath}/login/toIndex.do";
 		}
 	</script>
 	</body>

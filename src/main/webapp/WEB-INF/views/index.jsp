@@ -14,23 +14,19 @@
 	<div
 		style="width: 100%; height: 150px; background-color: rgba(102, 153, 204, 1);">
 		<div style="float: left;">
-			<img src="${pageContext.request.contextPath}/img/back.png"
-				width="25px" height="25px"
-				style="margin-top: 28px; margin-left: 6px;" /> <img
-				src="${pageContext.request.contextPath}/img/close.png" height="25px"
-				style="margin-top: 28px; margin-left: 4px;" />
+<%-- 			<img src="${pageContext.request.contextPath}/img/back.png" width="25px" height="25px" style="margin-top: 28px; margin-left: 6px;" /> --%>
+<%-- 			<img src="${pageContext.request.contextPath}/img/close.png" height="25px" style="margin-top: 28px; margin-left: 4px;" /> --%>
 		</div>
-		<div>
+		<div style="display: block;text-align: center;">
 			<span
-				style="color: white; font-size: 22px; line-height: 80px; margin-left: 80px;">易佰客服</span><img
-				src="${pageContext.request.contextPath}/img/u102.png" height="25px"
-				style="margin-top: 28px; float: right; margin-right: 10px;" />
+				style="color: white; font-size: 22px; line-height: 80px;">易佰客服</span>
+<%-- 				<img src="${pageContext.request.contextPath}/img/u102.png" height="25px" style="margin-top: 28px; float: right; margin-right: 10px;" /> --%>
 		</div>
 		<div></div>
 		<div style="padding: 10px; color: white; font-size: 1.4em;">欢迎登录!</div>
 	</div>
 	<div
-		style="width: 100%; padding: 20px; background-color: white; margin-top: 10px;">
+		style="padding: 20px; background-color: white; margin-top: 10px;">
 		<a href="${pageContext.request.contextPath}/repair/toRepair.do?userNo=${user.userNo}">
 			<div style="float: left; width: 100px;">
 				<img src="${pageContext.request.contextPath}/img/u87.png"
@@ -45,16 +41,17 @@
 		</a>
 	</div>
 	<div
-		style="width: 100%; height: 100%; background-color: white; margin-top: 10px; padding: 10px; overflow: hidden; border-bottom: solid #cccccc 1px;">
+		style="background-color: white; margin-top: 10px; padding: 10px; overflow: hidden; border-bottom: solid #cccccc 1px;">
 		<div>
 			<span style="float: left;">最新申请记录</span><span
 				style="color: grey; float: right; margin-right: 10px;"><a href="${pageContext.request.contextPath}/repair/toMoreRecord.do?userNo=${user.userNo}">查看更多></a></span>
 		</div>
 	</div>
+	<div  class="records">
 	<c:forEach begin="0" end="1" items="${records}" var="record">
 		<c:if test="${ record.type==0 }">
-			<div
-				style="width: 100%; height: 100%; background-color: white; padding: 10px; overflow: hidden;border-bottom: solid #ccc 1px;">
+			<div  class="repair ch" data="${record.recordNo }"  inType="${ record.type}" 
+				style="background-color: white; padding: 10px; overflow: hidden;border-bottom: solid #ccc 1px;">
 				<div
 					style="float: left; width: 70px; padding: 6px 0px; border-right: solid #cccccc 1px;">
 					<img src="${pageContext.request.contextPath}/img/u87.png"
@@ -75,8 +72,8 @@
 			</div>
 		</c:if>
 		<c:if test="${ record.type==1 }">
-			<div
-				style="width: 100%; height: 100%; background-color: white; padding: 10px; overflow: hidden; border-bottom: solid #cccccc 1px;">
+			<div class="bookPaper ch" data="${record.recordNo }" inType="${ record.type}" 
+				style="background-color: white; padding: 10px; overflow: hidden; border-bottom: solid #cccccc 1px;">
 				<div
 					style="float: left; width: 70px; padding: 6px 0px; border-right: solid #cccccc 1px;">
 					<img src="${pageContext.request.contextPath}/img/u86.png"
@@ -98,5 +95,28 @@
 			</div>
 		</c:if>
 	</c:forEach>
+	</div>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.0.js"></script>
+		<script type="text/javascript">
+		$(function(){
+			//点击跳转链接
+			$('.records').children('div.ch').each(function(i){
+				$(this).on('click',function(){
+					var recordNo = $(this).attr('data');
+					var type = $(this).attr('inType');
+					if(type==0){
+						//跳转报修
+						window.location.href="${pageContext.request.contextPath}/repair/toRepairNofication.do?recordNo="+recordNo;
+					}else if(type==1){
+						//跳转订纸
+						window.location.href="${pageContext.request.contextPath}/book/toBookNofication.do?recordNo="+recordNo;
+					}
+				});
+			});
+		});
+		function backPage(num) {
+			history.go(num);
+		}
+	</script>
 </body>
 </html>
