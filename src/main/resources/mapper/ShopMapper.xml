@@ -91,6 +91,6 @@
 			remark = #{remark},
 		</if>
 		update_time = now()
-		where pos_no = #{posNo}
+		where user_no = #{userNo}
 	</sql>
 </mapper>

@@ -69,9 +69,15 @@ public class BindingController extends BaseController {
 				return "redirect:/userBinding/toBindUser.do";
 			}
 			shop.setUserNo(u.getUserNo());
-			shopService.insertShop(shop);
+			//先查询是否有门店,有则调用修改的方法,没有则创建门店
 			List<Shop> s = shopService.getShopByCondition(shop);
 			if(s!=null && s.size()>0){
+				shopService.updateShopByCondition(shop);
+			}else{
+				shopService.insertShop(shop);
+			}
+			List<Shop> ss = shopService.getShopByCondition(shop);
+			if(ss!=null && ss.size()>0){
 				session.setAttribute("shop", s.get(0));
 			}else{
 				return "redirect:/userBinding/toBindShop.do";
