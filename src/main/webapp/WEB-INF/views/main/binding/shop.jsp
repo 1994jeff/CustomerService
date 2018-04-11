@@ -41,25 +41,25 @@
 			<div>
 				<div style="padding:10px;overflow: hidden;border-bottom: solid #cccccc 1px;">
 					<span style="float: left;margin-left: 10px;"><img src="${pageContext.request.contextPath}/img/u145.png" width="40px"/></span>
-					<span style="float: right;width: 220px;margin-right: 30px;"><input class="inText" type="password" placeholder="请注册门店品牌"/></span>
+					<span style="float: right;width: 220px;margin-right: 30px;"><input class="inText" type="text" placeholder="请注册门店品牌"/></span>
 				</div>
 			</div>
 			<div>
 				<div style="padding:10px;overflow: hidden;border-bottom: solid #cccccc 1px;">
 					<span style="float: left;margin-left: 10px;"><img src="${pageContext.request.contextPath}/img/u145.png" width="40px"/></span>
-					<span style="float: right;width: 220px;margin-right: 30px;"><input class="inText" type="password" placeholder="请注册门店名称"/></span>
+					<span style="float: right;width: 220px;margin-right: 30px;"><input class="inText" type="text" placeholder="请注册门店名称"/></span>
 				</div>
 			</div>
 			<div>
 				<div style="padding:10px;overflow: hidden;border-bottom: solid #cccccc 1px;">
 					<span style="float: left;margin-left: 10px;"><img src="${pageContext.request.contextPath}/img/u145.png" width="40px"/></span>
-					<span style="float: right;width: 220px;margin-right: 30px;"><input class="inText" type="password" placeholder="请注册门店电话"/></span>
+					<span style="float: right;width: 220px;margin-right: 30px;"><input class="inText" type="text" placeholder="请注册门店电话"/></span>
 				</div>
 			</div>
 			<div>
 				<div style="padding:10px;overflow: hidden;border-bottom: solid #cccccc 1px;">
 					<span style="float: left;margin-left: 10px;"><img src="${pageContext.request.contextPath}/img/u145.png" width="40px"/></span>
-					<span style="float: right;width: 220px;margin-right: 30px;"><input class="inText" type="password" placeholder="请注册门店地址"/></span>
+					<span style="float: right;width: 220px;margin-right: 30px;"><input class="inText" type="text" placeholder="请注册门店地址"/></span>
 				</div>
 			</div>
 			<div>
@@ -69,11 +69,14 @@
 				</div>
 			</div>
 		</div>
-		<div style="text-align: center;margin-top: 20px;"><span style="display: block;color: cornflowerblue;padding:10px 20px;border-radius: 30px;border: solid cornflowerblue 1px;width: 230px;margin:auto;">下一步</span></div>
+		<div style="text-align: center;margin-top: 20px;" onclick="registerShop()"><span style="display: block;color: cornflowerblue;padding:10px 20px;border-radius: 30px;border: solid cornflowerblue 1px;width: 230px;margin:auto;">下一步</span></div>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.0.js"></script>
 		<script type="text/javascript">
 		function backPage(num) {
 			history.go(num);
+		}
+		function registerShop() {
+			
 		}
 		</script>
 	</body>
