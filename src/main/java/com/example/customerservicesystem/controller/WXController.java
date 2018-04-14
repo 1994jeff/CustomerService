@@ -25,9 +25,10 @@ import com.example.customerservicesystem.untils.SHA1;
 public class WXController extends BaseController {
 
     private static String Token = "yibaikefu";  //这个是之前在微信上填写的Token数据，可以自定义  
+    String eEncodingAESKey = "bK7or2cZtNoJTm8GTss4TQHP8hMONjTIwBuaIHlUOWF";
     
 	// 与微信服务器传送过来的数据进行验证,成功后方才成为开发者,可调用接口
-	@RequestMapping("/checkDev")
+	@RequestMapping("/checkdev.do")
 	public void checkDev(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("get请求，正确");
 		System.out.println("获得微信请求!");
