@@ -8,7 +8,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,23 +28,22 @@ import com.example.customerservicesystem.untils.SHA1;
 @RequestMapping("/weixin")
 public class WXController extends BaseController {
 
+	Logger log = LoggerFactory.getLogger(WXController.class);
+	
     private static String Token = "yibaikefu";  //这个是之前在微信上填写的Token数据，可以自定义  
     String eEncodingAESKey = "bK7or2cZtNoJTm8GTss4TQHP8hMONjTIwBuaIHlUOWF";
+    private static String encode = "k5e77FFfiI2Si84lkSA7Z9uhet0TfLk7NXc62HfMi3c";  //这个是之前在微信上填写的Token数据，可以自定义  
     
 	// 与微信服务器传送过来的数据进行验证,成功后方才成为开发者,可调用接口
 	@RequestMapping("/checkdev.do")
-	public void checkDev(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("get请求，正确");
-		System.out.println("获得微信请求!");
-		String signature = request.getParameter("signature");
-		String timestamp = request.getParameter("timestamp");
-		String nonce = request.getParameter("nonce");
-		String echostr = request.getParameter("echostr");
-		System.out.println("signature=" + signature);
-		System.out.println("timestamp=" + timestamp);
-		System.out.println("nonce=" + nonce);
-		System.out.println("echostr=" + echostr);
-		System.out.println("Token=" + Token);
+	public void checkDev(String signature,String timestamp,String nonce,String echostr,HttpSession session,HttpServletResponse response) {
+		log.debug("get请求，正确");
+		log.debug("获得微信请求!");
+		log.debug("signature=" + signature);
+		log.debug("timestamp=" + timestamp);
+		log.debug("nonce=" + nonce);
+		log.debug("echostr=" + echostr);
+		log.debug("Token=" + Token);
 
 		List<String> params = new ArrayList<String>();
 		params.add(Token);
@@ -56,16 +59,16 @@ public class WXController extends BaseController {
 		// 2. 将三个参数字符串拼接成一个字符串进行sha1加密
 		String temp = SHA1.encode(params.get(0) + params.get(1) + params.get(2));
 		if (temp.equals(signature)) {
-			System.out.println("原:" + signature);
-			System.out.println("测试:" + temp);
-			System.out.println("匹配正确，传回微信了");
+			log.debug("原:" + signature);
+			log.debug("测试:" + temp);
+			log.debug("匹配正确，传回微信了");
 			try {
 				response.getWriter().write(echostr);
 			} catch (IOException e) {
 			}
-			System.out.println("传回微信成功");
+			log.debug("传回微信成功");
 		} else {
-			System.out.println("没有传回去数据，");
+			log.debug("没有传回去数据，");
 		}
 	}
 
