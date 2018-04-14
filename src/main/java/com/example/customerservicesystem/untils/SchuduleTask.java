@@ -25,7 +25,7 @@ public class SchuduleTask {
 	@Resource
 	UserService userService;
 	
-	@Scheduled(cron = "0 0 0/7 * * ? ")
+	@Scheduled(cron = "0 0 0/2 * * ? ")
 	public void runFunction(){
 		String date = fm.format(new Date());
 		String time = format.format(new Date());
@@ -37,6 +37,10 @@ public class SchuduleTask {
 			User user = new User();
 			userService.getUserByCondition(user );
 			log = time + " \n-----------------------------------> TaskOk \t\n ";
+			AccessTokenUtil.getToken(AccessTokenUtil.GET_TOKEN_URL, AccessTokenUtil.APP_ID, AccessTokenUtil.SECRET );
+			if(AccessTokenUtil.ACCESS_TOKEN.equals("")) {
+				AccessTokenUtil.getToken(AccessTokenUtil.GET_TOKEN_URL, AccessTokenUtil.APP_ID, AccessTokenUtil.SECRET );
+			}
 			System.out.println(log);
 		} catch (Exception e) {
 			log = time + " \n-----------------------------------> TaskError\n";

@@ -43,7 +43,7 @@
 					</div>
 					<div style="padding-bottom: 20px;padding-left: 80px;">
 						<br/><span style="color: cornflowerblue;font-size: 16px;line-height: 20px;">${shop.name }</span><br />
-						<span>门店电话:${shop.remark}</span><span style="float: right;margin-right: 4px;color:gray;"><a href="${pageContext.request.contextPath}/userBinding/bindShop.do">我换店了>></a></span><br />
+						<span>门店电话:${shop.remark}</span><span style="float: right;margin-right: 4px;color:gray;"><a href="${pageContext.request.contextPath}/userBinding/toBindShop.do">我换店了>></a></span><br />
 						<span>门店地址:${shop.address}</span><br />
 					</div>
 				</div>
