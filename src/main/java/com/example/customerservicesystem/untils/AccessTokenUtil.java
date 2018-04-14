@@ -15,6 +15,7 @@ public class AccessTokenUtil {
     public static final String GET_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token";
     public static final String APP_ID = "wx33b5b45b527827a4";
     public static final String SECRET = "440512ecedcaecb27885828360e5eff4";
+    public static String ACCESS_TOKEN = "";
     private static HttpClient client;
 
     // 获取token
@@ -44,6 +45,7 @@ public class AccessTokenUtil {
         } finally {
             // 关闭连接 ,释放资源
             client.getConnectionManager().shutdown();
+            ACCESS_TOKEN = result;
             return result;
         }
     }
