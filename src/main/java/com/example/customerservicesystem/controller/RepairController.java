@@ -38,10 +38,22 @@ public class RepairController extends BaseController {
 	ShopService shopService;
 
 	@RequestMapping("/toRepair.do")
-	public String toRepair(HttpSession session) {
+	public String toRepair(HttpSession session, String openId, Model model) {
 		User user = getSessionUser(session);
-		if (user == null) {
-			return "redirect:/login/toLogin.do";
+		try {
+			if (user == null) {
+				User u = new User();
+				u.setOpenId(openId);
+				List<User> us = userService.getUserByCondition(u);
+				if (us != null && us.size() > 0) {
+					user = us.get(0);
+				} else {
+					throw new Exception("账号信息不存在,请先绑定!");
+				}
+			}
+		} catch (Exception e) {
+			model.addAttribute("errorMsg", e.getMessage());
+			return "error/404";
 		}
 		return "main/repair/repair";
 	}
@@ -57,13 +69,14 @@ public class RepairController extends BaseController {
 		List<Shop> shops = shopService.getShopByCondition(s);
 		if (shops != null && shops.size() > 0) {
 			model.addAttribute("shop", shops.get(0));
-		}else{
+		} else {
 			return "redirect:/userBinding/toBindShop.do";
 		}
 		model.addAttribute("user", user);
 		// ApplyRecord applyRecord = new ApplyRecord();
 		// applyRecord.setUserNo(user.getUserNo());
-		// List<ApplyRecord> records = recordService.getRecordByCondition(applyRecord);
+		// List<ApplyRecord> records =
+		// recordService.getRecordByCondition(applyRecord);
 		// if (records != null && records.size() > 0) {
 		// model.addAttribute("record", records.get(0));
 		// }
@@ -103,15 +116,15 @@ public class RepairController extends BaseController {
 	}
 
 	@RequestMapping("/toRepairNofication.do")
-	public String toRepairNofication(HttpSession session, String name, Model model,String recordNo) {
+	public String toRepairNofication(HttpSession session, String name, Model model, String recordNo) {
 		User user = getSessionUser(session);
 		try {
 			if (user == null) {
 				return "redirect:/login/toLogin.do";
 			}
 			ApplyRecord applyRecord = new ApplyRecord();
-			//记录号为空则插入数据否则查询
-			if(recordNo==null || recordNo.equals("")) {
+			// 记录号为空则插入数据否则查询
+			if (recordNo == null || recordNo.equals("")) {
 				applyRecord.setType("0");
 				applyRecord.setApplyMobile(user.getRemark());
 				applyRecord.setApplyName(user.getName());
@@ -119,7 +132,7 @@ public class RepairController extends BaseController {
 				applyRecord.setUserNo(user.getUserNo());
 				applyRecord.setStatus("0");
 				recordService.insertRecord(applyRecord);
-			}else {
+			} else {
 				applyRecord.setRecordNo(recordNo);
 			}
 			List<ApplyRecord> re = recordService.getRecordByCondition(applyRecord);
@@ -134,15 +147,28 @@ public class RepairController extends BaseController {
 	}
 
 	@RequestMapping("/toMoreRecord.do")
-	public String toMoreRecord(HttpSession session, String userNo, Model model) {
+	public String toMoreRecord(HttpSession session, String userNo, Model model, String openId) {
 		User user = getSessionUser(session);
-		if (user == null) {
-			return "redirect:/login/toLogin.do";
+		try {
+			if (user == null) {
+				User u = new User();
+				u.setOpenId(openId);
+				List<User> us = userService.getUserByCondition(u);
+				if (us != null && us.size() > 0)
+				{
+					user = us.get(0);
+				}else {
+					throw new Exception("账号信息不存在,请先绑定!");
+				}
+			} 
+			ApplyRecord applyRecord = new ApplyRecord();
+			applyRecord.setUserNo(userNo);
+			List<ApplyRecord> records = recordService.getRecordByCondition(applyRecord);
+			model.addAttribute("records", records);
+		} catch (Exception e) {
+			model.addAttribute("errorMsg", e.getMessage());
+			return "error/404";
 		}
-		ApplyRecord applyRecord = new ApplyRecord();
-		applyRecord.setUserNo(userNo);
-		List<ApplyRecord> records = recordService.getRecordByCondition(applyRecord);
-		model.addAttribute("records", records);
 		return "main/common/record";
 	}
 
