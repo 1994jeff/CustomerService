@@ -70,6 +70,7 @@ public class WeixinUtil {
             while ((str = bufferedReader.readLine()) != null) {  
                 buffer.append(str);  
             }  
+            System.out.println("----------str-----------");
             bufferedReader.close();  
             inputStreamReader.close();  
             // 释放资源  
