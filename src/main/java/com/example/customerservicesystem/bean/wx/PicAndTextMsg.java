@@ -1,4 +1,4 @@
-package com.example.customerservicesystem.bean;
+package com.example.customerservicesystem.bean.wx;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.customerservicesystem.bean;
+package com.example.customerservicesystem.bean.wx;
 
 public class TextMsg {
     private String ToUserName;

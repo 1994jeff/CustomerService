@@ -17,8 +17,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import com.example.customerservicesystem.bean.TextMsg;
 import com.example.customerservicesystem.bean.User;
+import com.example.customerservicesystem.bean.wx.TextMsg;
 import com.example.customerservicesystem.service.UserService;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;

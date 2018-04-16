@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.customerservicesystem.bean.TextMsg;
 import com.example.customerservicesystem.bean.User;
+import com.example.customerservicesystem.bean.wx.TextMsg;
 import com.example.customerservicesystem.service.UserService;
 import com.example.customerservicesystem.untils.CoreService;
 import com.example.customerservicesystem.untils.FileUtils;

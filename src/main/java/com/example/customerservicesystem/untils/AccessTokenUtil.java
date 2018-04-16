@@ -34,10 +34,11 @@ public class AccessTokenUtil {
             JsonObject json = jsonparer.parse(responseContent).getAsJsonObject();
             // 将json字符串转换为json对象
             if (res.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                if (json.get("errcode") != null) {// 错误时微信会返回错误码等信息，{"errcode":40013,"errmsg":"invalid
-                                                    // appid"}
+                if (json.get("errcode") != null) {// 错误时微信会返回错误码等信息，{"errcode":40013,"errmsg":"invalid appid"}
+                	System.out.println(json);
                 } else {// 正常情况下{"access_token":"ACCESS_TOKEN","expires_in":7200}
                     result = json.get("access_token").getAsString();
+                	System.out.println(json);
                 }
             }
         } catch (Exception e) {
@@ -50,11 +51,14 @@ public class AccessTokenUtil {
         }
     }
 
-    public void printToken() throws Exception {
+    public static void printToken() throws Exception {
         System.out.println("=========1获取token=========");
         String accessToken = getToken(GET_TOKEN_URL, APP_ID, SECRET);// 获取token
         if (accessToken != null)
             System.out.println(accessToken);
     }
-
+    
+    public static void main(String[] args) throws Exception {
+    	printToken();
+	}
 }
