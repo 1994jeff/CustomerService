@@ -11,6 +11,7 @@ import com.example.customerservicesystem.bean.User;
 import com.example.customerservicesystem.dao.UserDao;
 import com.example.customerservicesystem.service.UserService;
 import com.example.customerservicesystem.untils.DomainNoUtils;
+import com.example.customerservicesystem.untils.FileUtils;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			return userDao.getUserByCondition(user);
 		} catch (Exception e) {
+			FileUtils.insertFile("hahatest", "getUserByCondition "+e.getMessage()+",e"+e.toString());
 			throw new Exception(e.getMessage());
 		}
 	}

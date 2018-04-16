@@ -34,7 +34,8 @@ public class BindingController extends BaseController {
 	ShopService shopService;
 	
 	@RequestMapping("/toBindUser.do")
-	public String toModifyPsd(HttpSession session,User user,Model model) {
+	public String toModifyPsd(HttpSession session,User user,Model model,String openId) {
+		model.addAttribute("openId", openId);
 		return "main/binding/user";
 	}
 	
@@ -65,7 +66,7 @@ public class BindingController extends BaseController {
 	public String bindShop(HttpSession session,Shop shop,Model model) {
 		try {
 			User u = getSessionUser(session);
-			if(u==null || u.getUserNo().equals("")){
+			if(u==null || u.getUserNo().equals("") || u.getOpenId().equals("")){
 				return "redirect:/userBinding/toBindUser.do";
 			}
 			shop.setUserNo(u.getUserNo());

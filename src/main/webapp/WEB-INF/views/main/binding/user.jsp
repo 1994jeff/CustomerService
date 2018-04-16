@@ -48,7 +48,7 @@
 		<div style="text-align: center;margin-top: 20px;"><span class="btn" style="display: block;color: cornflowerblue;padding:10px 20px;border-radius: 30px;border: solid cornflowerblue 1px;width: 230px;margin:auto;">下一步</span></div>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.0.js"></script>
 		<script type="text/javascript">
-			
+			var openId = ${opedId}
 			$(function(){
 				$('.btn').on('click',function(){
 					var name = $('#name').val();
@@ -58,7 +58,7 @@
 						alert('您的信息不能为空!');
 						return;
 					}
-					window.location.href="${pageContext.request.contextPath}/userBinding/bindUser.do?name="+name+"&remark="+remark+"&address="+address;
+					window.location.href="${pageContext.request.contextPath}/userBinding/bindUser.do?name="+name+"&remark="+remark+"&address="+address+"&openId="+openId;
 				});
 			});
 			

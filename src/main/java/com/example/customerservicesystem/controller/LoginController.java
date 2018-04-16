@@ -3,6 +3,7 @@ package com.example.customerservicesystem.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -40,15 +41,22 @@ public class LoginController extends BaseController {
 	ShopService shopService;
 	
 	@RequestMapping("/toIndex.do")
-	public String toIndex(HttpSession session,Model model){
+	public String toIndex(HttpSession session,Model model,HttpServletRequest req,String openId){
+		try {
 		User user = getSessionUser(session);
 		//TODO 根据微信id查找是否已经绑定用户,未绑定则跳转
-		if(null==user || user.getUserNo().equals(""))
-		{
-			user = new User();
-			user.setUserNo("1");
-//			return "redirect:/userBinding/toBindUser.do";
-		}
+		if (user == null) {
+			User u = new User();
+			u.setOpenId(openId);
+			List<User> us = userService.getUserByCondition(u);
+			if (us != null && us.size() > 0)
+			{
+				user = us.get(0);
+			}
+			else {
+				throw new Exception("账号信息不存在,请先绑定!");
+			}
+		} 
 		
 		//绑定用户查找是否绑定店铺,未绑定则跳转绑定店铺
 		Shop shop = new Shop();
@@ -59,9 +67,8 @@ public class LoginController extends BaseController {
 		}
 		
 		//所有数据绑定了则进入首页
-		try {
 			List<User> u = userService.getUserByCondition(user);
-			log.debug("-----------------------u-----------------------"+u.toString());
+			log.debug("-----------------------u-----------------------"+req.getMethod());
 			ApplyRecord applyRecord = new ApplyRecord();
 			applyRecord.setUserNo(u.get(0).getUserNo());
 			List<ApplyRecord> records = recordService.getRecordByCondition(applyRecord );

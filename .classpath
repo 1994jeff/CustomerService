@@ -29,5 +29,7 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="bin/xstream-1.4.4.jar"/>
+	<classpathentry kind="lib" path="bin/xmlpull_1_0_5.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
