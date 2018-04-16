@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.customerservicesystem.dao.KeyWordDao">
+	<resultMap type="com.example.customerservicesystem.bean.KeyWord"
+		id="keyWordMap">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="keyword_no" jdbcType="VARCHAR" property="keyWordNo" />
+		<result column="keyword" jdbcType="VARCHAR" property="keyWord" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+	</resultMap>
+	<insert id="insertKeyWord" parameterType="com.example.customerservicesystem.bean.KeyWord">
+		insert into
+		keyword(keyword_no,keyword,create_time,update_time,remark)
+		values(#{keyWordNo},#{keyWord},now(),now(),#{remark})
+	</insert>
+
+	<select id="getKeyWordByCondition" parameterType="com.example.customerservicesystem.bean.KeyWord"
+		resultMap="keyWordMap">
+		select * from keyword
+		<include refid="sqlWhere" />
+	</select>
+
+	<update id="updateKeyWordByCondition" parameterType="com.example.customerservicesystem.bean.KeyWord">
+		update keyword
+		<include refid="updateSet" />
+	</update>
+
+	<delete id="deleteKeyWordByKeyWordNo" parameterType="com.example.customerservicesystem.bean.KeyWord">
+		delete from
+		keyword
+		where keyword_no = #{keyWordNo}
+	</delete>
+
+	<sql id="sqlWhere">
+		where
+		1=1
+		<if test="keyWordNo != '' and keyWordNo != null ">
+			and keyword_no = #{keyWordNo}
+		</if>
+		<if test="keyWord !='' and keyWord != null ">
+			and keyword = #{keyWord}
+		</if>
+		<if test="remark !='' and remark !=null ">
+			and remark = #{remark}
+		</if>
+	</sql>
+
+	<sql id="updateSet">
+		set
+		<if test="keyWordNo != '' and keyWordNo != null ">
+			 keyword_no = #{keyWordNo},
+		</if>
+		<if test="keyWord !='' and keyWord != null ">
+			 keyword = #{keyWord},
+		</if>
+		<if test="remark !='' and remark !=null ">
+			 remark = #{remark},
+		</if>
+		update_time = now()
+		where keyword_no = #{keyWordNo}
+	</sql>
+</mapper>
