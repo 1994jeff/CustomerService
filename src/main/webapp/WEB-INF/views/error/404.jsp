@@ -25,8 +25,8 @@
 			</div>
 			<div><span style="margin-left:10px;color: white;font-size: 22px;line-height: 80px;text-align: center;display: block;">小E出错啦</span></div>
 		</div>
-		<div style="margin-top: 10px;background-color: white;overflow: hidden;padding: 10px;text-align: left;">
-			<span>出错了哟!${errorMsg},重试一下吧!</span>
+		<div style="margin-top: 10px;background-color: white;overflow: hidden;padding: 20px;text-align: left;">
+			<span>出错了哟!${errorMsg}</span>
 		</div>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.0.js"></script>
 	</body>

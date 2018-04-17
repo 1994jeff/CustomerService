@@ -37,7 +37,9 @@ import com.thoughtworks.xstream.XStream;
 
 /**
  * 微信接入流程 1.公众平台配置服务器接口token等数据 2.开发服务器get接口验证微信传送过来的数据,成为开发者
- * 3.获取微信access_token,注意提前设置IP白名单
+ * 
+ * 成为开发者之后，用户发生消息给服务号都会调用之前填写的接口，只不过是调用的post方法接口，通过微信传送的消息和数据
+ * 我们可以对用户进行回复消息
  */
 @Controller
 @RequestMapping("/weixin")
@@ -76,9 +78,6 @@ public class WXController extends BaseController {
 			// 2. 将三个参数字符串拼接成一个字符串进行sha1加密
 			String temp = SHA1.encode(params.get(0) + params.get(1) + params.get(2));
 			if (temp.equals(signature)) {
-				log.debug("原:" + signature);
-				log.debug("测试:" + temp);
-				log.debug("匹配正确，传回微信了");
 				PrintWriter out = response.getWriter();
 				out.print(echostr);
 				out.flush();
@@ -110,7 +109,6 @@ public class WXController extends BaseController {
 			String msgType = map.get("MsgType");
 			String content = map.get("Content");
 			
-			FileUtils.insertFile("hahatest", "\nmsgType:" + msgType+",fromUserName:" + fromUserName+",toUserName:" + toUserName+",content:"+content);
 			TextMsg textMsg = new TextMsg();
 			// 第一步：按照回复文本信息构造需要的参数
 			textMsg.setToUserName(fromUserName);//
@@ -121,9 +119,7 @@ public class WXController extends BaseController {
 			User query = new User();
 			query.setOpenId(fromUserName);
 			List<User> users = null;
-			FileUtils.insertFile("hahatest", "before getUser");
 			users = userService.getUserByCondition(query);
-			FileUtils.insertFile("hahatest", "after getUser users="+users!=null?users.size()+"":"null");
 			if (users != null && users.size() > 0) {
 				query = users.get(0);
 				session.setAttribute("user", query);
@@ -138,7 +134,6 @@ public class WXController extends BaseController {
 					StringBuffer contentMsg = new StringBuffer();
 					contentMsg.append("欢迎使用易佰客服管理系统哟,小E将竭诚为您服务").append("\n");
 					contentMsg.append("不过小E现在还不够智能,暂时不能理解您的输入哟,您可以输入订纸,报修,或者申请记录这些关键词哟").append("\n\n");
-					contentMsg.append("点击查看 <a href=\"http://www.baidu.com\">帮助手册</a>");
 					textMsg.setContent(contentMsg.toString());
 				}
 			} else {
@@ -147,7 +142,6 @@ public class WXController extends BaseController {
 			// // 第二步，将构造的信息转化为微信识别的xml格式【百度：xstream bean转xml】
 			textMsg2Xml = core.MsgToString(textMsg);
 			// // 第三步，发送xml的格式信息给微信服务器，服务器转发给用户
-			FileUtils.insertFile("hahatest", "in checkdev.do second");
 			out = response.getWriter();
 			out.print(textMsg2Xml);
 			out.flush();
