@@ -18,11 +18,11 @@ public class CreateMenu {
 
 	public static void main(String[] args) {
 		try {
-			//String token = AccessTokenUtil.getToken(AccessTokenUtil.GET_TOKEN_URL, AccessTokenUtil.APP_ID, AccessTokenUtil.SECRET);
+			String token = AccessTokenUtil.getToken(AccessTokenUtil.GET_TOKEN_URL, AccessTokenUtil.APP_ID, AccessTokenUtil.SECRET);
 			String menu = JSONObject.fromObject(initMenu()).toString();
 			System.out.println(menu.toString());
-			int result = createMenu("8_77GmH1XpO_3lMjl8uRM0M9AXVoXWEEoTva_xAra6x8mhptKdysdblwWkm3LIiPTauYbjGyB-Znn4t7gznbvXcgWnzH0Ig_Mr3C66NjNBFia648xOQ0sDAqQgHvIVGRgAEADOZ", menu);
-			//int result = createMenu(token, menu);
+			//int result = createMenu("8_77GmH1XpO_3lMjl8uRM0M9AXVoXWEEoTva_xAra6x8mhptKdysdblwWkm3LIiPTauYbjGyB-Znn4t7gznbvXcgWnzH0Ig_Mr3C66NjNBFia648xOQ0sDAqQgHvIVGRgAEADOZ", menu);
+			int result = createMenu(token, menu);
 			if(result==0){
 				System.out.println("菜单创建成功！"+result);
 			}else {
