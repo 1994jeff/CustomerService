@@ -14,7 +14,7 @@ import net.sf.json.JSONObject;
 public class CreateMenu {
 
 	public static String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
-	public static String BASE_URL = "http://139.199.182.22/customerservicesystem/";
+	public static String BASE_URL = "http://jeff.geekare.com/";
 
 	public static void main(String[] args) {
 		try {

@@ -1,13 +1,10 @@
 package com.example.customerservicesystem.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,10 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -31,9 +24,7 @@ import com.example.customerservicesystem.bean.User;
 import com.example.customerservicesystem.bean.wx.TextMsg;
 import com.example.customerservicesystem.service.UserService;
 import com.example.customerservicesystem.untils.CoreService;
-import com.example.customerservicesystem.untils.FileUtils;
 import com.example.customerservicesystem.untils.SHA1;
-import com.thoughtworks.xstream.XStream;
 
 /**
  * 微信接入流程 1.公众平台配置服务器接口token等数据 2.开发服务器get接口验证微信传送过来的数据,成为开发者
@@ -45,9 +36,10 @@ import com.thoughtworks.xstream.XStream;
 @RequestMapping("/weixin")
 public class WXController extends BaseController {
 
-	public static final String BASE_ADDRESS = "http://jeff.geekare.com/";
+	
 	Logger log = LoggerFactory.getLogger(WXController.class);
 
+	public static final String BASE_ADDRESS = "http://jeff.geekare.com";
 	private static String Token = "yibaikefu"; // 这个是之前在微信上填写的Token数据，可以自定义
 	private static String encode = "k5e77FFfiI2Si84lkSA7Z9uhet0TfLk7NXc62HfMi3c"; // 这个是之前在微信上填写的Token数据，可以自定义
 
