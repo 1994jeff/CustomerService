@@ -52,9 +52,16 @@ public class BindingController extends BaseController {
 			List<User> u = userService.getUserByCondition(user);
 			if(u!=null && u.size()>0){
 				session.setAttribute("user", user);
+				Shop shop = new Shop();
+				shop.setUserNo(user.getUserNo());
+				List<Shop> shops= shopService.getShopByCondition(shop );
+				if(shops!=null && shops.size()>0) {
+					return "redirect:/login/toIndex.do";
+				}
 			}else{
 				return "redirect:/userBinding/toBindUser.do";
 			}
+			
 		} catch (Exception e) {
 			model.addAttribute("errorMsg",e.getMessage());
 			return "error/404";
