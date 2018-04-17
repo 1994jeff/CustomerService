@@ -43,6 +43,7 @@ import com.thoughtworks.xstream.XStream;
 @RequestMapping("/weixin")
 public class WXController extends BaseController {
 
+	public static final String BASE_ADDRESS = "http://jeff.geekare.com/";
 	Logger log = LoggerFactory.getLogger(WXController.class);
 
 	private static String Token = "yibaikefu"; // 这个是之前在微信上填写的Token数据，可以自定义
@@ -96,7 +97,6 @@ public class WXController extends BaseController {
 		PrintWriter out = null;
 		String textMsg2Xml = "";
 		try {
-			FileUtils.insertFile("hahatest", "------------------------------------------------in checkdev.do-------------------------------------------------");
 			request.setCharacterEncoding("utf-8");
 			response.setCharacterEncoding("utf-8");
 			// 调用核心业务类接收消息、处理消息
@@ -128,11 +128,11 @@ public class WXController extends BaseController {
 				query = users.get(0);
 				session.setAttribute("user", query);
 				if (content.contains("订纸")) {
-					textMsg.setContent("您是要去订纸吗?请点击<a href=\"http://139.199.182.22/customerservicesystem/book/toWantBook.do?openId="+query.getOpenId()+"\">进入订纸页面</a>");
+					textMsg.setContent("您是要去订纸吗?请点击<a href=\""+BASE_ADDRESS+"book/toWantBook.do?openId="+query.getOpenId()+"\">进入订纸页面</a>");
 				} else if (content.contains("报修")) {
-					textMsg.setContent("您是要报修机器吗?请点击<a href=\"http://139.199.182.22/customerservicesystem/repair/toRepair.do?openId="+query.getOpenId()+"\">进入报修页面</a>");
+					textMsg.setContent("您是要报修机器吗?请点击<a href=\""+BASE_ADDRESS+"repair/toRepair.do?openId="+query.getOpenId()+"\">进入报修页面</a>");
 				} else if (content.contains("申请记录")) {
-					textMsg.setContent("您是要查看申请记录吗?请点击<a href=\"http://139.199.182.22/customerservicesystem/repair/toMoreRecord.do?openId="+query.getOpenId()+"\">进入申请记录页面</a>");
+					textMsg.setContent("您是要查看申请记录吗?请点击<a href=\""+BASE_ADDRESS+"repair/toMoreRecord.do?openId="+query.getOpenId()+"\">进入申请记录页面</a>");
 				} else {
 					// 由于href属性值必须用双引号引起，这与字符串本身的双引号冲突，所以要转义
 					StringBuffer contentMsg = new StringBuffer();
@@ -142,7 +142,7 @@ public class WXController extends BaseController {
 					textMsg.setContent(contentMsg.toString());
 				}
 			} else {
-				textMsg.setContent("小E提示:您尚未绑定用户信息,请点击<a href=\"http://139.199.182.22/customerservicesystem/userBinding/toBindUser.do?openId="+fromUserName+"\">进入绑定</a>");
+				textMsg.setContent("小E提示:您尚未绑定用户信息,请点击<a href=\""+BASE_ADDRESS+"userBinding/toBindUser.do?openId="+fromUserName+"\">进入绑定</a>");
 			}
 			// // 第二步，将构造的信息转化为微信识别的xml格式【百度：xstream bean转xml】
 			textMsg2Xml = core.MsgToString(textMsg);
