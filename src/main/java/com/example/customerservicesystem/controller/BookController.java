@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.customerservicesystem.bean.ApplyRecord;
 import com.example.customerservicesystem.bean.Shop;
 import com.example.customerservicesystem.bean.User;
+import com.example.customerservicesystem.bean.wx.AccessTokenBean;
 import com.example.customerservicesystem.service.RecordService;
 import com.example.customerservicesystem.service.ShopService;
 import com.example.customerservicesystem.service.UserService;
+import com.example.customerservicesystem.untils.AccessTokenUtil;
 import com.example.customerservicesystem.untils.CalendarUtils;
 
 @Controller
@@ -108,17 +110,27 @@ public class BookController extends BaseController {
 	}
 
 	@RequestMapping("/toWantBook.do")
-	public String toWantBook(HttpSession session, Model model, String openId) {
+	public String toWantBook(HttpSession session, Model model, String openId,String code) {
 		try {
 			User user = getSessionUser(session);
 			if (user == null) {
-				User us = userService.getUserByOpenId(openId);
-				if(us!=null)
-				{
-					user = us;
-					session.setAttribute("user", user);
-				}else{
-					throw new Exception("账号信息不存在,请先绑定!");
+				if(openId==null || "".endsWith(openId)) {
+					AccessTokenBean bean = AccessTokenUtil.getAccessToken(code);
+					User ue = userService.getUserByOpenId(bean.getOpenid());
+					if(ue!=null) {
+						session.setAttribute("user", ue);
+					}else {
+						return "redirect:/userBinding/toBindUser.do";
+					}
+				}else {
+					User us = userService.getUserByOpenId(openId);
+					if(us!=null)
+					{
+						user = us;
+						session.setAttribute("user", user);
+					}else{
+						throw new Exception("账号信息不存在,请先绑定!");
+					}
 				}
 			}
 			Shop s = new Shop();

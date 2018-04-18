@@ -17,9 +17,11 @@ import com.example.customerservicesystem.bean.ApplyRecord;
 import com.example.customerservicesystem.bean.RetParam;
 import com.example.customerservicesystem.bean.Shop;
 import com.example.customerservicesystem.bean.User;
+import com.example.customerservicesystem.bean.wx.AccessTokenBean;
 import com.example.customerservicesystem.service.RecordService;
 import com.example.customerservicesystem.service.ShopService;
 import com.example.customerservicesystem.service.UserService;
+import com.example.customerservicesystem.untils.AccessTokenUtil;
 import com.example.customerservicesystem.untils.CalendarUtils;
 
 import net.sf.json.JSONObject;
@@ -38,17 +40,27 @@ public class RepairController extends BaseController {
 	ShopService shopService;
 
 	@RequestMapping("/toRepair.do")
-	public String toRepair(HttpSession session, String openId, Model model) {
+	public String toRepair(HttpSession session, String openId, Model model,String code) {
 		User user = getSessionUser(session);
 		try {
 			if (user == null) {
-				User us = userService.getUserByOpenId(openId);
-				if(us!=null)
-				{
-					user = us;
-					session.setAttribute("user", user);
-				}else{
-					throw new Exception("账号信息不存在,请先绑定!");
+				if(openId==null || "".endsWith(openId)) {
+					AccessTokenBean bean = AccessTokenUtil.getAccessToken(code);
+					User ue = userService.getUserByOpenId(bean.getOpenid());
+					if(ue!=null) {
+						session.setAttribute("user", ue);
+					}else {
+						return "redirect:/userBinding/toBindUser.do";
+					}
+				}else {
+					User us = userService.getUserByOpenId(openId);
+					if(us!=null)
+					{
+						user = us;
+						session.setAttribute("user", user);
+					}else{
+						throw new Exception("账号信息不存在,请先绑定!");
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -147,17 +159,27 @@ public class RepairController extends BaseController {
 	}
 
 	@RequestMapping("/toMoreRecord.do")
-	public String toMoreRecord(HttpSession session, String userNo, Model model, String openId) {
+	public String toMoreRecord(HttpSession session, String userNo, Model model, String openId,String code) {
 		User user = getSessionUser(session);
 		try {
 			if (user == null) {
-				User us = userService.getUserByOpenId(openId);
-				if(us!=null)
-				{
-					user = us;
-					session.setAttribute("user", user);
-				}else{
-					throw new Exception("账号信息不存在,请先绑定!");
+				if(openId==null || "".endsWith(openId)) {
+					AccessTokenBean bean = AccessTokenUtil.getAccessToken(code);
+					User ue = userService.getUserByOpenId(bean.getOpenid());
+					if(ue!=null) {
+						session.setAttribute("user", ue);
+					}else {
+						return "redirect:/userBinding/toBindUser.do";
+					}
+				}else {
+					User us = userService.getUserByOpenId(openId);
+					if(us!=null)
+					{
+						user = us;
+						session.setAttribute("user", user);
+					}else{
+						throw new Exception("账号信息不存在,请先绑定!");
+					}
 				}
 			} 
 			ApplyRecord applyRecord = new ApplyRecord();

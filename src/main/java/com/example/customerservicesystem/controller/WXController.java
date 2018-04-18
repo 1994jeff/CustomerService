@@ -24,6 +24,7 @@ import com.example.customerservicesystem.bean.User;
 import com.example.customerservicesystem.bean.wx.TextMsg;
 import com.example.customerservicesystem.service.UserService;
 import com.example.customerservicesystem.untils.CoreService;
+import com.example.customerservicesystem.untils.FileUtils;
 import com.example.customerservicesystem.untils.SHA1;
 
 /**
@@ -39,7 +40,7 @@ public class WXController extends BaseController {
 	
 	Logger log = LoggerFactory.getLogger(WXController.class);
 
-	public static final String BASE_ADDRESS = "http://www.wq321.xyz/";
+	public static final String BASE_ADDRESS = "http://www.wq321.xyz/customerservicesystem/";
 	private static String Token = "yibaikefu"; // 这个是之前在微信上填写的Token数据，可以自定义
 	private static String encode = "k5e77FFfiI2Si84lkSA7Z9uhet0TfLk7NXc62HfMi3c"; // 这个是之前在微信上填写的Token数据，可以自定义
 
@@ -99,8 +100,13 @@ public class WXController extends BaseController {
 			String toUserName = map.get("ToUserName");
 			// 消息类型
 			String msgType = map.get("MsgType");
+			//内容
 			String content = map.get("Content");
-			
+			//事件类型
+			String Event = map.get("Event");
+			//按键key
+			String EventKey = map.get("EventKey");
+			FileUtils.insertFile("weixin.txt", "Event="+Event+",EventKey="+EventKey+",openId="+fromUserName+",MsgType="+msgType+",toUserName="+toUserName+",content"+content);
 			TextMsg textMsg = new TextMsg();
 			// 第一步：按照回复文本信息构造需要的参数
 			textMsg.setToUserName(fromUserName);//
@@ -129,7 +135,7 @@ public class WXController extends BaseController {
 					textMsg.setContent(contentMsg.toString());
 				}
 			} else {
-				textMsg.setContent("小E提示:您尚未绑定用户信息,请点击<a href=\""+BASE_ADDRESS+"userBinding/toBindUser.do?openId="+fromUserName+"\">进入绑定</a>");
+				textMsg.setContent("小E提示:您尚未绑定用户信息,请点击‘用户中心->绑定个人信息’");
 			}
 			// // 第二步，将构造的信息转化为微信识别的xml格式【百度：xstream bean转xml】
 			textMsg2Xml = core.MsgToString(textMsg);

@@ -14,11 +14,12 @@ import net.sf.json.JSONObject;
 public class CreateMenu {
 
 	public static String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
-	public static final String BASE_URL = "http://www.wq321.xyz/";
+	public static final String BASE_URL = "http://www.wq321.xyz/customerservicesystem/";
 	
 	//微信通过菜单获取openId
+	//https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect
 	public static final String PRE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+AccessTokenUtil.APP_ID+"&redirect_uri=";
-	public static final String AFTER_URL = "?action=viewtest&response_type=code&scope=snsapi_base&state=1#wechat_redirect";
+	public static final String AFTER_URL = "&response_type=code&scope=snsapi_base&state=1#wechat_redirect";
 	
 
 	public static void main(String[] args) {
@@ -85,11 +86,11 @@ public class CreateMenu {
 		ViewButton user = new ViewButton();
 		user.setName("绑定个人信息");
 		user.setType("view");
-		user.setUrl(PRE_URL+BASE_URL + "userBinding/toBindUser.do");
+		user.setUrl(PRE_URL+BASE_URL + "userBinding/toBindUser.do"+AFTER_URL);
 		ViewButton shop = new ViewButton();
 		shop.setName("更换绑定门店");
 		shop.setType("view");
-		shop.setUrl(PRE_URL+BASE_URL + "userBinding/toBindShop.do");
+		shop.setUrl(PRE_URL+BASE_URL + "userBinding/toBindShop.do"+AFTER_URL);
 
 		eService.setSub_button(new Button[] { index, book, repair });
 		userService.setSub_button(new Button[] { record, user, shop });

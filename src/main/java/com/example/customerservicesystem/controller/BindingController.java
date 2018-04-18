@@ -1,6 +1,5 @@
 package com.example.customerservicesystem.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.customerservicesystem.bean.Shop;
 import com.example.customerservicesystem.bean.User;
+import com.example.customerservicesystem.bean.wx.AccessTokenBean;
 import com.example.customerservicesystem.service.ShopService;
 import com.example.customerservicesystem.service.UserService;
+import com.example.customerservicesystem.untils.AccessTokenUtil;
 
 /**
  * 用户数据绑定控制器 
@@ -34,30 +35,27 @@ public class BindingController extends BaseController {
 	ShopService shopService;
 	
 	@RequestMapping("/toBindUser.do")
-	public String toModifyPsd(HttpSession session,String openId,Model model) {
-		if("".equals(openId)) {
-			model.addAttribute("errorMsg","获取您的openId失败，请尝试退出重新进入绑定");
+	public String toModifyPsd(HttpSession session,String code,Model model) {
+		if("".equals(code)) {
+			model.addAttribute("errorMsg","获取您的code失败，请尝试退出重新进入");
 			return "error/404";
 		}
-		model.addAttribute("openId", openId);
+		AccessTokenBean bean = AccessTokenUtil.getAccessToken(code);
+		model.addAttribute("openId", bean.getOpenid());
 		return "main/binding/user";
 	}
 	
 	@RequestMapping("/toBindShop.do")
-	public String toBindShop(HttpSession session,Model model,String openId) {
+	public String toBindShop(HttpSession session,Model model,String code) {
 		User u = getSessionUser(session);
 		try {
 			if(u==null){
-				if("".equals(openId))
-				{
+				AccessTokenBean bean = AccessTokenUtil.getAccessToken(code);
+				User user = userService.getUserByOpenId(bean.getOpenid());
+				if(user!=null) {
+					session.setAttribute("user", user);
+				}else {
 					return "redirect:/userBinding/toBindUser.do";
-				}
-				else {
-					User us = userService.getUserByOpenId(openId);
-					if(us==null) {
-						return "redirect:/userBinding/toBindUser.do?openId="+openId;
-					}
-					session.setAttribute("user", us);
 				}
 			}else {
 				if(u.getOpenId().equals(""))
@@ -95,20 +93,16 @@ public class BindingController extends BaseController {
 	}
 	
 	@RequestMapping("/bindShop.do")
-	public String bindShop(HttpSession session,Shop shop,Model model,String openId) {
+	public String bindShop(HttpSession session,Shop shop,Model model,String code) {
 		try {
 			User u = getSessionUser(session);
 			if(u==null){
-				if("".equals(openId))
-				{
+				AccessTokenBean bean = AccessTokenUtil.getAccessToken(code);
+				User user = userService.getUserByOpenId(bean.getOpenid());
+				if(user!=null) {
+					session.setAttribute("user", user);
+				}else {
 					return "redirect:/userBinding/toBindUser.do";
-				}
-				else {
-					User us = userService.getUserByOpenId(openId);
-					if(us==null) {
-						return "redirect:/userBinding/toBindUser.do?openId="+openId;
-					}
-					session.setAttribute("user", us);
 				}
 			}else {
 				if(u.getOpenId().equals(""))
