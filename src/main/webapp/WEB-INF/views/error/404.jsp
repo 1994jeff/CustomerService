@@ -23,7 +23,7 @@
 				<img src="${pageContext.request.contextPath}/img/back.png" width="25px" height="25px" style="margin-top: 28px;margin-left: 6px;" />
 				<img src="${pageContext.request.contextPath}/img/close.png" height="25px" style="margin-top: 28px;margin-left: 4px;" />
 			</div>
-			<div><span style="margin-left:10px;color: white;font-size: 22px;line-height: 80px;text-align: center;display: block;">小E出错啦</span></div>
+			<div><span style="margin-left:10px;color: white;font-size: 22px;line-height: 80px;text-align: center;display: block;">小E提示</span></div>
 		</div>
 		<div style="margin-top: 10px;background-color: white;overflow: hidden;padding: 20px;text-align: left;">
 			<span>出错了哟!${errorMsg}</span>
