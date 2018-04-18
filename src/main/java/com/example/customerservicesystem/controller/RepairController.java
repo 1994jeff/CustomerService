@@ -42,12 +42,12 @@ public class RepairController extends BaseController {
 		User user = getSessionUser(session);
 		try {
 			if (user == null) {
-				User u = new User();
-				u.setOpenId(openId);
-				List<User> us = userService.getUserByCondition(u);
-				if (us != null && us.size() > 0) {
-					user = us.get(0);
-				} else {
+				User us = userService.getUserByOpenId(openId);
+				if(us!=null)
+				{
+					user = us;
+					session.setAttribute("user", user);
+				}else{
 					throw new Exception("账号信息不存在,请先绑定!");
 				}
 			}
@@ -151,13 +151,12 @@ public class RepairController extends BaseController {
 		User user = getSessionUser(session);
 		try {
 			if (user == null) {
-				User u = new User();
-				u.setOpenId(openId);
-				List<User> us = userService.getUserByCondition(u);
-				if (us != null && us.size() > 0)
+				User us = userService.getUserByOpenId(openId);
+				if(us!=null)
 				{
-					user = us.get(0);
-				}else {
+					user = us;
+					session.setAttribute("user", user);
+				}else{
 					throw new Exception("账号信息不存在,请先绑定!");
 				}
 			} 

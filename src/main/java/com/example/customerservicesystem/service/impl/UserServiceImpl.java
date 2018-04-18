@@ -40,10 +40,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void insertUser(User auser) throws Exception {
 		try {
+			if("".equals(auser.getOpenId())) {
+				throw new Exception("openId不能为空");
+			}
 			User s = new User();
 			s.setName(auser.getName());
 			if(userDao.getUserByCondition(s).size()>0){
 				throw new Exception("添加失败! 用户名【"+auser.getName()+"】已存在！");
+			}
+			User ss = new User();
+			ss.setName(auser.getOpenId());
+			if(userDao.getUserByCondition(s).size()>0){
+				throw new Exception("添加失败!openId【"+auser.getOpenId()+"】已存在！");
 			}
 			String userNo = DomainNoUtils.getNoByPreStr(DomainNoUtils.USER_NO);
 			auser.setUserNo(userNo);
@@ -66,6 +74,14 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
+	}
+
+	@Override
+	public User getUserByOpenId(String openId) throws Exception {
+		if("".equals(openId)) {
+			throw new Exception("openID不能为空！");
+		}
+		return userDao.getUserByOpenId(openId);
 	}
 
 }

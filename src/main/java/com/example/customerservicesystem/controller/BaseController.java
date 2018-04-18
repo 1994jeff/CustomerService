@@ -14,5 +14,4 @@ public class BaseController {
 		return (User) session.getAttribute("user");
 	}
 	
-	
 }

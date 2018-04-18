@@ -34,23 +34,48 @@ public class BindingController extends BaseController {
 	ShopService shopService;
 	
 	@RequestMapping("/toBindUser.do")
-	public String toModifyPsd(HttpSession session,User user,Model model,String openId) {
+	public String toModifyPsd(HttpSession session,String openId,Model model) {
+		if("".equals(openId)) {
+			model.addAttribute("errorMsg","获取您的openId失败，请尝试退出重新进入绑定");
+			return "error/404";
+		}
 		model.addAttribute("openId", openId);
 		return "main/binding/user";
 	}
 	
 	@RequestMapping("/toBindShop.do")
-	public String toBindShop(HttpSession session,User user,Model model) {
+	public String toBindShop(HttpSession session,Model model,String openId) {
+		User u = getSessionUser(session);
+		try {
+			if(u==null){
+				if("".equals(openId))
+				{
+					return "redirect:/userBinding/toBindUser.do";
+				}
+				else {
+					User us = userService.getUserByOpenId(openId);
+					if(us==null) {
+						return "redirect:/userBinding/toBindUser.do?openId="+openId;
+					}
+					session.setAttribute("user", us);
+				}
+			}else {
+				if(u.getOpenId().equals(""))
+					return "redirect:/userBinding/toBindUser.do";
+			}
+		} catch (Exception e) {
+			model.addAttribute("errorMsg",e.getMessage());
+			return "error/404";
+		}
 		return "main/binding/shop";
 	}
 	
 	@RequestMapping("/bindUser.do")
 	public String bindUser(HttpSession session,User user,Model model) {
 		try {
-			user.setOpenId(new Date().getTime()+"");
 			userService.insertUser(user);
-			List<User> u = userService.getUserByCondition(user);
-			if(u!=null && u.size()>0){
+			User u = userService.getUserByOpenId(user.getOpenId());
+			if(u!=null){
 				session.setAttribute("user", user);
 				Shop shop = new Shop();
 				shop.setUserNo(user.getUserNo());
@@ -59,7 +84,7 @@ public class BindingController extends BaseController {
 					return "redirect:/login/toIndex.do";
 				}
 			}else{
-				return "redirect:/userBinding/toBindUser.do";
+				throw new Exception("获取您的openId失败，请尝试退出重新进入绑定");
 			}
 			
 		} catch (Exception e) {
@@ -70,11 +95,24 @@ public class BindingController extends BaseController {
 	}
 	
 	@RequestMapping("/bindShop.do")
-	public String bindShop(HttpSession session,Shop shop,Model model) {
+	public String bindShop(HttpSession session,Shop shop,Model model,String openId) {
 		try {
 			User u = getSessionUser(session);
-			if(u==null || u.getUserNo().equals("") || u.getOpenId().equals("")){
-				return "redirect:/userBinding/toBindUser.do";
+			if(u==null){
+				if("".equals(openId))
+				{
+					return "redirect:/userBinding/toBindUser.do";
+				}
+				else {
+					User us = userService.getUserByOpenId(openId);
+					if(us==null) {
+						return "redirect:/userBinding/toBindUser.do?openId="+openId;
+					}
+					session.setAttribute("user", us);
+				}
+			}else {
+				if(u.getOpenId().equals(""))
+					return "redirect:/userBinding/toBindUser.do";
 			}
 			shop.setUserNo(u.getUserNo());
 			//先查询是否有门店,有则调用修改的方法,没有则创建门店
@@ -86,7 +124,7 @@ public class BindingController extends BaseController {
 			}
 			List<Shop> ss = shopService.getShopByCondition(shop);
 			if(ss!=null && ss.size()>0){
-				session.setAttribute("shop", s.get(0));
+				session.setAttribute("shop", ss.get(0));
 			}else{
 				return "redirect:/userBinding/toBindShop.do";
 			}

@@ -15,4 +15,6 @@ public interface UserService {
 
 	public void deleteUserByUserNo(String userNo)throws Exception;
 
+	public User getUserByOpenId(String openId) throws Exception;
+
 }

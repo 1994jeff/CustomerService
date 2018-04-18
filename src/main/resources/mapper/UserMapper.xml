@@ -21,6 +21,11 @@
 		<include refid="sqlWhere"/>
 	</select>
 	
+	<select id="getUserByOpenId" parameterType="com.example.customerservicesystem.bean.User" resultMap="userMap">
+		select * from user
+		where open_id = #{openId}
+	</select>
+	
 	<update id="updateUserByCondition" parameterType="com.example.customerservicesystem.bean.User">
 		update user
 		<include refid="updateSet"/>

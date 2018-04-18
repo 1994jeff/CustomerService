@@ -15,4 +15,6 @@ public interface UserDao {
 
 	void deleteUserByUserNo(String userNo);
 
+	User getUserByOpenId(String openId);
+
 }

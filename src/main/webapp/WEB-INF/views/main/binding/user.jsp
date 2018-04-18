@@ -29,7 +29,7 @@
 			<div>
 				<div style="padding: 10px;overflow: hidden;border-bottom: solid #cccccc 1px;">
 					<span style="float: left;margin-left: 10px;"><img src="${pageContext.request.contextPath}/img/u135.png" width="40px"/></span>
-					<span style="float: right;width: 220px;margin-right: 30px;"><input class="inText" id="name" placeholder="请输入您的姓名"/></span>
+					<span style="float: right;width: 220px;margin-right: 30px;"><input data="${openId}" class="inText" id="name" placeholder="请输入您的姓名"/></span>
 				</div>
 			</div>
 			<div>
@@ -48,12 +48,16 @@
 		<div style="text-align: center;margin-top: 20px;"><span class="btn" style="display: block;color: cornflowerblue;padding:10px 20px;border-radius: 30px;border: solid cornflowerblue 1px;width: 230px;margin:auto;">下一步</span></div>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.0.js"></script>
 		<script type="text/javascript">
-			var openId = ${opedId}
 			$(function(){
 				$('.btn').on('click',function(){
+					var openId = $('#name').attr('data');
 					var name = $('#name').val();
 					var remark = $('#remark').val();
 					var address = $('#address').val();
+					if(openId=="" ){
+						alert("获取您的openId失败，请尝试退出重新进入绑定");
+						return;
+					}
 					if(name==''||remark==''||address==''){
 						alert('您的信息不能为空!');
 						return;

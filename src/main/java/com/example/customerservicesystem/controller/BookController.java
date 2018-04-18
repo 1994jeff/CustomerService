@@ -112,12 +112,11 @@ public class BookController extends BaseController {
 		try {
 			User user = getSessionUser(session);
 			if (user == null) {
-				User u = new User();
-				u.setOpenId(openId);
-				List<User> us = userService.getUserByCondition(u);
-				if(us!=null && us.size()>0)
+				User us = userService.getUserByOpenId(openId);
+				if(us!=null)
 				{
-					user = us.get(0);
+					user = us;
+					session.setAttribute("user", user);
 				}else{
 					throw new Exception("账号信息不存在,请先绑定!");
 				}

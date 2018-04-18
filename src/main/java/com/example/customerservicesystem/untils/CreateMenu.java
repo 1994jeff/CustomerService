@@ -14,14 +14,14 @@ import net.sf.json.JSONObject;
 public class CreateMenu {
 
 	public static String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
-	public static final String BASE_URL = "http://jeff.geekare.com/";
+	public static final String BASE_URL = "http://www.wq321.xyz/";
 
 	public static void main(String[] args) {
 		try {
 			String token = AccessTokenUtil.getToken(AccessTokenUtil.GET_TOKEN_URL, AccessTokenUtil.APP_ID, AccessTokenUtil.SECRET);
 			String menu = JSONObject.fromObject(initMenu()).toString();
 			System.out.println(menu.toString());
-			//int result = createMenu("8_77GmH1XpO_3lMjl8uRM0M9AXVoXWEEoTva_xAra6x8mhptKdysdblwWkm3LIiPTauYbjGyB-Znn4t7gznbvXcgWnzH0Ig_Mr3C66NjNBFia648xOQ0sDAqQgHvIVGRgAEADOZ", menu);
+//			int result = createMenu("8_D_uyWve6ptavnOOmQsFneCVvDoDcmOeKdHrA-2s4sXVNFaUQ0WxYyz9V9ywhTOAfbHsbCg4Pk7OGmW5lVZFNOr6ikuTxvg1OQQgNeuv_WMRWVVx40Jwn9B5twYHxPkHaSeXsnzG9aXuftwDCOXBgAEAWFJ", menu);
 			int result = createMenu(token, menu);
 			if(result==0){
 				System.out.println("菜单创建成功！"+result);
