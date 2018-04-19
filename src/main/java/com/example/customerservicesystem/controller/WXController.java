@@ -106,7 +106,7 @@ public class WXController extends BaseController {
 			String Event = map.get("Event");
 			//按键key
 			String EventKey = map.get("EventKey");
-			FileUtils.insertFile("weixin.txt", "Event="+Event+",EventKey="+EventKey+",openId="+fromUserName+",MsgType="+msgType+",toUserName="+toUserName+",content"+content);
+			FileUtils.insertFile("weixin", "Event="+Event+",EventKey="+EventKey+",openId="+fromUserName+",MsgType="+msgType+",toUserName="+toUserName+",content"+content);
 			TextMsg textMsg = new TextMsg();
 			// 第一步：按照回复文本信息构造需要的参数
 			textMsg.setToUserName(fromUserName);//
@@ -135,7 +135,7 @@ public class WXController extends BaseController {
 					textMsg.setContent(contentMsg.toString());
 				}
 			} else {
-				textMsg.setContent("小E提示:您尚未绑定用户信息,请点击‘用户中心->绑定个人信息’");
+				textMsg.setContent("小E提示:您尚未绑定用户信息,请点击<a href=\""+BASE_ADDRESS+"userBinding/toBindUser.do?openId="+query.getOpenId()+"\">绑定</a>个人信息’");
 			}
 			// // 第二步，将构造的信息转化为微信识别的xml格式【百度：xstream bean转xml】
 			textMsg2Xml = core.MsgToString(textMsg);

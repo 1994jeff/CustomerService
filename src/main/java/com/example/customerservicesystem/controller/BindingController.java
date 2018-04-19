@@ -35,13 +35,17 @@ public class BindingController extends BaseController {
 	ShopService shopService;
 	
 	@RequestMapping("/toBindUser.do")
-	public String toModifyPsd(HttpSession session,String code,Model model) {
-		if("".equals(code)) {
-			model.addAttribute("errorMsg","获取您的code失败，请尝试退出重新进入");
-			return "error/404";
+	public String toModifyPsd(HttpSession session,String code,Model model,String openId) {
+		if("".equals(openId)||null==openId){
+			if("".equals(code)) {
+				model.addAttribute("errorMsg","获取您的code失败，请尝试退出重新进入");
+				return "error/404";
+			}
+			AccessTokenBean bean = AccessTokenUtil.getAccessToken(code);
+			model.addAttribute("openId", bean.getOpenid());
+		}else{
+			model.addAttribute("openId", openId);
 		}
-		AccessTokenBean bean = AccessTokenUtil.getAccessToken(code);
-		model.addAttribute("openId", bean.getOpenid());
 		return "main/binding/user";
 	}
 	
