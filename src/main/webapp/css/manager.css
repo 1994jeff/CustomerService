@@ -1,0 +1,22 @@
+.table-cla {
+	margin-left: 130px;
+}
+
+.table-cla tr {
+	text-align: center;
+}
+
+.tr-cla {
+	
+}
+
+.tr-cla td {
+	padding: 10px 20px;
+	color: white;
+	border: solid white 1px;
+}
+
+input {
+	padding: 10px;
+	border-radius: 6px;
+}

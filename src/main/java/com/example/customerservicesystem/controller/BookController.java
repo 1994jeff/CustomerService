@@ -1,5 +1,7 @@
 package com.example.customerservicesystem.controller;
-
+/**
+ * 订纸接口
+ */
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -67,7 +69,7 @@ public class BookController extends BaseController {
 				applyRecord.setApplyMobile(num);
 				applyRecord.setApplyName(user.getName());
 				if (reason == null || reason.equals("")) {
-					applyRecord.setReason("卷纸正常使用完");
+					applyRecord.setReason("common");
 				} else {
 					applyRecord.setReason(reason);
 				}

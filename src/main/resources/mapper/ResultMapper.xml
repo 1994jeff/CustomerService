@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.customerservicesystem.dao.ResultDao">
+	<resultMap type="com.example.customerservicesystem.bean.Result"
+		id="resultMap">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="result_no" jdbcType="VARCHAR" property="resultNo" />
+		<result column="record_no" jdbcType="VARCHAR" property="recordNo" />
+		<result column="reason" jdbcType="VARCHAR" property="reason" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="reply_msg" jdbcType="VARCHAR" property="replyMsg" />
+		<result column="goods" jdbcType="VARCHAR" property="goods" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="resolve_time" jdbcType="TIMESTAMP" property="resolveTime" />
+	</resultMap>
+	<insert id="insertResult" parameterType="com.example.customerservicesystem.bean.Result">
+		insert into
+		result(result_no,record_no,reason,type,reply_msg,goods,remark,create_time,resolve_time)
+		values(#{resultNo},#{recordNo},#{reason},#{type},#{replyMsg},#{goods},#{remark},now(),#{resolveTime})
+	</insert>
+
+	<select id="getResultByCondition" parameterType="com.example.customerservicesystem.bean.Result"
+		resultMap="resultMap">
+		select * from result
+	</select>
+	
+	<select id="getResultByResultNo" parameterType="com.example.customerservicesystem.bean.Result"
+		resultMap="resultMap">
+		select * from result
+		where result_no = #{resultNo}
+	</select>
+	
+	<update id="updateResultByCondition" parameterType="com.example.customerservicesystem.bean.Result">
+		update result
+	</update>
+
+	<delete id="deleteResultByResultNo" parameterType="com.example.customerservicesystem.bean.Result">
+		delete from
+		result
+		where result_no = #{resultNo}
+	</delete>
+
+</mapper>

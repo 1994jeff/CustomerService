@@ -40,7 +40,8 @@ public class WXController extends BaseController {
 	
 	Logger log = LoggerFactory.getLogger(WXController.class);
 
-	public static final String BASE_ADDRESS = "http://www.wq321.xyz/customerservicesystem/";
+//	public static final String BASE_ADDRESS = "http://www.wq321.xyz/customerservicesystem/";
+	public static final String BASE_ADDRESS = "http://139.199.182.22/customerservicesystem/";
 	private static String Token = "yibaikefu"; // 这个是之前在微信上填写的Token数据，可以自定义
 	private static String encode = "k5e77FFfiI2Si84lkSA7Z9uhet0TfLk7NXc62HfMi3c"; // 这个是之前在微信上填写的Token数据，可以自定义
 

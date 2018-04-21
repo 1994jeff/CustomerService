@@ -12,9 +12,23 @@ public class KeyWord implements Serializable{
 	private int id;
 	private String keyWordNo;
 	private String keyWord;
+	private String reply;
+	private String status;
 	private Date createTime;
 	private Date updateTime;
 	private String remark;
+	public String getReply() {
+		return reply;
+	}
+	public void setReply(String reply) {
+		this.reply = reply;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public int getId() {
 		return id;
 	}
