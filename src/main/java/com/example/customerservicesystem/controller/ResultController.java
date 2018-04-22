@@ -1,5 +1,6 @@
 package com.example.customerservicesystem.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,10 +14,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.customerservicesystem.bean.ApplyRecord;
 import com.example.customerservicesystem.bean.Result;
 import com.example.customerservicesystem.bean.RetParam;
+import com.example.customerservicesystem.bean.User;
 import com.example.customerservicesystem.bean.dto.ShopDto;
 import com.example.customerservicesystem.service.KeyWordService;
 import com.example.customerservicesystem.service.RecordService;
 import com.example.customerservicesystem.service.ResultService;
+import com.example.customerservicesystem.service.UserService;
+import com.example.customerservicesystem.untils.CreateMenu;
+import com.thoughtworks.xstream.io.json.JsonWriter.Format;
 
 import net.sf.json.JSONObject;
 
@@ -30,6 +35,10 @@ public class ResultController extends BaseController{
 	ResultService resultService;
 	@Resource
 	KeyWordService keyWordService;
+	@Resource
+	UserService userService;
+	
+	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 	
 	@RequestMapping("/toCloseRecord.do")
 	public String toCloseRecord(HttpSession session,Model model,String recordNo,String replyMsg){
@@ -47,7 +56,29 @@ public class ResultController extends BaseController{
 		dto.setType("1");
 		List<ShopDto> dtos = keyWordService.getShopDtoByCondition(dto);
 		model.addAttribute("dtos", dtos);
+		
+		List<ApplyRecord> list = recordService.getRecordByCondition(applyRecord);
+		ApplyRecord ap = list.get(0);
+		sendMsgToUser(ap, "订纸");
+		
 		return "main/manager/book";
+	}
+
+	//主动发送消息给指定微信用户,但是必须是在用户与服务号有交互的48小时之内,而且发送次数有限制
+	private void sendMsgToUser(ApplyRecord ap, String str) {
+		User user = new User();
+		user.setUserNo(ap.getUserNo());
+		try {
+			List<User> us = userService.getUserByCondition(user);
+			User ur = us.get(0);
+			StringBuilder sb = new StringBuilder();
+			sb.append("申请状态更新通知").append("\n\n");
+			sb.append("亲爱的").append(ur.getName()).append("您好,您的").append(str).append("申请已受理!").append("\n");
+			sb.append("请及时前往查看哦").append("\n");
+			sb.append("申请时间:").append(format.format(ap.getCreateTime()));
+			CreateMenu.sendMsgToUser(sb.toString(), ur.getOpenId());
+		} catch (Exception e) {
+		}
 	}
 	
 	@RequestMapping("/toCloseExceptionRecord.do")
@@ -65,6 +96,10 @@ public class ResultController extends BaseController{
 		dto.setType("1");
 		List<ShopDto> dtos = keyWordService.getShopDtoByCondition(dto);
 		model.addAttribute("dtos", dtos);
+		
+		List<ApplyRecord> list = recordService.getRecordByCondition(applyRecord);
+		ApplyRecord ap = list.get(0);
+		sendMsgToUser(ap, "订纸");
 		return "main/manager/exception";
 	}
 	
@@ -88,6 +123,10 @@ public class ResultController extends BaseController{
 		dto.setType("1");
 		List<ShopDto> dtos = keyWordService.getShopDtoByCondition(dto);
 		model.addAttribute("dtos", dtos);
+		
+		List<ApplyRecord> list = recordService.getRecordByCondition(applyRecord);
+		ApplyRecord ap = list.get(0);
+		sendMsgToUser(ap, "订纸");
 		return "main/manager/exception";
 	}
 	
@@ -112,6 +151,11 @@ public class ResultController extends BaseController{
 		dto.setType("1");
 		List<ShopDto> dtos = keyWordService.getShopDtoByCondition(dto);
 		model.addAttribute("dtos", dtos);
+		
+		List<ApplyRecord> list = recordService.getRecordByCondition(applyRecord);
+		ApplyRecord ap = list.get(0);
+		sendMsgToUser(ap, "订纸");
+		
 		return "main/manager/book";
 	}
 	
@@ -151,6 +195,10 @@ public class ResultController extends BaseController{
 		dto.setType("0");
 		List<ShopDto> dtos = keyWordService.getShopDtoByCondition(dto);
 		model.addAttribute("dtos", dtos);
+		
+		List<ApplyRecord> list = recordService.getRecordByCondition(applyRecord);
+		ApplyRecord ap = list.get(0);
+		sendMsgToUser(ap, "报修");
 		return "main/manager/repair";
 	}
 	
@@ -168,6 +216,11 @@ public class ResultController extends BaseController{
 		dto.setType("0");
 		List<ShopDto> dtos = keyWordService.getShopDtoByCondition(dto);
 		model.addAttribute("dtos", dtos);
+		
+		List<ApplyRecord> list = recordService.getRecordByCondition(applyRecord);
+		ApplyRecord ap = list.get(0);
+		sendMsgToUser(ap, "报修");
+		
 		return "main/manager/repair";
 	}
 }

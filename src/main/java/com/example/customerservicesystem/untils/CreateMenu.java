@@ -7,7 +7,10 @@ import org.apache.http.client.ClientProtocolException;
 import com.example.customerservicesystem.bean.wx.Button;
 import com.example.customerservicesystem.bean.wx.ClickButton;
 import com.example.customerservicesystem.bean.wx.Menu;
+import com.example.customerservicesystem.bean.wx.SendBean;
+import com.example.customerservicesystem.bean.wx.Text;
 import com.example.customerservicesystem.bean.wx.ViewButton;
+import com.google.gson.JsonObject;
 
 import net.sf.json.JSONObject;
 
@@ -23,9 +26,20 @@ public class CreateMenu {
 	
 
 	public static void main(String[] args) {
+		//menu();
 		try {
-			String token = AccessTokenUtil.getToken(AccessTokenUtil.GET_TOKEN_URL, AccessTokenUtil.APP_ID,
-					AccessTokenUtil.SECRET);
+			sendMsgToUser("hahaha", "oPFDk1QFYUzriWOEtqVgdSQVtp3A");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void menu() {
+		try {
+			String token = AccessTokenUtil.ACCESS_TOKEN;
+			if("".equals(token)){
+				token = AccessTokenUtil.getToken(AccessTokenUtil.GET_TOKEN_URL, AccessTokenUtil.APP_ID, AccessTokenUtil.SECRET );
+			}
 			String menu = JSONObject.fromObject(initMenu()).toString();
 			System.out.println(menu.toString());
 			// int result =
@@ -48,7 +62,30 @@ public class CreateMenu {
 		int result = 0;
 		String url = CREATE_MENU_URL.replace("ACCESS_TOKEN", token);
 		JSONObject jsonObject = WeixinUtil.httpRequest(url, "POST", menu);
-		System.out.println(jsonObject == null ? "null" : "not null");
+		System.out.println(jsonObject);
+		if (jsonObject != null) {
+			result = jsonObject.getInt("errcode");
+		}
+		return result;
+	}
+	
+	 //通过此接口向微信用户发送消息 POST方式
+    private static String SEND_MSG = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN";
+	public static int sendMsgToUser(String text,String openId) throws ClientProtocolException, IOException {
+		String token = AccessTokenUtil.ACCESS_TOKEN;
+		if("".equals(token)){
+			token = AccessTokenUtil.getToken(AccessTokenUtil.GET_TOKEN_URL, AccessTokenUtil.APP_ID, AccessTokenUtil.SECRET );
+		}
+		int result = 0;
+		String url = SEND_MSG.replace("ACCESS_TOKEN", token);
+		SendBean send = new SendBean();
+		Text t = new Text(text);
+		send.setText(t);
+		send.setMsgtype("text");
+		send.setTouser(openId);
+		JSONObject jsonObject = WeixinUtil.httpRequest(url, "POST", JSONObject.fromObject(send).toString());
+		System.out.println(jsonObject);
+		System.out.println(JSONObject.fromObject(send).toString());
 		if (jsonObject != null) {
 			result = jsonObject.getInt("errcode");
 		}

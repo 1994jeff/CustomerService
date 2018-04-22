@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.customerservicesystem.bean.KeyWord;
 import com.example.customerservicesystem.bean.User;
 import com.example.customerservicesystem.bean.wx.TextMsg;
+import com.example.customerservicesystem.service.KeyWordService;
 import com.example.customerservicesystem.service.UserService;
 import com.example.customerservicesystem.untils.CoreService;
 import com.example.customerservicesystem.untils.FileUtils;
@@ -47,6 +49,8 @@ public class WXController extends BaseController {
 
 	@Resource
 	UserService userService;
+	@Resource
+	KeyWordService keyWordService;
 	
 	@RequestMapping(value = "/checkdev.do", method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest req, HttpServletResponse response){
@@ -129,11 +133,27 @@ public class WXController extends BaseController {
 				} else if (content.contains("申请记录")) {
 					textMsg.setContent("您是要查看申请记录吗?请点击<a href=\""+BASE_ADDRESS+"repair/toMoreRecord.do?openId="+query.getOpenId()+"\">进入申请记录页面</a>");
 				} else {
-					// 由于href属性值必须用双引号引起，这与字符串本身的双引号冲突，所以要转义
-					StringBuffer contentMsg = new StringBuffer();
-					contentMsg.append("欢迎使用易佰客服管理系统哟,小E将竭诚为您服务").append("\n");
-					contentMsg.append("不过小E现在还不够智能,暂时不能理解您的输入哟,您可以输入订纸,报修,或者申请记录这些关键词哟").append("\n\n");
-					textMsg.setContent(contentMsg.toString());
+					KeyWord keyWord = new KeyWord();
+					//获取数据库自定义关键词,并设置指定回复内容
+					keyWord.setStatus("1");
+					List<KeyWord> list = keyWordService.getKeyWordByCondition(keyWord);
+					String replys = "";
+					if(list!=null){
+						for (KeyWord key : list) {
+							if(content.equals(key.getKeyWord())){
+								replys = key.getReply();
+								break;
+							}
+						}
+					}
+					if("".equals(replys)){
+						// 由于href属性值必须用双引号引起，这与字符串本身的双引号冲突，所以要转义
+						StringBuffer contentMsg = new StringBuffer();
+						contentMsg.append("不好意思,小E现在还不够智能,暂时不能理解您的输入哟,您可以输入订纸,报修,或者申请记录这些关键词哟").append("\n\n");
+						textMsg.setContent(contentMsg.toString());
+					}else{
+						textMsg.setContent(replys);
+					}
 				}
 			} else {
 				textMsg.setContent("小E提示:您尚未绑定用户信息,请点击<a href=\""+BASE_ADDRESS+"userBinding/toBindUser.do?openId="+query.getOpenId()+"\">绑定</a>个人信息’");

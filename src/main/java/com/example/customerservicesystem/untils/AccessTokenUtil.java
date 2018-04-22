@@ -124,14 +124,4 @@ public class AccessTokenUtil {
         return bean;
     }
     
-    public static void printToken() throws Exception {
-        System.out.println("=========1获取token=========");
-        String accessToken = getToken(GET_TOKEN_URL, APP_ID, SECRET);// 获取token
-        if (accessToken != null)
-            System.out.println(accessToken);
-    }
-    
-    public static void main(String[] args) throws Exception {
-    	printToken();
-	}
 }
