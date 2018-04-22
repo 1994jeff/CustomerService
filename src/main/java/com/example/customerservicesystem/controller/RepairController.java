@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.customerservicesystem.bean.ApplyRecord;
+import com.example.customerservicesystem.bean.Result;
 import com.example.customerservicesystem.bean.RetParam;
 import com.example.customerservicesystem.bean.Shop;
 import com.example.customerservicesystem.bean.User;
 import com.example.customerservicesystem.bean.wx.AccessTokenBean;
 import com.example.customerservicesystem.service.RecordService;
+import com.example.customerservicesystem.service.ResultService;
 import com.example.customerservicesystem.service.ShopService;
 import com.example.customerservicesystem.service.UserService;
 import com.example.customerservicesystem.untils.AccessTokenUtil;
@@ -38,7 +40,9 @@ public class RepairController extends BaseController {
 	UserService userService;
 	@Resource
 	ShopService shopService;
-
+	@Resource
+	ResultService resultService;
+	
 	@RequestMapping("/toRepair.do")
 	public String toRepair(HttpSession session, String openId, Model model,String code) {
 		User user = getSessionUser(session);
@@ -149,7 +153,15 @@ public class RepairController extends BaseController {
 			}
 			List<ApplyRecord> re = recordService.getRecordByCondition(applyRecord);
 			if (re != null && re.size() > 0) {
-				model.addAttribute("record", re.get(0));
+				ApplyRecord r = re.get(0);
+				model.addAttribute("record", r);
+				if(r.getStatus().equals("1")){
+					Result result = new Result();
+					result.setRecordNo(r.getRecordNo());
+					List<Result> rs = resultService.getResultByCondition(result );
+					Result res = rs.get(0);
+					model.addAttribute("result", res);
+				}
 			}
 		} catch (Exception e) {
 			model.addAttribute("errorMsg", e.getMessage());

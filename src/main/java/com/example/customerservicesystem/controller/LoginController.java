@@ -48,7 +48,8 @@ public class LoginController extends BaseController {
 		if (user == null) {
 			User u = new User();
 			u.setOpenId(openId);
-			User us = userService.getUserByOpenId(openId);
+			//User us = userService.getUserByOpenId(openId);
+			User us = userService.getUserByOpenId("oPFDk1QFYUzriWOEtqVgdSQVtp3A");
 			if (us != null )
 			{
 				user = us;

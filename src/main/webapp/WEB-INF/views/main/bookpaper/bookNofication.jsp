@@ -48,7 +48,15 @@
 			<div class="times">
 				<ul>
 					<li><b></b><span><fmt:formatDate value="${record.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
-					<p>已为您发货</p></li>
+					<p>已为您发货</p>
+					<c:if test="${record.applyName=='pass' }">
+						<p>快递:${result.reason}<br/>运单号:${result.remark }<br/>寄出小票纸:${result.goods}卷</p>
+					</c:if>
+					<c:if test="${record.applyName=='reject' }">
+						<p>已拒绝您的申请</p>
+						<p>原因:${result.replyMsg }</p>
+					</c:if>
+					</li>
 					<!--b标签不输入内容，span标签内输入时间不限制格式，p标签内输入介绍内容。注意，标签内不能使用div分割-->
 					<li><b></b><span><fmt:formatDate value="${record.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
 					<p>提交申请成功</p></li>
