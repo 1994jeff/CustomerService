@@ -18,10 +18,17 @@ public class ShopDto implements Serializable{
 	private String contactMobile;
 	private String shopAddress;
 	private String bookStatus;
+	private String resolveResult;
 	private Date createTime;
 	private String type;
 	private String reason;
 	
+	public String getResolveResult() {
+		return resolveResult;
+	}
+	public void setResolveResult(String resolveResult) {
+		this.resolveResult = resolveResult;
+	}
 	public String getType() {
 		return type;
 	}

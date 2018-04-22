@@ -28,7 +28,8 @@
 		resultType="com.example.customerservicesystem.bean.dto.ShopDto">
 		select record.create_time as createTime,shop.name as shopName,shop.brand as shopBrand,
 		record.apply_mobile as bookNum,user.user_no as userNo,user.name as contactName,user.remark as contactMobile,
-		shop.address as shopAddress,record.status as bookStatus,record.record_no as recordNo,record.reason as reason
+		shop.address as shopAddress,record.status as bookStatus,record.record_no as recordNo,record.reason as reason,
+		record.apply_name as resolveResult
 		from shop left join record on shop.user_no = record.user_no
 		left join user on shop.user_no = user.user_no
 		where 1=1

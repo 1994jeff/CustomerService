@@ -12,7 +12,7 @@
 		<result column="goods" jdbcType="VARCHAR" property="goods" />
 		<result column="remark" jdbcType="VARCHAR" property="remark" />
 		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-		<result column="resolve_time" jdbcType="TIMESTAMP" property="resolveTime" />
+		<result column="resolve_time" jdbcType="VARCHAR" property="resolveTime" />
 	</resultMap>
 	<insert id="insertResult" parameterType="com.example.customerservicesystem.bean.Result">
 		insert into
@@ -23,6 +23,7 @@
 	<select id="getResultByCondition" parameterType="com.example.customerservicesystem.bean.Result"
 		resultMap="resultMap">
 		select * from result
+		<include refid="sqlWhere"/>
 	</select>
 	
 	<select id="getResultByResultNo" parameterType="com.example.customerservicesystem.bean.Result"
@@ -40,5 +41,18 @@
 		result
 		where result_no = #{resultNo}
 	</delete>
-
+	
+<sql id="sqlWhere">
+		where
+		1=1
+		<if test="recordNo != '' and recordNo != null ">
+			and record_no = #{recordNo}
+		</if>
+		<if test="resultNo !='' and resultNo != null ">
+			and result_no = #{resultNo}
+		</if>
+		<if test="remark !='' and remark != null ">
+			and remark = #{remark}
+		</if>
+	</sql>
 </mapper>

@@ -16,7 +16,7 @@ public class ApplyRecord implements Serializable{
 	private String reason;//订纸原因分为common与异常
 	private String status;//0未处理,1已处理
 	private String userNo;
-	private String applyName;//报修处理结果(已处理pass,待回访wait,已拒绝reject)，订纸处理结果(已发货pass,已拒绝reject)
+	private String applyName;//报修处理结果(已处理pass,已拒绝reject)，订纸处理结果(已发货pass,已拒绝reject)
 	private String applyMobile;//报修处理状态，订纸卷数
 	private Date createTime;
 	private Date updateTime;

@@ -18,7 +18,7 @@ public class Result implements Serializable{
 	private String replyMsg;
 	private String goods;
 	private String remark;
-	private Date resolveTime;
+	private String resolveTime;
 	private Date createTime;
 	public String getId() {
 		return id;
@@ -68,10 +68,10 @@ public class Result implements Serializable{
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public Date getResolveTime() {
+	public String getResolveTime() {
 		return resolveTime;
 	}
-	public void setResolveTime(Date resolveTime) {
+	public void setResolveTime(String resolveTime) {
 		this.resolveTime = resolveTime;
 	}
 	public Date getCreateTime() {

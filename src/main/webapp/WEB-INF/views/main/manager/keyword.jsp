@@ -7,8 +7,29 @@
 		<title></title>
 	</head>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/base.css" />
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/manager.css" />
 	<style>
+	.table-cla {
+		margin-left: 130px;
+	}
+	
+	.table-cla tr {
+		text-align: center;
+	}
+	
+	.tr-cla {
+		
+	}
+	
+	.tr-cla td {
+		padding: 10px 20px;
+		color: white;
+		border: solid white 1px;
+	}
+	
+	input {
+		padding: 10px;
+		border-radius: 6px;
+	}
 	</style>
 	<body style="">
 		<div style="padding: 20px;width: 1440px;text-align: left;margin-left:120px;margin-top: 10px;">

@@ -20,3 +20,61 @@ input {
 	padding: 10px;
 	border-radius: 6px;
 }
+
+.closeDialog{
+	width: 460px;
+	background: white;
+	margin: auto;
+	margin-top: 100px;
+	height: 300px;
+	border-radius: 8px;
+	display: none;
+}
+.resultDialog{
+	width: 460px;
+	background: white;
+	margin: auto;
+	margin-top: 100px;
+	border-radius: 8px;
+	height: 200px;
+	display: none;
+}
+.passDialog{
+	width: 460px;
+	background: white;
+	margin: auto;
+	margin-top: 100px;
+	height: 300px;
+	display: none;
+	border-radius: 8px;
+}
+.diaBody{
+	padding-left: 20px;
+}
+
+.replyMsg{
+	height: 120px;
+	display: block;
+	float: left;
+	width: 280px;
+	margin-bottom: 30px;
+	margin-left: 10px;
+}
+.btn{
+	margin-left: 100px;
+	padding: 8px 13px;
+	border-radius: 6px;
+	display: block;
+	float: left;
+	margin-top: 10px;
+	color: white;
+}
+
+.diaInput{
+	padding: 1px;
+	border-radius: 0px ;
+	margin-left: 10px;
+	float: right;
+	margin-right: 40px;
+	width: 300px;
+}
