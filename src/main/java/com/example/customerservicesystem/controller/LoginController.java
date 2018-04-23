@@ -18,9 +18,11 @@ import com.example.customerservicesystem.bean.ApplyRecord;
 import com.example.customerservicesystem.bean.RetParam;
 import com.example.customerservicesystem.bean.Shop;
 import com.example.customerservicesystem.bean.User;
+import com.example.customerservicesystem.bean.wx.AccessTokenBean;
 import com.example.customerservicesystem.service.RecordService;
 import com.example.customerservicesystem.service.ShopService;
 import com.example.customerservicesystem.service.UserService;
+import com.example.customerservicesystem.untils.AccessTokenUtil;
 
 import net.sf.json.JSONObject;
 
@@ -41,24 +43,28 @@ public class LoginController extends BaseController {
 	ShopService shopService;
 	
 	@RequestMapping("/toIndex.do")
-	public String toIndex(HttpSession session,Model model,HttpServletRequest req,String openId){
+	public String toIndex(HttpSession session,Model model,HttpServletRequest req,String openId,String code){
 		try {
 		User user = getSessionUser(session);
 		//TODO 根据微信id查找是否已经绑定用户,未绑定则跳转
-		if (user == null) {
-			User u = new User();
-			u.setOpenId(openId);
-			//User us = userService.getUserByOpenId(openId);
-			User us = userService.getUserByOpenId("oPFDk1QFYUzriWOEtqVgdSQVtp3A");
-			if (us != null )
+		if(openId==null || "".endsWith(openId)) {
+			AccessTokenBean bean = AccessTokenUtil.getAccessToken(code);
+			User ue = userService.getUserByOpenId(bean.getOpenid());
+			if(ue!=null) {
+				session.setAttribute("user", ue);
+			}else {
+				return "redirect:/userBinding/toBindUser.do";
+			}
+		}else {
+			User us = userService.getUserByOpenId(openId);
+			if(us!=null)
 			{
 				user = us;
-				session.setAttribute("user", us);
-			}
-			else {
+				session.setAttribute("user", user);
+			}else{
 				throw new Exception("账号信息不存在,请先绑定!");
 			}
-		} 
+		}
 		
 		//绑定用户查找是否绑定店铺,未绑定则跳转绑定店铺
 		Shop shop = new Shop();

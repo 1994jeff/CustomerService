@@ -32,18 +32,17 @@ import com.example.customerservicesystem.untils.SHA1;
 /**
  * 微信接入流程 1.公众平台配置服务器接口token等数据 2.开发服务器get接口验证微信传送过来的数据,成为开发者
  * 
- * 成为开发者之后，用户发生消息给服务号都会调用之前填写的接口，只不过是调用的post方法接口，通过微信传送的消息和数据
- * 我们可以对用户进行回复消息
+ * 成为开发者之后，用户发生消息给服务号都会调用之前填写的接口，只不过是调用的post方法接口，通过微信传送的消息和数据 我们可以对用户进行回复消息
  */
 @Controller
 @RequestMapping("/weixin")
 public class WXController extends BaseController {
 
-	
 	Logger log = LoggerFactory.getLogger(WXController.class);
 
-//	public static final String BASE_ADDRESS = "http://www.wq321.xyz/customerservicesystem/";
-	public static final String BASE_ADDRESS = "http://139.199.182.22/customerservicesystem/";
+	public static final String BASE_ADDRESS = "http://www.wq321.xyz/customerservicesystem/";
+	// public static final String BASE_ADDRESS =
+	// "http://139.199.182.22/customerservicesystem/";
 	private static String Token = "yibaikefu"; // 这个是之前在微信上填写的Token数据，可以自定义
 	private static String encode = "k5e77FFfiI2Si84lkSA7Z9uhet0TfLk7NXc62HfMi3c"; // 这个是之前在微信上填写的Token数据，可以自定义
 
@@ -51,9 +50,9 @@ public class WXController extends BaseController {
 	UserService userService;
 	@Resource
 	KeyWordService keyWordService;
-	
+
 	@RequestMapping(value = "/checkdev.do", method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest req, HttpServletResponse response){
+	protected void doGet(HttpServletRequest req, HttpServletResponse response) {
 		try {
 			log.debug("get请求，正确");
 			log.debug("获得微信请求!");
@@ -85,10 +84,11 @@ public class WXController extends BaseController {
 			e.printStackTrace();
 		}
 	}
-	
+
+	// 用户消息以及点击菜单的事件都会推送到这个方法
 	@ResponseBody
 	@RequestMapping(value = "/checkdev.do", method = RequestMethod.POST)
-	public void doPost(HttpServletRequest request, HttpServletResponse response,HttpSession session){
+	public void doPost(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		// 将请求、响应的编码均设置为UTF-8（防止中文乱码）
 		// 设置编码
 		PrintWriter out = null;
@@ -98,20 +98,21 @@ public class WXController extends BaseController {
 			response.setCharacterEncoding("utf-8");
 			// 调用核心业务类接收消息、处理消息
 			CoreService core = new CoreService();
-			Map<String,String> map = core.processRequest(request, response);
+			Map<String, String> map = core.processRequest(request, response);
 			// 发送方帐号（open_id）
 			String fromUserName = map.get("FromUserName");
 			// 公众帐号
 			String toUserName = map.get("ToUserName");
 			// 消息类型
 			String msgType = map.get("MsgType");
-			//内容
+			// 内容
 			String content = map.get("Content");
-			//事件类型
+			// 事件类型
 			String Event = map.get("Event");
-			//按键key
+			// 按键key
 			String EventKey = map.get("EventKey");
-			FileUtils.insertFile("weixin", "Event="+Event+",EventKey="+EventKey+",openId="+fromUserName+",MsgType="+msgType+",toUserName="+toUserName+",content"+content);
+			FileUtils.insertFile("weixin", "Event=" + Event + ",EventKey=" + EventKey + ",openId=" + fromUserName
+					+ ",MsgType=" + msgType + ",toUserName=" + toUserName + ",content" + content);
 			TextMsg textMsg = new TextMsg();
 			// 第一步：按照回复文本信息构造需要的参数
 			textMsg.setToUserName(fromUserName);//
@@ -127,36 +128,40 @@ public class WXController extends BaseController {
 				query = users.get(0);
 				session.setAttribute("user", query);
 				if (content.contains("订纸")) {
-					textMsg.setContent("您是要去订纸吗?请点击<a href=\""+BASE_ADDRESS+"book/toWantBook.do?openId="+query.getOpenId()+"\">进入订纸页面</a>");
+					textMsg.setContent("您是要去订纸吗?请点击<a href=\"" + BASE_ADDRESS + "book/toWantBook.do?openId="
+							+ query.getOpenId() + "\">进入订纸页面</a>");
 				} else if (content.contains("报修")) {
-					textMsg.setContent("您是要报修机器吗?请点击<a href=\""+BASE_ADDRESS+"repair/toRepair.do?openId="+query.getOpenId()+"\">进入报修页面</a>");
+					textMsg.setContent("您是要报修机器吗?请点击<a href=\"" + BASE_ADDRESS + "repair/toRepair.do?openId="
+							+ query.getOpenId() + "\">进入报修页面</a>");
 				} else if (content.contains("申请记录")) {
-					textMsg.setContent("您是要查看申请记录吗?请点击<a href=\""+BASE_ADDRESS+"repair/toMoreRecord.do?openId="+query.getOpenId()+"\">进入申请记录页面</a>");
+					textMsg.setContent("您是要查看申请记录吗?请点击<a href=\"" + BASE_ADDRESS + "repair/toMoreRecord.do?openId="
+							+ query.getOpenId() + "\">进入申请记录页面</a>");
 				} else {
 					KeyWord keyWord = new KeyWord();
-					//获取数据库自定义关键词,并设置指定回复内容
+					// 获取数据库自定义关键词,并设置指定回复内容
 					keyWord.setStatus("1");
 					List<KeyWord> list = keyWordService.getKeyWordByCondition(keyWord);
 					String replys = "";
-					if(list!=null){
+					if (list != null) {
 						for (KeyWord key : list) {
-							if(content.equals(key.getKeyWord())){
+							if (content.equals(key.getKeyWord())) {
 								replys = key.getReply();
 								break;
 							}
 						}
 					}
-					if("".equals(replys)){
+					if ("".equals(replys)) {
 						// 由于href属性值必须用双引号引起，这与字符串本身的双引号冲突，所以要转义
 						StringBuffer contentMsg = new StringBuffer();
 						contentMsg.append("不好意思,小E现在还不够智能,暂时不能理解您的输入哟,您可以输入订纸,报修,或者申请记录这些关键词哟").append("\n\n");
 						textMsg.setContent(contentMsg.toString());
-					}else{
+					} else {
 						textMsg.setContent(replys);
 					}
 				}
 			} else {
-				textMsg.setContent("小E提示:您尚未绑定用户信息,请点击<a href=\""+BASE_ADDRESS+"userBinding/toBindUser.do?openId="+query.getOpenId()+"\">绑定</a>个人信息’");
+				textMsg.setContent("小E提示:您尚未绑定用户信息,请点击<a href=\"" + BASE_ADDRESS + "userBinding/toBindUser.do?openId="
+						+ query.getOpenId() + "\">绑定</a>个人信息’");
 			}
 			// // 第二步，将构造的信息转化为微信识别的xml格式【百度：xstream bean转xml】
 			textMsg2Xml = core.MsgToString(textMsg);
@@ -165,7 +170,7 @@ public class WXController extends BaseController {
 			out.print(textMsg2Xml);
 			out.flush();
 		} catch (Exception e) {
-		} finally{
+		} finally {
 			out.close();
 		}
 	}

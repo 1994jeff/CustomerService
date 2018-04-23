@@ -46,6 +46,15 @@ public class BindingController extends BaseController {
 		}else{
 			model.addAttribute("openId", openId);
 		}
+		User ue = null;
+		try {
+			ue = userService.getUserByOpenId(openId);
+		} catch (Exception e) {
+		}
+		if(ue!=null) {
+			model.addAttribute("errorMsg","您已经绑定了信息，不可再次绑定哦！");
+			return "error/404";
+		}
 		return "main/binding/user";
 	}
 	
