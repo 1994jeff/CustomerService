@@ -55,7 +55,7 @@
 					var remark = $('#remark').val();
 					var address = $('#address').val();
 					if(openId=="" ){
-						alert("获取您的openId失败，请尝试退出重新进入绑定");
+						alert("获取您的openId失败，请从菜单或者客服消息中进入进入绑定界面!");
 						return;
 					}
 					if(name==''||remark==''||address==''){

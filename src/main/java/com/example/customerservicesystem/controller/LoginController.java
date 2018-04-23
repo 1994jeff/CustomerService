@@ -49,7 +49,7 @@ public class LoginController extends BaseController {
 			if(user==null || user.getOpenId().endsWith(""))
 			{
 				String id = "";
-				if("".equals(openId)||null==openId){
+				if(null==openId||"".equals(openId)){
 					if(code==null || "".equals(code)) {
 						//model.addAttribute("errorMsg","获取您的code失败，请尝试退出重新进入");
 						//return "error/404";
@@ -60,7 +60,7 @@ public class LoginController extends BaseController {
 				}else{
 					id = openId;
 				}
-				User ser = userService.getUserByOpenId("oPFDk1QFYUzriWOEtqVgdSQVtp3A");
+				User ser = userService.getUserByOpenId(id);
 				if(ser==null){
 					model.addAttribute("errorMsg","账号信息不存在,请先绑定!");
 					return "error/404";

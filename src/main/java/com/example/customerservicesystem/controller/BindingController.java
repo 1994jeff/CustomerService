@@ -92,6 +92,8 @@ public class BindingController extends BaseController {
 				session.setAttribute("user", u);
 			}else{
 				userService.insertUser(user);
+				User us = userService.getUserByOpenId(user.getOpenId());
+				session.setAttribute("user", us);
 				Shop shop = new Shop();
 				shop.setUserNo(userService.getUserByOpenId(user.getOpenId()).getUserNo());
 				List<Shop> shops= shopService.getShopByCondition(shop );
@@ -128,11 +130,11 @@ public class BindingController extends BaseController {
 			Shop ss = new Shop();
 			ss.setUserNo(u.getUserNo());
 			//先查询是否有门店,有则调用修改的方法,没有则创建门店
+			shop.setUserNo(u.getUserNo());
 			List<Shop> s = shopService.getShopByCondition(ss);
 			if(s!=null && s.size()>0){
 				shopService.updateShopByCondition(shop);
 			}else{
-				shop.setUserNo(u.getUserNo());
 				shopService.insertShop(shop);
 			}
 		} catch (Exception e) {
