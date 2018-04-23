@@ -195,7 +195,6 @@
 						}
 						window.location.href="${pageContext.request.contextPath}/result/toPassRepairRecord.do?recordNo="+recordNo+"&type="+sel+"&resolveTime="+resolveTime+"&replyMsg="+replyMsg;
 					}
-					//window.location.href="${pageContext.request.contextPath}/result/toPassRecord.do?remark="+remark+"&reason="+reason+"&type="+type+"&goods="+goods+"&recordNo="+recordNo;
 				});
 				
 				$('.look').on('click',function(){

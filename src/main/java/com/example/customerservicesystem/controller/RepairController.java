@@ -195,7 +195,7 @@ public class RepairController extends BaseController {
 				}
 			} 
 			ApplyRecord applyRecord = new ApplyRecord();
-			applyRecord.setUserNo(userNo);
+			applyRecord.setUserNo(user.getUserNo());
 			List<ApplyRecord> records = recordService.getRecordByCondition(applyRecord);
 			model.addAttribute("records", records);
 		} catch (Exception e) {

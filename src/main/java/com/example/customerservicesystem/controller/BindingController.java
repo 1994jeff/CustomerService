@@ -36,25 +36,28 @@ public class BindingController extends BaseController {
 	
 	@RequestMapping("/toBindUser.do")
 	public String toModifyPsd(HttpSession session,String code,Model model,String openId) {
+		String id = "";
 		if("".equals(openId)||null==openId){
-			if("".equals(code)) {
-				model.addAttribute("errorMsg","获取您的code失败，请尝试退出重新进入");
-				return "error/404";
+			if(code==null || "".equals(code)) {
+				//model.addAttribute("errorMsg","获取您的code失败，请尝试退出重新进入");
+				//return "error/404";
+			}else{
+				AccessTokenBean bean = AccessTokenUtil.getAccessToken(code);
+				id = bean.getOpenid();
 			}
-			AccessTokenBean bean = AccessTokenUtil.getAccessToken(code);
-			model.addAttribute("openId", bean.getOpenid());
 		}else{
-			model.addAttribute("openId", openId);
+			id = openId;
 		}
 		User ue = null;
 		try {
-			ue = userService.getUserByOpenId(openId);
+			ue = userService.getUserByOpenId(id);
 		} catch (Exception e) {
 		}
-		if(ue!=null) {
+		if(ue!=null && !ue.getOpenId().equals("")) {
 			model.addAttribute("errorMsg","您已经绑定了信息，不可再次绑定哦！");
 			return "error/404";
 		}
+		model.addAttribute("openId", id);
 		return "main/binding/user";
 	}
 	
@@ -84,18 +87,18 @@ public class BindingController extends BaseController {
 	@RequestMapping("/bindUser.do")
 	public String bindUser(HttpSession session,User user,Model model) {
 		try {
-			userService.insertUser(user);
 			User u = userService.getUserByOpenId(user.getOpenId());
-			if(u!=null){
-				session.setAttribute("user", user);
+			if(u!=null && !u.getOpenId().equals("")){
+				session.setAttribute("user", u);
+			}else{
+				userService.insertUser(user);
 				Shop shop = new Shop();
-				shop.setUserNo(user.getUserNo());
+				shop.setUserNo(userService.getUserByOpenId(user.getOpenId()).getUserNo());
 				List<Shop> shops= shopService.getShopByCondition(shop );
 				if(shops!=null && shops.size()>0) {
-					return "redirect:/login/toIndex.do";
+					model.addAttribute("errorMsg","您已经绑定了门店信息哦!需要更换请进入更换绑定门店选项!");
+					return "error/404";
 				}
-			}else{
-				throw new Exception("获取您的openId失败，请尝试退出重新进入绑定");
 			}
 			
 		} catch (Exception e) {
@@ -114,6 +117,7 @@ public class BindingController extends BaseController {
 				User user = userService.getUserByOpenId(bean.getOpenid());
 				if(user!=null) {
 					session.setAttribute("user", user);
+					u = user;
 				}else {
 					return "redirect:/userBinding/toBindUser.do";
 				}
@@ -121,19 +125,15 @@ public class BindingController extends BaseController {
 				if(u.getOpenId().equals(""))
 					return "redirect:/userBinding/toBindUser.do";
 			}
-			shop.setUserNo(u.getUserNo());
+			Shop ss = new Shop();
+			ss.setUserNo(u.getUserNo());
 			//先查询是否有门店,有则调用修改的方法,没有则创建门店
-			List<Shop> s = shopService.getShopByCondition(shop);
+			List<Shop> s = shopService.getShopByCondition(ss);
 			if(s!=null && s.size()>0){
 				shopService.updateShopByCondition(shop);
 			}else{
+				shop.setUserNo(u.getUserNo());
 				shopService.insertShop(shop);
-			}
-			List<Shop> ss = shopService.getShopByCondition(shop);
-			if(ss!=null && ss.size()>0){
-				session.setAttribute("shop", ss.get(0));
-			}else{
-				return "redirect:/userBinding/toBindShop.do";
 			}
 		} catch (Exception e) {
 			model.addAttribute("errorMsg",e.getMessage());

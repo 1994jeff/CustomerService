@@ -72,7 +72,7 @@
 	</div>
 	<script type="text/javascript">
 	function backPage(num) {
-		history.go(num);
+		window.location.href="${pageContext.request.contextPath}/login/toIndex.do";
 	}
 	</script>
 </body>

@@ -45,26 +45,30 @@ public class LoginController extends BaseController {
 	@RequestMapping("/toIndex.do")
 	public String toIndex(HttpSession session,Model model,HttpServletRequest req,String openId,String code){
 		try {
-		User user = getSessionUser(session);
-		//TODO 根据微信id查找是否已经绑定用户,未绑定则跳转
-		if(openId==null || "".endsWith(openId)) {
-			AccessTokenBean bean = AccessTokenUtil.getAccessToken(code);
-			User ue = userService.getUserByOpenId(bean.getOpenid());
-			if(ue!=null) {
-				session.setAttribute("user", ue);
-			}else {
-				return "redirect:/userBinding/toBindUser.do";
-			}
-		}else {
-			User us = userService.getUserByOpenId(openId);
-			if(us!=null)
+			User user = getSessionUser(session);
+			if(user==null || user.getOpenId().endsWith(""))
 			{
-				user = us;
-				session.setAttribute("user", user);
-			}else{
-				throw new Exception("账号信息不存在,请先绑定!");
+				String id = "";
+				if("".equals(openId)||null==openId){
+					if(code==null || "".equals(code)) {
+						//model.addAttribute("errorMsg","获取您的code失败，请尝试退出重新进入");
+						//return "error/404";
+					}else{
+						AccessTokenBean bean = AccessTokenUtil.getAccessToken(code);
+						id = bean.getOpenid();
+					}
+				}else{
+					id = openId;
+				}
+				User ser = userService.getUserByOpenId("oPFDk1QFYUzriWOEtqVgdSQVtp3A");
+				if(ser==null){
+					model.addAttribute("errorMsg","账号信息不存在,请先绑定!");
+					return "error/404";
+				}else{
+					user = ser;
+					session.setAttribute("user",ser);
+				}
 			}
-		}
 		
 		//绑定用户查找是否绑定店铺,未绑定则跳转绑定店铺
 		Shop shop = new Shop();

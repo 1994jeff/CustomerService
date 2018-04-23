@@ -50,7 +50,7 @@
 			<div class="times">
 				<ul>
 					<li><b></b><span><fmt:formatDate value="${record.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
-					<p>已处理</p>
+					<p>客服管理员已处理</p>
 					<c:if test="${result.type=='pass'}">
 						<p>处理方式:快递维修</p>
 						<p>快递:${result.reason}<br/>运单号:${result.remark }<br/>寄出物品:${result.goods}</p>

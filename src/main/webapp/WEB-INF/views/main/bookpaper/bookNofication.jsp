@@ -48,7 +48,7 @@
 			<div class="times">
 				<ul>
 					<li><b></b><span><fmt:formatDate value="${record.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
-					<p>已为您发货</p>
+					<p>客服管理员已处理</p>
 					<c:if test="${record.applyName=='pass' }">
 						<p>快递:${result.reason}<br/>运单号:${result.remark }<br/>寄出小票纸:${result.goods}卷</p>
 					</c:if>

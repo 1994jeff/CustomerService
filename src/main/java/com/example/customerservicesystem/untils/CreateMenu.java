@@ -26,12 +26,12 @@ public class CreateMenu {
 	
 
 	public static void main(String[] args) {
-		menu();
-//		try {
-//			sendMsgToUser("hahaha", "oPFDk1QFYUzriWOEtqVgdSQVtp3A");
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		//menu();
+		try {
+			sendMsgToUser("hahaha", "oPFDk1QFYUzriWOEtqVgdSQVtp3A");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static void menu() {
