@@ -48,7 +48,7 @@
 					<span style="float: right">自申请之日起30天</span>
 				</div>
 			</div>
-			<div style="text-align: center;margin-top: 20px;" onclick="book()"><span style="display: block;color: rgba(102, 153, 204, 1);padding:10px 20px;border-radius: 30px;border: solid rgba(102, 153, 204, 1) 1px;width: 230px;margin:auto;">确定申请订纸</span></div>
+			<div class="ssdas" data="${reason}" style="text-align: center;margin-top: 20px;" onclick="book()"><span style="display: block;color: rgba(102, 153, 204, 1);padding:10px 20px;border-radius: 30px;border: solid rgba(102, 153, 204, 1) 1px;width: 230px;margin:auto;">确定申请订纸</span></div>
 		</div>
 		<script type="text/javascript">
 		function backPage(num) {
@@ -56,11 +56,12 @@
 		}
 		function book() {
 			var num = $('.bookNum').text();
+			var reason = $('.ssdas').attr('data');
 			if(num==''){
 				alert('预定数量不能为空！'+num);
 				return;
 			}
-			window.location.href="${pageContext.request.contextPath}/book/toBookNofication.do?num="+num;
+			window.location.href="${pageContext.request.contextPath}/book/toBookNofication.do?num="+num+"&reason="+reason;
 		}
 		</script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.0.js"></script>
