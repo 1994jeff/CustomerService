@@ -12,11 +12,8 @@
 <body>
 	<div style="height: 80px; background-color: rgba(102, 153, 204, 1);">
 		<div style="float: left; position: fixed;">
-			<img src="${pageContext.request.contextPath}/img/back.png"
-				width="25px" height="25px" onclick="backPage(-1)"
-				style="margin-top: 28px; margin-left: 6px;" /> 				
-			<a href="javascript:window.opener=null;window.open('','_self');window.close();"><img src="${pageContext.request.contextPath}/img/close.png" height="25px" style="margin-top: 28px;margin-left: 4px;" /></a>
-
+			<img src="${pageContext.request.contextPath}/img/back.png" width="25px" height="25px" onclick="backPage(-1)" style="margin-top: 28px; margin-left: 6px;" /> 				
+<%-- 			<img src="${pageContext.request.contextPath}/img/close.png" height="25px" style="margin-top: 28px;margin-left: 4px;" /> --%>
 		</div>
 		<div>
 			<span
@@ -75,7 +72,7 @@
 	</div>
 	<script type="text/javascript">
 	function backPage(num) {
-		history.go(num);
+		window.location.href="${pageContext.request.contextPath}/login/toIndex.do";
 	}
 	</script>
 </body>

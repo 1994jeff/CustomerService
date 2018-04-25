@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.6.33, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.19, for linux-glibc2.5 (x86_64)
 --
--- Host: 127.0.0.1    Database: customerservice
+-- Host: 207.148.94.118    Database: customerservice
 -- ------------------------------------------------------
 -- Server version	5.6.33-0ubuntu0.14.04.1
 
@@ -34,8 +34,10 @@ CREATE TABLE `shop` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `remark` varchar(45) DEFAULT '',
-  PRIMARY KEY (`id`,`pos_no`,`user_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`pos_no`),
+  KEY `id` (`id`),
+  KEY `user_no` (`user_no`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +46,7 @@ CREATE TABLE `shop` (
 
 LOCK TABLES `shop` WRITE;
 /*!40000 ALTER TABLE `shop` DISABLE KEYS */;
-INSERT INTO `shop` VALUES (1,'1','1','jeff','KFC','Tom','123','jiangxi','2018-04-08 22:09:57','2018-04-08 22:09:57','10086'),(2,'2','2','deng','KFC','Cat','1234','beijing','2018-04-08 22:09:57','2018-04-08 22:09:57','10086');
+INSERT INTO `shop` VALUES (6,'11111111','UN2018042401280700002','星巴克（八佰伴店）','星巴克','11111111','123','上海','2018-04-24 01:29:35','2018-04-24 01:29:35','021-53338222'),(8,'dddd','UN2018042411360900004','dds','dds','ddd','cd','Ddd','2018-04-24 11:36:38','2018-04-24 11:36:38','懂的'),(7,'xdd','UN2018042401421100003','dd','dd','xdd','dd','dd','2018-04-24 01:42:17','2018-04-24 01:42:17','dd');
 /*!40000 ALTER TABLE `shop` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-09 23:07:28
+-- Dump completed on 2018-04-25  9:01:00

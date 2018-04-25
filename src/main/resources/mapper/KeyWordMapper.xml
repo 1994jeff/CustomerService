@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.customerservicesystem.dao.KeyWordDao">
+	<resultMap type="com.example.customerservicesystem.bean.KeyWord"
+		id="keyWordMap">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="keyword_no" jdbcType="VARCHAR" property="keyWordNo" />
+		<result column="keyword" jdbcType="VARCHAR" property="keyWord" />
+		<result column="reply" jdbcType="VARCHAR" property="reply" />
+		<result column="status" jdbcType="VARCHAR" property="status" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+	</resultMap>
+	<insert id="insertKeyWord" parameterType="com.example.customerservicesystem.bean.KeyWord">
+		insert into
+		keyword(keyword_no,keyword,create_time,update_time,remark,reply,status)
+		values(#{keyWordNo},#{keyWord},now(),now(),#{remark},#{reply},#{status})
+	</insert>
+
+	<select id="getKeyWordByCondition" parameterType="com.example.customerservicesystem.bean.KeyWord"
+		resultMap="keyWordMap">
+		select * from keyword
+		<include refid="sqlWhere" />
+	</select>
+	
+	<select id="getShopDtoByCondition" parameterType="com.example.customerservicesystem.bean.dto.ShopDto"
+		resultType="com.example.customerservicesystem.bean.dto.ShopDto">
+		select record.create_time as createTime,shop.name as shopName,shop.brand as shopBrand,
+		record.apply_mobile as bookNum,user.user_no as userNo,user.name as contactName,user.remark as contactMobile,
+		shop.address as shopAddress,record.status as bookStatus,record.record_no as recordNo,record.reason as reason,
+		record.apply_name as resolveResult
+		from shop left join record on shop.user_no = record.user_no
+		left join user on shop.user_no = user.user_no
+		where 1=1
+		<if test=" type!=null and type!='' ">
+			and record.type = #{type}
+		</if>
+		<if test=" shopName!=null and shopName!='' ">
+			and shop.name = #{shopName}
+		</if>
+		<if test=" shopBrand!=null and shopBrand!='' ">
+			and shop.brand = #{shopBrand}
+		</if>
+		<if test=" reason!=null and reason!='' ">
+			and record.reason = #{reason}
+		</if>
+		<if test=" reason==null or reason=='' ">
+			and record.reason != 'common'
+		</if>
+	</select>
+
+	<update id="updateKeyWordByCondition" parameterType="com.example.customerservicesystem.bean.KeyWord">
+		update keyword
+		<include refid="updateSet" />
+	</update>
+
+	<delete id="deleteKeyWordByKeyWordNo" parameterType="com.example.customerservicesystem.bean.KeyWord">
+		delete from
+		keyword
+		where keyword_no = #{keyWordNo}
+	</delete>
+
+	<sql id="sqlWhere">
+		where
+		1=1
+		<if test="keyWordNo != '' and keyWordNo != null ">
+			and keyword_no = #{keyWordNo}
+		</if>
+		<if test="keyWord !='' and keyWord != null ">
+			and keyword = #{keyWord}
+		</if>
+		<if test="remark !='' and remark !=null ">
+			and remark = #{remark}
+		</if>
+		<if test="status !='' and status !=null ">
+			and status = #{status}
+		</if>
+		<if test="reply !='' and reply !=null ">
+			and reply = #{reply}
+		</if>
+	</sql>
+
+	<sql id="updateSet">
+		set
+		<if test="keyWordNo != '' and keyWordNo != null ">
+			 keyword_no = #{keyWordNo},
+		</if>
+		<if test="keyWord !='' and keyWord != null ">
+			 keyword = #{keyWord},
+		</if>
+		<if test="remark !='' and remark !=null ">
+			 remark = #{remark},
+		</if>
+		<if test="status !='' and status !=null ">
+			 status = #{status},
+		</if>
+		<if test="reply !='' and reply !=null ">
+			 reply = #{reply},
+		</if>
+		update_time = now()
+		where keyword_no = #{keyWordNo}
+	</sql>
+</mapper>

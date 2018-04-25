@@ -15,9 +15,8 @@
 		<div style="float: left; position: fixed;">
 			<img src="${pageContext.request.contextPath}/img/back.png"
 				width="25px" height="25px" onclick="backPage(-1)"
-				style="margin-top: 28px; margin-left: 6px;" /> <img
-				src="${pageContext.request.contextPath}/img/close.png" height="25px"
-				style="margin-top: 28px; margin-left: 4px;" />
+				style="margin-top: 28px; margin-left: 6px;" />
+<%-- 		<img src="${pageContext.request.contextPath}/img/close.png" height="25px" style="margin-top: 28px; margin-left: 4px;" /> --%>
 		</div>
 		<div>
 			<span
@@ -35,7 +34,7 @@
 						<span
 							style="color: cornflowerblue; font-size: 16px; line-height: 20px;">${shop.name}</span><br />
 						<span>门店电话:${shop.remark }</span><span
-							style="float: right; margin-right: 4px; color: gray;">我换店了></span><br />
+							style="float: right; margin-right: 4px; color: gray;"><a href="${pageContext.request.contextPath}/userBinding/toBindShop.do">我换店了></a></span><br />
 						<span>门店地址:${shop.address }</span><br />
 					</div>
 				</div>

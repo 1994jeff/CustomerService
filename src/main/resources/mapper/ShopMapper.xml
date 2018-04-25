@@ -44,6 +44,9 @@
 		<if test="posNo != '' and posNo != null ">
 			and pos_no = #{posNo}
 		</if>
+		<if test="userNo != '' and userNo != null ">
+			and user_no = #{userNo}
+		</if>
 		<if test="name !='' and name != null ">
 			and name = #{name}
 		</if>
@@ -88,6 +91,6 @@
 			remark = #{remark},
 		</if>
 		update_time = now()
-		where pos_no = #{posNo}
+		where user_no = #{userNo}
 	</sql>
 </mapper>

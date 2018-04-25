@@ -14,12 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.customerservicesystem.bean.ApplyRecord;
+import com.example.customerservicesystem.bean.Result;
 import com.example.customerservicesystem.bean.RetParam;
 import com.example.customerservicesystem.bean.Shop;
 import com.example.customerservicesystem.bean.User;
+import com.example.customerservicesystem.bean.wx.AccessTokenBean;
 import com.example.customerservicesystem.service.RecordService;
+import com.example.customerservicesystem.service.ResultService;
 import com.example.customerservicesystem.service.ShopService;
 import com.example.customerservicesystem.service.UserService;
+import com.example.customerservicesystem.untils.AccessTokenUtil;
+import com.example.customerservicesystem.untils.CalendarUtils;
 
 import net.sf.json.JSONObject;
 
@@ -35,12 +40,36 @@ public class RepairController extends BaseController {
 	UserService userService;
 	@Resource
 	ShopService shopService;
-
+	@Resource
+	ResultService resultService;
+	
 	@RequestMapping("/toRepair.do")
-	public String toRepair(HttpSession session) {
+	public String toRepair(HttpSession session, String openId, Model model,String code) {
 		User user = getSessionUser(session);
-		if(user==null){
-			return "redirect:/login/toLogin.do";
+		try {
+			if (user == null) {
+				if(openId==null || "".endsWith(openId)) {
+					AccessTokenBean bean = AccessTokenUtil.getAccessToken(code);
+					User ue = userService.getUserByOpenId(bean.getOpenid());
+					if(ue!=null) {
+						session.setAttribute("user", ue);
+					}else {
+						return "redirect:/userBinding/toBindUser.do";
+					}
+				}else {
+					User us = userService.getUserByOpenId(openId);
+					if(us!=null)
+					{
+						user = us;
+						session.setAttribute("user", user);
+					}else{
+						throw new Exception("账号信息不存在,请先绑定!");
+					}
+				}
+			}
+		} catch (Exception e) {
+			model.addAttribute("errorMsg", e.getMessage());
+			return "error/404";
 		}
 		return "main/repair/repair";
 	}
@@ -48,7 +77,7 @@ public class RepairController extends BaseController {
 	@RequestMapping("/toSelfRepair.do")
 	public String toSelfRepair(HttpSession session, Model model) {
 		User user = getSessionUser(session);
-		if(user==null){
+		if (user == null) {
 			return "redirect:/login/toLogin.do";
 		}
 		Shop s = new Shop();
@@ -56,21 +85,24 @@ public class RepairController extends BaseController {
 		List<Shop> shops = shopService.getShopByCondition(s);
 		if (shops != null && shops.size() > 0) {
 			model.addAttribute("shop", shops.get(0));
+		} else {
+			return "redirect:/userBinding/toBindShop.do";
 		}
 		model.addAttribute("user", user);
-//		ApplyRecord applyRecord = new ApplyRecord();
-//		applyRecord.setUserNo(user.getUserNo());
-//		List<ApplyRecord> records = recordService.getRecordByCondition(applyRecord);
-//		if (records != null && records.size() > 0) {
-//			model.addAttribute("record", records.get(0));
-//		}
+		// ApplyRecord applyRecord = new ApplyRecord();
+		// applyRecord.setUserNo(user.getUserNo());
+		// List<ApplyRecord> records =
+		// recordService.getRecordByCondition(applyRecord);
+		// if (records != null && records.size() > 0) {
+		// model.addAttribute("record", records.get(0));
+		// }
 		return "main/repair/selfrepair";
 	}
 
 	@RequestMapping("/toReason.do")
 	public String toReason(HttpSession session) {
 		User user = getSessionUser(session);
-		if(user==null){
+		if (user == null) {
 			return "redirect:/login/toLogin.do";
 		}
 		return "main/repair/reason";
@@ -79,7 +111,7 @@ public class RepairController extends BaseController {
 	@RequestMapping("/toRecord.do")
 	public String toRecord(HttpSession session, String userNo, Model model) {
 		User user = getSessionUser(session);
-		if(user==null){
+		if (user == null) {
 			return "redirect:/login/toLogin.do";
 		}
 		ApplyRecord applyRecord = new ApplyRecord();
@@ -93,49 +125,84 @@ public class RepairController extends BaseController {
 	@RequestMapping("/toRepairDetails.do")
 	public String toRepairDetails(HttpSession session) {
 		User user = getSessionUser(session);
-		if(user==null){
+		if (user == null) {
 			return "redirect:/login/toLogin.do";
 		}
 		return "main/repair/repairDetails";
 	}
 
 	@RequestMapping("/toRepairNofication.do")
-	public String toRepairNofication(HttpSession session,String name,Model model) {
+	public String toRepairNofication(HttpSession session, String name, Model model, String recordNo) {
 		User user = getSessionUser(session);
 		try {
-			if(user==null){
+			if (user == null) {
 				return "redirect:/login/toLogin.do";
 			}
 			ApplyRecord applyRecord = new ApplyRecord();
-			applyRecord.setType("0");
-			applyRecord.setApplyMobile(user.getRemark());
-			applyRecord.setApplyName(user.getName());
-			applyRecord.setReason(name);
-			applyRecord.setUserNo(user.getUserNo());
-			applyRecord.setStatus("0");
-			recordService.insertRecord(applyRecord );
+			// 记录号为空则插入数据否则查询
+			if (recordNo == null || recordNo.equals("")) {
+				applyRecord.setType("0");
+				applyRecord.setApplyMobile(user.getRemark());
+				applyRecord.setApplyName(user.getName());
+				applyRecord.setReason(name);
+				applyRecord.setUserNo(user.getUserNo());
+				applyRecord.setStatus("0");
+				recordService.insertRecord(applyRecord);
+			} else {
+				applyRecord.setRecordNo(recordNo);
+			}
 			List<ApplyRecord> re = recordService.getRecordByCondition(applyRecord);
-			if(re!=null && re.size()>0){
-				model.addAttribute("record",re.get(0));
+			if (re != null && re.size() > 0) {
+				ApplyRecord r = re.get(0);
+				model.addAttribute("record", r);
+				if(r.getStatus().equals("1")){
+					Result result = new Result();
+					result.setRecordNo(r.getRecordNo());
+					List<Result> rs = resultService.getResultByCondition(result );
+					Result res = rs.get(0);
+					model.addAttribute("result", res);
+				}
 			}
 		} catch (Exception e) {
-			model.addAttribute("errorMsg",e.getMessage());
+			model.addAttribute("errorMsg", e.getMessage());
 			return "error/404";
 		}
 		return "main/repair/repairNofication";
 	}
 
 	@RequestMapping("/toMoreRecord.do")
-	public String toMoreRecord(HttpSession session, String userNo, Model model) {
+	public String toMoreRecord(HttpSession session, String userNo, Model model, String openId,String code) {
 		User user = getSessionUser(session);
-		if(user==null){
-			return "redirect:/login/toLogin.do";
+		try {
+			if (user == null) {
+				if(openId==null || "".endsWith(openId)) {
+					AccessTokenBean bean = AccessTokenUtil.getAccessToken(code);
+					User ue = userService.getUserByOpenId(bean.getOpenid());
+					if(ue!=null) {
+						session.setAttribute("user", ue);
+					}else {
+						return "redirect:/userBinding/toBindUser.do";
+					}
+				}else {
+					User us = userService.getUserByOpenId(openId);
+					if(us!=null)
+					{
+						user = us;
+						session.setAttribute("user", user);
+					}else{
+						throw new Exception("账号信息不存在,请先绑定!");
+					}
+				}
+			} 
+			ApplyRecord applyRecord = new ApplyRecord();
+			applyRecord.setUserNo(user.getUserNo());
+			List<ApplyRecord> records = recordService.getRecordByCondition(applyRecord);
+			model.addAttribute("records", records);
+		} catch (Exception e) {
+			model.addAttribute("errorMsg", e.getMessage());
+			return "error/404";
 		}
-		ApplyRecord applyRecord = new ApplyRecord();
-		applyRecord.setUserNo(userNo);
-		List<ApplyRecord> records = recordService.getRecordByCondition(applyRecord);
-		model.addAttribute("records", records);
 		return "main/common/record";
 	}
-	
+
 }

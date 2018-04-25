@@ -15,9 +15,8 @@
 		<div style="float: left; position: fixed;">
 			<img src="${pageContext.request.contextPath}/img/back.png"
 				width="25px" height="25px" onclick="backPage(-1)"
-				style="margin-top: 28px; margin-left: 6px;" /> <img
-				src="${pageContext.request.contextPath}/img/close.png" height="25px"
-				style="margin-top: 28px; margin-left: 4px;" />
+				style="margin-top: 28px; margin-left: 6px;" />
+<%-- 		<img src="${pageContext.request.contextPath}/img/close.png" height="25px" style="margin-top: 28px; margin-left: 4px;" /> --%>
 		</div>
 		<div>
 			<span
@@ -30,15 +29,15 @@
 			width="40px" style="float: left;" />
 		<div
 			style="float: left; margin-top: 8px; font-size: 20px; margin-left: 10px;">
-			<span style="color: white;">待电话回访</span>
+			<span style="color: white;"><c:if test="${record.status=='0'}">待处理</c:if><c:if test="${record.status=='1'}">已处理</c:if></span>
 		</div>
 	</div>
 	<c:if test="${record.status=='0'}">
 		<div style="background-color: white;">
 			<div class="times">
 				<ul>
-					<li><b></b><span>待电话回访</span>
-					<p>请务必保证联系电话准确通畅，我们的工程师会尽快与您取得联系</p></li>
+					<li><b></b><span>待处理</span>
+					<p>请耐心等候客服处理您的申请</p></li>
 					<!--b标签不输入内容，span标签内输入时间不限制格式，p标签内输入介绍内容。注意，标签内不能使用div分割-->
 					<li><b></b><span><fmt:formatDate value="${record.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
 					<p>提交申请成功</p></li>
@@ -50,19 +49,41 @@
 		<div style="background-color: white;">
 			<div class="times">
 				<ul>
-					<li><b></b><span>已电话回访</span>
-					<p>请务必保证联系电话准确通畅，我们的工程师会尽快与您取得联系</p></li>
+					<li><b></b><span><fmt:formatDate value="${record.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
+					<c:if test="${result.type=='pass'}">
+						<p>客服管理员已处理<a href="http://m.kuaidi100.com/index.jsp?from=openv"><span style="float: right;color: rgba(102, 153, 204, 1);font-size: 14px;">物流信息</span></a></p>
+						<p>处理方式:快递维修</p>
+						<p>快递:${result.reason}<br/>运单号:${result.remark }<br/>寄出物品:${result.goods}</p>
+					</c:if>
+					<c:if test="${result.type=='go'}">
+						<p>客服管理员已处理</p>
+						<p>处理方式:上门维修</p>
+						<p>我们的工程师将在${result.resolveTime}前上门维修,请您保持电话通畅哦!</p>
+					</c:if>
+					<c:if test="${result.type=='call'}">
+						<p>客服管理员已处理</p>
+						<p>处理方式:电话沟通</p>
+						<p>我们的工程师将在${result.resolveTime}前联系您,请您保持电话通畅哦!</p>
+					</c:if>
+					<c:if test="${result.type=='reject'}">
+						<p>客服管理员已处理</p>
+						<p>已拒绝您的申请</p>
+						<p>原因:${result.replyMsg }</p>
+					</c:if>
+					</li>
 					<!--b标签不输入内容，span标签内输入时间不限制格式，p标签内输入介绍内容。注意，标签内不能使用div分割-->
 					<li><b></b><span><fmt:formatDate value="${record.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
-					<p>提交申请成功</p></li>
+					<p>提交申请成功</p>
+					</li>
 				</ul>
 			</div>
 		</div>
 	</c:if>
 	<script type="text/javascript">
-	function backPage(num) {
-		history.go(num);
-	}
-	</script>
+		function backPage(num) {
+// 			history.go(num);
+			window.location.href="${pageContext.request.contextPath}/login/toIndex.do";
+		}
+		</script>
 </body>
 </html>

@@ -13,14 +13,15 @@ public class ApplyRecord implements Serializable{
 	private int id;
 	private String recordNo;
 	private String type;//0申请报修,1申请订纸
-	private String reason;
+	private String reason;//订纸原因分为common与异常
 	private String status;//0未处理,1已处理
 	private String userNo;
-	private String applyName;
-	private String applyMobile;
+	private String applyName;//报修处理结果(已处理pass,已拒绝reject)，订纸处理结果(已发货pass,已拒绝reject)
+	private String applyMobile;//报修处理状态，订纸卷数
 	private Date createTime;
 	private Date updateTime;
-	private String remark;
+	private String remark;//预计可使用至
+	
 	public int getId() {
 		return id;
 	}

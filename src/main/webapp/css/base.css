@@ -6,36 +6,46 @@ body {
 	background: rgba(242, 242, 242, 1);
 }
 
-a{
+a {
 	color: black;
 	text-decoration: none;
 }
 
-a:HOVER{
-	    -webkit-tap-highlight-color: transparent;/*去除点击时的背景色*/
+a:HOVER {
+	-webkit-tap-highlight-color: transparent; /*去除点击时的背景色*/
 }
+
 ul {
 	padding: 0px;
 	margin: 0px;
 }
 
-input{
-	margin: 0px;
-	padding: 0px;	
+.title {
+	position: fixed;
+	z-index: 99;
+	background: rgba(102, 153, 204, 1);
+	width: 100%;
 }
 
-.checkBox{
+input {
+	margin: 0px;
+	padding: 0px;
+}
+
+.checkBox {
 	zoom: 200%;
 	background-color: white;
 }
 
 .inText {
-	padding: 10px;
+	padding: 2px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	background-color: white;
 	border: 0px;
 }
 
-.card{
+.card {
 	background-color: white;
 	border-radius: 4px;
 	margin: 10px;
@@ -47,9 +57,7 @@ input{
 	margin: 15px 0px;
 }
 
-
 /*首先，我们要创建一个容器class*/
-
 .times ul {
 	margin-left: 25px;
 	border-left: 2px solid #ddd;
@@ -57,9 +65,7 @@ input{
 	padding: 10px 0px;
 }
 
-
 /*利用ul标签的特性，设置外边框左移25px，左边边框是2px粗的实心线，颜色一般要浅一点*/
-
 .times ul li {
 	width: 100%;
 	margin-left: -12px;
@@ -67,9 +73,7 @@ input{
 	font-weight: narmal;
 }
 
-
 /*一般情况，通过li标签控制圆点回到时间线上，然后控制要出现的文字大小和是否粗体*/
-
 .times ul li b {
 	width: 8px;
 	height: 8px;
@@ -84,9 +88,7 @@ input{
 	float: left;
 }
 
-
 /*利用处理加粗以外没有其它特别属性b标签做时间轴的圆点。*/
-
 .times ul li span {
 	padding-left: 7px;
 	font-size: 12px;
@@ -94,20 +96,15 @@ input{
 	color: #555;
 }
 
-
 /*设置span标签的属性，让它来做时间显示，加一点边距，使时间显示离时间线远一点*/
-
 
 /*.times ul li:hover b {border:2px solid #ff6600;}/*注意这一行，前面的li标签后面加了一个:hover伪属性，意思是鼠标移上来，激活后面的属性，这样可以设置鼠标移动到整个时间范围的时候，时间点和时间显示会变色*/
 
-
 /*.times ul li:hover span {color:#ff6600;}/*同上*/
-
 .times ul li p {
 	padding-left: 25px;
 	font-size: 14px;
 	line-height: 25px;
 }
-
 
 /*这里利用段落标签p做文字介绍*/

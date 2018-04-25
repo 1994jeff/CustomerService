@@ -7,12 +7,14 @@ import com.example.customerservicesystem.bean.User;
 
 public interface UserService {
 
-	List<User> getUserByCondition(User user) throws Exception;
+	public List<User> getUserByCondition(User user) throws Exception;
 
-	void updateUserByCondition(User user) throws Exception;
+	public void updateUserByCondition(User user) throws Exception;
 
-	void insertUser(User auser) throws Exception;
+	public void insertUser(User auser) throws Exception;
 
-	void deleteUserByUserNo(String userNo)throws Exception;
+	public void deleteUserByUserNo(String userNo)throws Exception;
+
+	public User getUserByOpenId(String openId) throws Exception;
 
 }

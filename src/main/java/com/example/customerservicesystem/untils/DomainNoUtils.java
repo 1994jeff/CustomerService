@@ -5,10 +5,10 @@ import java.util.Date;
 
 public class DomainNoUtils {
 
-	public static final String WIFI_NO = "WN";
-	public static final String USER_NO = "UN";
+	public static final String KEY_NO = "KW";//keyword前缀
+	public static final String USER_NO = "UN";//user前缀
 	public static final String SIGNED_NO = "SN";
-	public static final String USERAUTH_NO = "UA";
+	public static final String RESULT_NO = "RU";//result前缀
 	public static final String AUTH_NO = "RN";//record no前缀
 	public static final String BC_NO = "BCN";
 
@@ -32,13 +32,13 @@ public class DomainNoUtils {
 		case USER_NO:
 			str = getUserNo(timeStr);
 			break;
-		case WIFI_NO:
+		case KEY_NO:
 			str = getWiFiNo(timeStr);
 			break;
 		case SIGNED_NO:
 			str = getSignedNo(timeStr);
 			break;
-		case USERAUTH_NO:
+		case RESULT_NO:
 			str = getUserAuthNo(timeStr);
 			break;
 		case AUTH_NO:
@@ -72,7 +72,7 @@ public class DomainNoUtils {
 			userAuthNum=1;
 			dayStr=dateStr;
 		}
-		return USERAUTH_NO+timeStr+FormatNumBits(String.valueOf(userAuthNum));
+		return RESULT_NO+timeStr+FormatNumBits(String.valueOf(userAuthNum));
 	}
 
 	private static String getAuthNo(String timeStr) {
@@ -116,7 +116,7 @@ public class DomainNoUtils {
 			wifiNum=1;
 			dayStr=dateStr;
 		}
-		return WIFI_NO+timeStr+FormatNumBits(String.valueOf(wifiNum));
+		return KEY_NO+timeStr+FormatNumBits(String.valueOf(wifiNum));
 	}
 
 	private static String FormatNumBits(String valueOf) {
