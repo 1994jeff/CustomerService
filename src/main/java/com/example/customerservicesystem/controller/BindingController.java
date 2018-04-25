@@ -141,6 +141,6 @@ public class BindingController extends BaseController {
 			model.addAttribute("errorMsg",e.getMessage());
 			return "error/404";
 		}
-		return "index";
+		return "redirect:/login/toIndex.do";
 	}
 }

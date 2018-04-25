@@ -17,7 +17,7 @@ import net.sf.json.JSONObject;
 public class CreateMenu {
 
 	public static String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
-	public static final String BASE_URL = "http://www.wq321.xyz/customerservicesystem/";
+	public static final String BASE_URL = "http://www.wq321.xyz/customerservicesystem/login/toIndex.do";
 	
 	//微信通过菜单获取openId
 	//https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect

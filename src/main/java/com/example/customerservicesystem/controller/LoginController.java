@@ -23,6 +23,7 @@ import com.example.customerservicesystem.service.RecordService;
 import com.example.customerservicesystem.service.ShopService;
 import com.example.customerservicesystem.service.UserService;
 import com.example.customerservicesystem.untils.AccessTokenUtil;
+import com.example.customerservicesystem.untils.FileUtils;
 
 import net.sf.json.JSONObject;
 
@@ -46,7 +47,7 @@ public class LoginController extends BaseController {
 	public String toIndex(HttpSession session,Model model,HttpServletRequest req,String openId,String code){
 		try {
 			User user = getSessionUser(session);
-			if(user==null || user.getOpenId().endsWith(""))
+			if(user==null || user.getOpenId().equals(""))
 			{
 				String id = "";
 				if(null==openId||"".equals(openId)){
@@ -60,6 +61,7 @@ public class LoginController extends BaseController {
 				}else{
 					id = openId;
 				}
+				FileUtils.insertFile("user", "id="+id+"\n"+",openId="+openId+",code="+code);
 				User ser = userService.getUserByOpenId(id);
 				if(ser==null){
 					model.addAttribute("errorMsg","账号信息不存在,请先绑定!");

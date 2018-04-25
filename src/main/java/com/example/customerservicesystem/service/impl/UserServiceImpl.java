@@ -78,10 +78,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByOpenId(String openId) throws Exception {
-		if("".equals(openId)) {
-			throw new Exception("openID不能为空！");
+		try {
+			return userDao.getUserByOpenId(openId);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
 		}
-		return userDao.getUserByOpenId(openId);
 	}
 
 }
