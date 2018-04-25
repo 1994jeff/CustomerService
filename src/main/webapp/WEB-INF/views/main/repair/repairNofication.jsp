@@ -50,20 +50,23 @@
 			<div class="times">
 				<ul>
 					<li><b></b><span><fmt:formatDate value="${record.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
-					<p>客服管理员已处理</p>
 					<c:if test="${result.type=='pass'}">
+						<p>客服管理员已处理<a href="http://m.kuaidi100.com/index.jsp?from=openv"><span style="float: right;color: rgba(102, 153, 204, 1);font-size: 14px;">物流信息</span></a></p>
 						<p>处理方式:快递维修</p>
 						<p>快递:${result.reason}<br/>运单号:${result.remark }<br/>寄出物品:${result.goods}</p>
 					</c:if>
 					<c:if test="${result.type=='go'}">
+						<p>客服管理员已处理</p>
 						<p>处理方式:上门维修</p>
 						<p>我们的工程师将在${result.resolveTime}前上门维修,请您保持电话通畅哦!</p>
 					</c:if>
 					<c:if test="${result.type=='call'}">
+						<p>客服管理员已处理</p>
 						<p>处理方式:电话沟通</p>
 						<p>我们的工程师将在${result.resolveTime}前联系您,请您保持电话通畅哦!</p>
 					</c:if>
 					<c:if test="${result.type=='reject'}">
+						<p>客服管理员已处理</p>
 						<p>已拒绝您的申请</p>
 						<p>原因:${result.replyMsg }</p>
 					</c:if>
