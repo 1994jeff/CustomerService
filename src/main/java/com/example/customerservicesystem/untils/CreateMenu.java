@@ -17,7 +17,7 @@ import net.sf.json.JSONObject;
 public class CreateMenu {
 
 	public static String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
-	public static final String BASE_URL = "http://www.wq321.xyz/customerservicesystem/login/toIndex.do";
+	public static final String BASE_URL = "http://www.wq321.xyz/customerservicesystem/";
 	
 	//微信通过菜单获取openId
 	//https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect
@@ -26,12 +26,12 @@ public class CreateMenu {
 	
 
 	public static void main(String[] args) {
-		//menu();
-		try {
-			sendMsgToUser("hahaha", "oPFDk1QFYUzriWOEtqVgdSQVtp3A");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		menu();
+//		try {
+//			sendMsgToUser("hahaha", "oPFDk1QFYUzriWOEtqVgdSQVtp3A");
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	private static void menu() {
@@ -106,7 +106,7 @@ public class CreateMenu {
 		ViewButton index = new ViewButton();
 		index.setName("首页");
 		index.setType("view");
-		index.setUrl(PRE_URL+BASE_URL+AFTER_URL);
+		index.setUrl(PRE_URL+BASE_URL+"login/toIndex.do"+AFTER_URL);
 		ViewButton book = new ViewButton();
 		book.setName("订纸申请");
 		book.setType("view");
